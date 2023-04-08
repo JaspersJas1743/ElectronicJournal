@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="597f9a9adb2f4c218651db7265329391" Name="Diagram1" ZoomLevel="82" DisplayType="true">
+        <EntityTypeShape EntityType="ElectronicJournalModel.Admin" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.Attachment" Width="1.5" PointX="11.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.CoupleTiming" Width="1.5" PointX="10.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.Group" Width="1.5" PointX="8.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.Homework" Width="1.5" PointX="13.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.Lesson" Width="1.5" PointX="3.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.Mark" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.Message" Width="1.5" PointX="6" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.Parent" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.Role" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.Specialisation" Width="1.5" PointX="6" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.Student" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.Teacher" Width="1.5" PointX="6" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ElectronicJournalModel.User" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Admins__Role__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Admins__User__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__CoupleTim__Group__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__CoupleTim__Lesso__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Groups__ClassTea__5FB337D6" ManuallyRouted="false" ></AssociationConnector>
+        <AssociationConnector Association="ElectronicJournalModel.FK__Groups__Speciali__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Homeworks__Group__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Students__Group__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Homeworks__Lesso__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Marks__Lesson__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Marks__Student__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Marks__Teacher__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Messages__Receiv__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Messages__Sender__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Parents__Child__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Parents__User__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Students__User__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.FK__Teachers__User__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.Attachments_Messages" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.Homeworks_Attachments" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.Specialisations_Lessons" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.Teachers_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="ElectronicJournalModel.Teachers_Lessons" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
