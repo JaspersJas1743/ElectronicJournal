@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ElectronicJournal.Pages
+namespace ElectronicJournal.Resources.Windows
 {
 	/// <summary>
-	/// Логика взаимодействия для Authorization.xaml
+	/// Логика взаимодействия для MessageWindow.xaml
 	/// </summary>
-	public partial class Authorization : Page
+	public partial class MessageWindow : Window
 	{
-		public Authorization()
+		public MessageWindow()
 		{
 			InitializeComponent();
 		}

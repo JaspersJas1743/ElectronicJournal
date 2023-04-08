@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace ElectronicJournal
 {
-	/// <summary>
-	/// Логика взаимодействия для App.xaml
-	/// </summary>
 	public partial class App : Application
 	{
+		private readonly MainWindow _mainWindow;
+
+		public App()
+		{
+			InitializeComponent();
+			_mainWindow = new MainWindow();
+		}
+
+		private void OnApplicationStartup(object sender, StartupEventArgs e)
+		{
+			_mainWindow.Show();
+		}
 	}
 }

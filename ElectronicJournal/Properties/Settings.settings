@@ -1,7 +1,18 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ElectronicJournal.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Issuer" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">JaspersJas1743</Value>
+    </Setting>
+    <Setting Name="Audience" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">User12345</Value>
+    </Setting>
+    <Setting Name="SecurityKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MySuperSecretKeyForGenerateJWT</Value>
+    </Setting>
+    <Setting Name="Theme" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Светлая</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
