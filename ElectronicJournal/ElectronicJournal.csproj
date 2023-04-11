@@ -276,6 +276,8 @@
     <Compile Include="Resources\Windows\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\Theme.cs" />
+    <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="ViewModels\TimetableVM.cs" />
     <Compile Include="Views\PasswordRecovery.xaml.cs">
       <DependentUpon>PasswordRecovery.xaml</DependentUpon>
@@ -290,63 +292,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Entities\Admin.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Attachment.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\CoupleTiming.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\ElectronicJournalDatabaseModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ElectronicJournalDatabaseModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\ElectronicJournalDatabaseModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\ElectronicJournalDatabaseModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ElectronicJournalDatabaseModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Group.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Homework.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Lesson.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Mark.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Message.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Parent.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Role.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Specialisation.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Student.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Teacher.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\User.cs">
-      <DependentUpon>ElectronicJournalDatabaseModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Resources\UserControls\PasswordBoxWithPasswordViewer.xaml.cs">
       <DependentUpon>PasswordBoxWithPasswordViewer.xaml</DependentUpon>
@@ -372,6 +317,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resources\Themes\DarkColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\WindowButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Windows\MessageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -448,13 +401,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <EntityDeploy Include="Entities\ElectronicJournalDatabaseModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ElectronicJournalDatabaseModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Entities\ElectronicJournalDatabaseModel.edmx.diagram">
-      <DependentUpon>ElectronicJournalDatabaseModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -482,16 +428,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Entities\ElectronicJournalDatabaseModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ElectronicJournalDatabaseModel.Context.cs</LastGenOutput>
-      <DependentUpon>ElectronicJournalDatabaseModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Entities\ElectronicJournalDatabaseModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ElectronicJournalDatabaseModel.edmx</DependentUpon>
-      <LastGenOutput>ElectronicJournalDatabaseModel.cs</LastGenOutput>
-    </Content>
     <Resource Include="Resources\Images\icon.ico" />
   </ItemGroup>
   <ItemGroup>

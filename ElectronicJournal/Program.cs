@@ -12,7 +12,7 @@ namespace ElectronicJournal
 			IHost host = Host.CreateDefaultBuilder()
 				.ConfigureServices(configureDelegate: services => services.AddSingleton<App>()).Build();
 			App app = host.Services.GetService<App>();
-			app.Run();
+            app.Run();
 		}
 	}
 }

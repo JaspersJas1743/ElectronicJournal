@@ -56,21 +56,21 @@ namespace ElectronicJournal.Resources.UserControls
 		}
 
 		private void OnHiddenPasswordClick(object sender, RoutedEventArgs e)
-			=> ChangeVisibility(firstBtnName: "ShowPassword", secondBtn: (Button)sender, newText: GetSecureString(length: _password.Length));
+			=> ChangeVisibility(newText: GetSecureString(length: _password.Length));
 
 		private string GetSecureString(int length)
 			=> new String(c: _secureChar, count: length);
 
 		private void OnShowPasswordClick(object sender, RoutedEventArgs e)
-			=> ChangeVisibility(firstBtnName: "HiddenPassword", secondBtn: (Button)sender, newText: _password);
+			=> ChangeVisibility(newText: _password);
 		
-		private void ChangeVisibility(string firstBtnName, Button secondBtn, string newText)
+		private void ChangeVisibility(string newText)
 		{
-			Button firstButton = (Button)Tb.Template.FindName(name: firstBtnName, templatedParent: Tb);
-			(firstButton.Visibility, secondBtn.Visibility) = (secondBtn.Visibility, firstButton.Visibility);
+			(ShowPassword.Visibility, HiddenPassword.Visibility) = (HiddenPassword.Visibility, ShowPassword.Visibility);
 			_passwordVisible = !_passwordVisible;
 			ReplaceTextWithoutTracking(text: newText);
-			Tb.SelectionStart = Tb.Text.Length;
+            Tb.Focus();
+            Tb.SetSelectionStart(Tb.Text.Length);
 		}
 
 		private void ReplaceTextWithoutTracking(string text)
@@ -80,7 +80,7 @@ namespace ElectronicJournal.Resources.UserControls
 			_untraceableChange = false;
 		}
 
-		private void OnTbTextChanged(object sender, TextChangedEventArgs e)
+        private void OnTbTextChanged(object sender, TextChangedEventArgs e)
 		{
 			if (_untraceableChange)
 				return;
@@ -105,7 +105,7 @@ namespace ElectronicJournal.Resources.UserControls
 			ReplaceTextWithoutTracking(
 				text: text.Remove(startIndex: start, count: count).Insert(startIndex: start, value: GetSecureString(length: count))
 			);
-			Tb.SelectionStart = start + count;
+            Tb.SetSelectionStart(start + count);
 		}
-	}
+    }
 }

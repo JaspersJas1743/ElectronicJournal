@@ -7,8 +7,8 @@
              Name="ThisElement" d:DesignHeight="30" d:DesignWidth="200">
     <Grid>
         <TextBox  FontSize="{Binding ElementName=ThisElement,Path=FontSize}" VerticalContentAlignment="Center" 
-                  Text="{Binding ElementName=ThisElement,Path=Text,UpdateSourceTrigger=PropertyChanged}" 
-                  Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="4" Name="MainTextBox" Grid.Row="0">
+                  Text="{Binding ElementName=ThisElement,Path=Text,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  x:Name="MainTextBox" TextChanged="OnMainTextBoxChanged">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                     <Style.Setters>
