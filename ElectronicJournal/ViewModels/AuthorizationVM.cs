@@ -39,15 +39,15 @@ namespace ElectronicJournal.ViewModels
 			}
 		}
 
-		public string Password
-		{
-			get => _model.Password;
-			set
-			{
-				_model.Password = value;
-				OnPropertyChanged("Password");
-			}
-		}
+        public string Password
+        {
+            get => _model.Password;
+            set
+            {
+                _model.Password = value;
+                OnPropertyChanged("Password");
+            }
+        }
 
 		public Command Authorize => _authorize.Value;
 		public Command MoveToRegistration => _moveToRegistration.Value;
@@ -71,34 +71,34 @@ namespace ElectronicJournal.ViewModels
 		//		Navigation.Navigate(page: new Timetable());
 		//}
 
-		private bool ValidateModel(out string message)
-		{
-			List<ValidationResult> results = new List<ValidationResult>();
-			bool result = Validator.TryValidateObject(
-				instance: _model, validationContext: new ValidationContext(instance: _model),
-				validationResults: results, validateAllProperties: true
-			);
-			message = String.Join(separator: "\n", values: results.Select(x => x.ErrorMessage));
-			return result;
-		}
+        private bool ValidateModel(out string message)
+        {
+            List<ValidationResult> results = new List<ValidationResult>();
+            bool result = Validator.TryValidateObject(
+                instance: _model, validationContext: new ValidationContext(instance: _model),
+                validationResults: results, validateAllProperties: true
+            );
+            message = String.Join(separator: "\n", values: results.Select(x => x.ErrorMessage));
+            return result;
+        }
 
-		public string GenerateJWT()
-		{
-			string issuer = Settings.Default.Issuer;
-			string audience = Settings.Default.Audience;
-			Claim[] claims = new[]
-			{
-				new Claim(type: JwtRegisteredClaimNames.Name, value: Login + Password),
-				new Claim(type: JwtRegisteredClaimNames.Iss, value: issuer),
-				new Claim(type: JwtRegisteredClaimNames.Aud, value: audience)
-			};
-			SymmetricSecurityKey secretKey = new SymmetricSecurityKey(key: Encoding.UTF8.GetBytes(s: Settings.Default.SecurityKey));
-			SigningCredentials signingCredentials = new SigningCredentials(key: secretKey, algorithm: SecurityAlgorithms.HmacSha256Signature);
-			JwtSecurityToken token = new JwtSecurityToken(
-				issuer: issuer, audience: audience, claims: claims, signingCredentials: signingCredentials
-			);
-			string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
-			return tokenAsString.Length <= 255 ? tokenAsString : tokenAsString.Substring(startIndex: 0, length: 255);
-		}
-	}
+        public string GenerateJWT()
+        {
+            string issuer = Settings.Default.Issuer;
+            string audience = Settings.Default.Audience;
+            Claim[] claims = new[]
+            {
+                new Claim(type: JwtRegisteredClaimNames.Name, value: Login + Password),
+                new Claim(type: JwtRegisteredClaimNames.Iss, value: issuer),
+                new Claim(type: JwtRegisteredClaimNames.Aud, value: audience)
+            };
+            SymmetricSecurityKey secretKey = new SymmetricSecurityKey(key: Encoding.UTF8.GetBytes(s: Settings.Default.SecurityKey));
+            SigningCredentials signingCredentials = new SigningCredentials(key: secretKey, algorithm: SecurityAlgorithms.HmacSha256Signature);
+            JwtSecurityToken token = new JwtSecurityToken(
+                issuer: issuer, audience: audience, claims: claims, signingCredentials: signingCredentials
+            );
+            string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
+            return tokenAsString.Length <= 255 ? tokenAsString : tokenAsString.Substring(startIndex: 0, length: 255);
+        }
+    }
 }
