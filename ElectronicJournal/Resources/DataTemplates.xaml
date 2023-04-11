@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:vm="clr-namespace:ElectronicJournal.ViewModels"
+                    xmlns:view="clr-namespace:ElectronicJournal.Views"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate DataType="{x:Type vm:AuthorizationVM}">
+        <view:Authorization/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:RegistrationVM}">
+        <view:Registration/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:PasswordRecoveryVM}">
+        <view:PasswordRecovery/>
+    </DataTemplate>
+</ResourceDictionary>

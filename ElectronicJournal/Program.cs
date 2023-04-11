@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ElectronicJournal.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 
@@ -6,13 +7,23 @@ namespace ElectronicJournal
 {
 	public class Program
 	{
+		public static IHost AppHost { get; set; }
+
 		[STAThread]
 		public static void Main(string[] args)
 		{
-			IHost host = Host.CreateDefaultBuilder()
-				.ConfigureServices(configureDelegate: services => services.AddSingleton<App>()).Build();
-			App app = host.Services.GetService<App>();
-			app.Run();
+			AppHost = Host.CreateDefaultBuilder()
+				.ConfigureServices(configureDelegate: services =>
+				{
+					services.AddSingleton<App>();
+					services.AddSingleton<MainWindow>();
+					services.AddSingleton<MainWindowVM>();
+					services.AddSingleton<AuthorizationVM>();
+					services.AddSingleton<RegistrationVM>();
+					services.AddSingleton<PasswordRecoveryVM>();
+				}).Build();
+			App app = AppHost.Services.GetService<App>();
+            app.Run();
 		}
 	}
 }

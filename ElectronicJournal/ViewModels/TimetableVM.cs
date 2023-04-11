@@ -2,8 +2,7 @@
 
 namespace ElectronicJournal.ViewModels
 {
-	internal class TimetableVM : INotifyPropertyChanged
+	internal class TimetableVM : BaseVM
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

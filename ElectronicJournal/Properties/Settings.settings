@@ -11,8 +11,5 @@
     <Setting Name="SecurityKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">MySuperSecretKeyForGenerateJWT</Value>
     </Setting>
-    <Setting Name="Theme" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Светлая</Value>
-    </Setting>
   </Settings>
 </SettingsFile>

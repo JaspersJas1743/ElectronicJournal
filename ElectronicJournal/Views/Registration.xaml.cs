@@ -2,7 +2,7 @@
 
 namespace ElectronicJournal.Views
 {
-	public partial class Registration : Page
+	public partial class Registration : UserControl
 	{
 		public Registration()
 		{

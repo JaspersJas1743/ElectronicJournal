@@ -25,5 +25,8 @@ namespace ElectronicJournal.ViewModels
 
 		public void Execute(object parameter)
 			=> _execute(obj: parameter);
+
+        public static Lazy<Command> CreateLazyCommand(Action<object> action)
+            => new Lazy<Command>(valueFactory: () => new Command(execute: action));
 	}
 }

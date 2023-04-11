@@ -1,12 +1,14 @@
-﻿using System.Windows.Controls;
+﻿using ElectronicJournal.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ElectronicJournal.Utilities
 {
 	public static class Navigation
 	{
-		public static Frame Frame { get; set; }
-
-		public static void Navigate(object page)
-			=> Frame.Navigate(content: page);
+		public static void Navigate<T>() where T : BaseVM
+		{
+			MainWindowVM mainWindowVM = Program.AppHost.Services.GetService<MainWindowVM>();
+			mainWindowVM.Content = Program.AppHost.Services.GetService<T>();
+		}
 	}
 }

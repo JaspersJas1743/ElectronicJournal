@@ -2,7 +2,7 @@
 
 namespace ElectronicJournal.Views
 {
-	public partial class PasswordRecovery : Page
+	public partial class PasswordRecovery : UserControl
 	{
 		public PasswordRecovery()
 		{

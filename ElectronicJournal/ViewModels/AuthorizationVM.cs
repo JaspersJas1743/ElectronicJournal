@@ -1,48 +1,33 @@
-﻿using ElectronicJournal.Entities;
-using ElectronicJournal.Models;
+﻿using ElectronicJournal.Models;
 using ElectronicJournal.Properties;
 using ElectronicJournal.Utilities;
 using ElectronicJournal.Views;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ElectronicJournal.ViewModels
 {
-	public class AuthorizationVM : INotifyPropertyChanged
+	public class AuthorizationVM : BaseVM
 	{
 		private AuthorizationModel _model;
 		private readonly Lazy<Command> _authorize;
 		private readonly Lazy<Command> _moveToRegistration;
 		private readonly Lazy<Command> _moveToPasswordRecovery;
-		private readonly Lazy<ElectronicJournalEntities> _context;
 
 		public AuthorizationVM()
 		{
 			_model = new AuthorizationModel();
-			_authorize = CreateCommand(action: async (obj) => await CheckData(obj));
-			_moveToRegistration = CreateCommand(action: obj => Navigation.Navigate(page: new Registration()));
-			_moveToPasswordRecovery = CreateCommand(action: obj => Navigation.Navigate(page: new PasswordRecovery()));
-			_context = new Lazy<ElectronicJournalEntities>(valueFactory: () => new ElectronicJournalEntities());
+			_authorize = Command.CreateLazyCommand(action: obj => MessageBox.Show($"Login={Login};Password={Password};\nToken={GenerateJWT()}"));
+			_moveToRegistration = Command.CreateLazyCommand(action: obj => Navigation.Navigate<RegistrationVM>());
+			_moveToPasswordRecovery = Command.CreateLazyCommand(action: obj => Navigation.Navigate<PasswordRecoveryVM>());
 		}
-
-		~AuthorizationVM()
-		{
-			if (_context.IsValueCreated)
-				_context.Value.Dispose();
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		public string Login
 		{
@@ -67,31 +52,24 @@ namespace ElectronicJournal.ViewModels
 		public Command Authorize => _authorize.Value;
 		public Command MoveToRegistration => _moveToRegistration.Value;
 		public Command MoveToPasswordRecovery => _moveToPasswordRecovery.Value;
-		private ElectronicJournalEntities Context => _context.Value;
 
-		private Lazy<Command> CreateCommand(Action<object> action)
-			=> new Lazy<Command>(valueFactory: () => new Command(execute: action));
+		//private async Task CheckData(object obj)
+		//{
+		//	if (!ValidateModel(out string message))
+		//	{
+		//		MessageBox.Show(messageBoxText: message);
+		//		return;
+		//	}
 
-		public void OnPropertyChanged([CallerMemberName] string prop = "")
-			=> PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-
-		private async Task CheckData(object obj)
-		{
-			if (!ValidateModel(out string message))
-			{
-				MessageBox.Show(messageBoxText: message);
-				return;
-			}
-
-			string tokenForUser = GenerateJWT();
-			User user = await Context.Users.FirstOrDefaultAsync(predicate: x => x.AuthKey == tokenForUser);
-			if (user is null)
-			{
-				MessageBox.Show("Неверные аутентификационные данные");
-			}
-			else
-				Navigation.Navigate(page: new Timetable());
-		}
+		//	string tokenForUser = GenerateJWT();
+		//	User user = await Context.Users.FirstOrDefaultAsync(predicate: x => x.AuthKey == tokenForUser);
+		//	if (user is null)
+		//	{
+		//		MessageBox.Show("Неверные аутентификационные данные");
+		//	}
+		//	else
+		//		Navigation.Navigate(page: new Timetable());
+		//}
 
 		private bool ValidateModel(out string message)
 		{

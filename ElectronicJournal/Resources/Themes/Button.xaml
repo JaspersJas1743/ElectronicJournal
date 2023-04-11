@@ -3,13 +3,13 @@
                     xmlns:MyConverter="ElectronicJournal.Utilities">
     <Style TargetType="{x:Type Button}">
         <Style.Setters>
-            <Setter Property="Background" Value="{StaticResource MainColor}"/>
+            <Setter Property="Background" Value="{DynamicResource MainColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border x:Name="MainContent" Background="{TemplateBinding Background}" 
                                 CornerRadius="15" SnapsToDevicePixels="True"
-                                BorderBrush="{StaticResource Background}"
+                                BorderBrush="{DynamicResource Background}"
                                 BorderThickness="0">
                             <Grid>
                                 <Grid.RowDefinitions>
