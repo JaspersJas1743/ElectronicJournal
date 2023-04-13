@@ -7,6 +7,7 @@ namespace ElectronicJournal.Resources.UserControls
 {
 	public partial class PasswordBoxWithPasswordViewer : UserControl
 	{
+		#region Fields
 		private const char _secureChar = '•';
 		private string _password = String.Empty;
 		private bool _passwordVisible = false;
@@ -27,10 +28,14 @@ namespace ElectronicJournal.Resources.UserControls
 		public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register(
 			name: "Password", propertyType: typeof(String), ownerType: typeof(PasswordBoxWithPasswordViewer)
 		);
+		#endregion Fields
 
+		#region Constructor
 		public PasswordBoxWithPasswordViewer()
 			=> InitializeComponent();
+		#endregion Constructor
 
+		#region Properties
 		public string Password
 		{
 			get => (string)GetValue(dp: PasswordProperty);
@@ -54,7 +59,9 @@ namespace ElectronicJournal.Resources.UserControls
 			get => (string)GetValue(dp: PlaceholderProperty);
 			set => SetValue(dp: PlaceholderProperty, value: value);
 		}
+		#endregion Properties
 
+		#region Methods
 		private void OnHiddenPasswordClick(object sender, RoutedEventArgs e)
 			=> ChangeVisibility(newText: GetSecureString(length: _password.Length));
 
@@ -107,5 +114,6 @@ namespace ElectronicJournal.Resources.UserControls
 			);
             Tb.SetSelectionStart(start + count);
 		}
-    }
+		#endregion Methods
+	}
 }

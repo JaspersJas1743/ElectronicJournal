@@ -19,7 +19,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.187*"/>
         </Grid.RowDefinitions>
-        <Border BorderThickness="4" Grid.Column="1" Grid.Row="1" BorderBrush="{DynamicResource Border}" CornerRadius="20" Padding="20">
+        <Border BorderThickness="4" Grid.Column="1" Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" CornerRadius="20" Padding="20">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.05*"/>
@@ -39,11 +39,12 @@
                     <RowDefinition Height="0.65*"/>
                     <RowDefinition Height="0.7*"/>
                     <RowDefinition Height="0.9*"/>
+                    <RowDefinition Height="0.05*"/>
                     <RowDefinition Height="0.3*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <svgc:SvgViewbox Source="/Resources/Images/students.svg" Grid.Row="1" Grid.RowSpan="8" Grid.Column="1"/>
+                <svgc:SvgViewbox Source="/Resources/Images/students.svg" Grid.Row="1" Grid.RowSpan="9" Grid.Column="1"/>
 
                 <Viewbox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" KeyboardNavigation.TabNavigation="None">
                     <TextBlock Text="Добро пожаловать!"/>
@@ -59,10 +60,10 @@
 
                 <Button Grid.Row="7" Grid.Column="3" Content="Войти" Grid.ColumnSpan="4" Command="{Binding Authorize}"/>
 
-                <Button Grid.Column="3" Grid.Row="8" Style="{DynamicResource ClickableText}" Command="{Binding MoveToRegistration}"
+                <Button Grid.Column="3" Grid.Row="9" Style="{DynamicResource ClickableText}" Command="{Binding MoveToRegistration}"
                         HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ContentStringFormat="Регистрация →"/>
 
-                <Button Grid.Column="6" Grid.Row="8" Style="{DynamicResource ClickableText}" Command="{Binding MoveToPasswordRecovery}"
+                <Button Grid.Column="6" Grid.Row="9" Style="{DynamicResource ClickableText}" Command="{Binding MoveToPasswordRecovery}"
                         HorizontalContentAlignment="Right" VerticalContentAlignment="Center" ContentStringFormat="Забыл пароль?"/>
             </Grid>
         </Border>

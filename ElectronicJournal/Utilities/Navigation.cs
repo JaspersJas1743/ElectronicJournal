@@ -5,10 +5,10 @@ namespace ElectronicJournal.Utilities
 {
 	public static class Navigation
 	{
-		public static void Navigate<T>() where T : BaseVM
+		public static void Navigate<T>() where T : TrackedObject, new()
 		{
 			MainWindowVM mainWindowVM = Program.AppHost.Services.GetService<MainWindowVM>();
-			mainWindowVM.Content = Program.AppHost.Services.GetService<T>();
+			mainWindowVM.Content = new T();
 		}
 	}
 }

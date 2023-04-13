@@ -3,8 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:utility="clr-namespace:ElectronicJournal.Utilities"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" mc:Ignorable="d" 
              Name="ThisElement" d:DesignHeight="30" d:DesignWidth="200">
+    <UserControl.Resources>
+        <sys:Double x:Key="StartCR">15</sys:Double>
+        <utility:CornerRadiusConverter x:Key="CRConverter"/>
+    </UserControl.Resources>
     <Grid>
         <TextBox  FontSize="{Binding ElementName=ThisElement,Path=FontSize}" VerticalContentAlignment="Center" 
                   Text="{Binding ElementName=ThisElement,Path=Text,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
@@ -15,8 +21,8 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type TextBox}">
-                                    <Border Background="{TemplateBinding Background}" BorderBrush="{x:Null}"
-                                            SnapsToDevicePixels="True" CornerRadius="15">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{x:Null}" SnapsToDevicePixels="True" 
+                                            CornerRadius="{Binding Converter={StaticResource CRConverter}}">
                                         <Grid x:Name="MainGrid">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="10"/>

@@ -1,17 +1,16 @@
-﻿using System.ComponentModel;
+﻿using ElectronicJournal.ViewModels;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
 
 namespace ElectronicJournal.Models
 {
-	public class AuthorizationModel: INotifyPropertyChanged
+	public class AuthorizationModel : TrackedObject
 	{
 		private string _login;
 		private string _password;
 
 		[Required(ErrorMessage = "Поле \"Логин\"является обязательным")]
 		[MinLength(length: 4, ErrorMessage = "Минимальная длина логина - 4 символа")]
-		public string Login 
+		public string Login
 		{
 			get => _login;
 			set
@@ -32,10 +31,5 @@ namespace ElectronicJournal.Models
 				OnPropertyChanged("Password");
 			}
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public void OnPropertyChanged([CallerMemberName] string prop = "")
-			=> PropertyChanged?.Invoke(sender: this, e: new PropertyChangedEventArgs(propertyName: prop));
 	}
 }

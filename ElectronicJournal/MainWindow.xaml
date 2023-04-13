@@ -3,29 +3,68 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:ElectronicJournal.ViewModels"
-        xmlns:view="clr-namespace:ElectronicJournal.Views" WindowStyle="None" 
-        xmlns:local="clr-namespace:ElectronicJournal" mc:Ignorable="d" 
-        Icon="/Resources/Images/icon.ico" Name="ThisElement" Title="Электронный журнал" 
-        Height="512" Width="720" MinHeight="512" MinWidth="720" WindowStartupLocation="CenterScreen">
-    <Grid>
+        xmlns:uc="clr-namespace:ElectronicJournal.Resources.UserControls"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        mc:Ignorable="d" Name="ThisElement" Title="Электронный журнал" 
+        Style="{DynamicResource WindowStyle}" WindowStartupLocation="CenterScreen"
+        Height="512" Width="720" MinHeight="512" MinWidth="720" >
+    <Grid Background="{DynamicResource Background}" Grid.Row="0" KeyboardNavigation.TabNavigation="None">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="0.015*"/>
+            <RowDefinition Height="0.05*" MaxHeight="22"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Background="{DynamicResource Background}" Grid.Row="0" KeyboardNavigation.TabNavigation="None">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition Width="25"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Style="{DynamicResource WindowButton}" Command="{Binding ChangeTheme}"/>
-            <Button Grid.Column="2" Style="{DynamicResource WindowButton}" Command="{Binding Deactivate}"/>
-            <Button Grid.Column="3" Style="{DynamicResource WindowButton}" Command="{Binding Expand}"/>
-            <Button Grid.Column="4" Style="{DynamicResource WindowButton}" Command="{Binding Exit}"/>
-        </Grid>
-        <ContentControl Grid.Row="1" Content="{Binding Content,UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.05*" MaxWidth="22"/>
+            <ColumnDefinition Width="0.05*" MaxWidth="22"/>
+            <ColumnDefinition Width="0.05*" MaxWidth="22"/>
+            <ColumnDefinition Width="0.05*" MaxWidth="22"/>
+            <ColumnDefinition Width="0.015*" MaxWidth="12"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="7" Fill="Transparent" MouseDown="DraggingWindow"/>
+
+        <!--<Button Grid.Column="1" Grid.Row="1" Style="{DynamicResource WindowButton}" Foreground="#eeeeee"--> 
+                <!--Command="{Binding ToLightTheme}" Visibility="{Binding ToLightThemeVisibility}">-->
+            <!--<Button.Content>-->
+        <svgc:SvgViewbox Source="/Resources/Images/dark_theme.svg" Grid.Column="1" Grid.Row="1" Visibility="{Binding ToLightThemeVisibility}"/>
+            <!--</Button.Content>-->
+        <!--</Button>-->
+
+        <!--<Button Grid.Column="1" Grid.Row="1" Style="{DynamicResource WindowButton}" Foreground="#eeeeee"--> 
+                <!--Command="{Binding ToDarkTheme}" Visibility="{Binding ToDarkThemeVisibility}">-->
+            <!--<Button.Content>-->
+        <svgc:SvgViewbox Source="/Resources/Images/light_theme.svg" Grid.Column="1" Grid.Row="1" Visibility="{Binding ToDarkThemeVisibility}"/>
+            <!--</Button.Content>-->
+        <!--</Button>-->
+
+        <Button Grid.Column="2" Grid.Row="1" Style="{DynamicResource WindowButton}" Foreground="#42AAFF" Command="{Binding Minimize}">
+            <Button.Content>
+                <svgc:SvgViewbox Source="/Resources/Images/minimize1.svg"/>
+            </Button.Content>
+        </Button>
+
+        <Button Grid.Column="3" Grid.Row="1" Style="{DynamicResource WindowButton}" Foreground="#eeeeee" 
+                Command="{Binding Expand}" Visibility="{Binding ExpandVisibility}">
+            <Button.Content>
+                <svgc:SvgViewbox Source="/Resources/Images/expand.svg"/>
+            </Button.Content>
+        </Button>
+
+        <Button Grid.Column="3" Grid.Row="1" Style="{DynamicResource WindowButton}" Foreground="#eeeeee" 
+                Command="{Binding Collapse}" Visibility="{Binding CollapseVisibility}">
+            <Button.Content>
+                <svgc:SvgViewbox Source="/Resources/Images/collapse_to_window.svg"/>
+            </Button.Content>
+        </Button>
+
+        <Button Grid.Column="4" Grid.Row="1" Style="{DynamicResource WindowButton}" Foreground="Red" Command="{Binding Exit}">
+            <Button.Content>
+                <svgc:SvgViewbox Source="/Resources/Images/close.svg"/>
+            </Button.Content>
+        </Button>
+
+        <ContentControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="7" Content="{Binding Content}"/>
     </Grid>
 </Window>
