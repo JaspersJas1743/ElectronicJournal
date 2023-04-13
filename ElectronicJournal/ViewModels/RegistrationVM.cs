@@ -3,7 +3,7 @@ using System;
 
 namespace ElectronicJournal.ViewModels
 {
-	public class RegistrationVM : BaseVM
+	public class RegistrationVM : TrackedObject
 	{
 		private readonly Lazy<Command> _backCommand;
 

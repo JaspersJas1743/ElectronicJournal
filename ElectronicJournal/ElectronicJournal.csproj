@@ -276,11 +276,15 @@
     <Compile Include="Resources\Windows\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\CornerRadiusConverter.cs" />
+    <Compile Include="Utilities\JWT.cs" />
     <Compile Include="Utilities\Navigation.cs" />
+    <Compile Include="Utilities\Notification.cs" />
+    <Compile Include="Utilities\ObjectValidator.cs" />
     <Compile Include="Utilities\Theme.cs" />
     <Compile Include="ViewModels\PasswordRecoveryVM.cs" />
     <Compile Include="ViewModels\RegistrationVM.cs" />
-    <Compile Include="ViewModels\Tools\BaseVM.cs" />
+    <Compile Include="ViewModels\Tools\TrackedObject.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="ViewModels\TimetableVM.cs" />
     <Compile Include="Views\PasswordRecovery.xaml.cs">
@@ -320,14 +324,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Resources\Themes\DarkColors.xaml">
+    <Resource Include="Resources\Styles\DarkColors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Themes\WindowButton.xaml">
+    </Resource>
+    <Resource Include="Resources\Styles\WindowButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
+    </Resource>
+    <Resource Include="Resources\Styles\Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Page Include="Resources\Windows\MessageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -348,31 +356,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="Resources\Themes\Styles.xaml">
+    <Resource Include="Resources\Styles\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="Resources\Themes\TextBox.xaml">
+    <Resource Include="Resources\Styles\TextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="Resources\Themes\LightColors.xaml">
+    <Resource Include="Resources\Styles\LightColors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="Resources\Themes\TextBlock.xaml">
+    <Resource Include="Resources\Styles\TextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Resource>
-    <Resource Include="Resources\Themes\Button.xaml">
+    <Resource Include="Resources\Styles\Button.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="Resources\Themes\ClickableText.xaml">
+    <Resource Include="Resources\Styles\ClickableText.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="Resources\Themes\EmptyButton.xaml">
+    <Resource Include="Resources\Styles\EmptyButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
@@ -413,6 +421,13 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\Images\minimize1.svg" />
+    <Resource Include="Resources\Images\dark_theme.svg" />
+    <Resource Include="Resources\Images\light_theme.svg" />
+    <Resource Include="Resources\Images\close.svg" />
+    <Resource Include="Resources\Images\collapse_to_window.svg" />
+    <Resource Include="Resources\Images\expand.svg" />
+    <Resource Include="Resources\Images\minimize.svg" />
     <Resource Include="Resources\Images\hidden_password.svg" />
     <Resource Include="Resources\Images\show_password.svg" />
     <Resource Include="Resources\Images\login.svg" />

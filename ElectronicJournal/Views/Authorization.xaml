@@ -19,7 +19,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.187*"/>
         </Grid.RowDefinitions>
-        <Border BorderThickness="4" Grid.Column="1" Grid.Row="1" BorderBrush="{DynamicResource Border}" CornerRadius="20" Padding="20">
+        <Border BorderThickness="4" Grid.Column="1" Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" CornerRadius="20" Padding="20">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.05*"/>

@@ -6,7 +6,8 @@ namespace ElectronicJournal.Resources.UserControls
 {
     public partial class TextBoxWithImageAndPlaceholder : UserControl
     {
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+		#region Fields
+		public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             name: "Text", propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
         );
 
@@ -17,11 +18,15 @@ namespace ElectronicJournal.Resources.UserControls
         public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
             name: "Placeholder", propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
         );
+		#endregion Fields
 
-        public TextBoxWithImageAndPlaceholder()
+		#region Constructor
+		public TextBoxWithImageAndPlaceholder()
             => InitializeComponent();
+		#endregion Constructor
 
-        public string Text
+		#region Properties
+		public string Text
         {
             get => (string)GetValue(dp: TextProperty);
             set => SetValue(dp: TextProperty, value: value);
@@ -43,13 +48,18 @@ namespace ElectronicJournal.Resources.UserControls
             => MainTextBox.SelectionStart = selectionStart;
 
         public int MaxLength => MainTextBox.MaxLength;
+		#endregion Properties
 
-        public event TextChangedEventHandler TextChanged;
+		#region Events
+		public event TextChangedEventHandler TextChanged;
+		#endregion Events
 
-        public new void Focus()
+		#region Methods
+		public new void Focus()
             => MainTextBox.Focus();
 
         private void OnMainTextBoxChanged(object sender, TextChangedEventArgs e)
             => TextChanged?.Invoke(sender: sender, e: e);
-    }
+		#endregion Methods
+	}
 }

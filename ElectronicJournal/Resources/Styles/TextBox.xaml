@@ -3,8 +3,8 @@
                     xmlns:my="clr-namespace:ElectronicJournal.Resources.UserControls">
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Style.Setters>
-            <Setter Property="Background" Value="{DynamicResource MainColor}"/>
-            <Setter Property="Foreground" Value="{DynamicResource Fonts}"/>
+            <Setter Property="Background" Value="{DynamicResource MainElementColor}"/>
+            <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
             <Setter Property="MaxLength" Value="25"/>
             <Setter Property="FontFamily" Value="Raleway"/>
             <Setter Property="FontWeight" Value="SemiBold"/>

@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace ElectronicJournal.ViewModels
 {
-	public class BaseVM : INotifyPropertyChanged
+	public class TrackedObject : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName] string propertyName = null)
