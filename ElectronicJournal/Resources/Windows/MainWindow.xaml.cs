@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 
-namespace ElectronicJournal
+namespace ElectronicJournal.Resources.Windows
 {
 	public partial class MainWindow : Window
 	{

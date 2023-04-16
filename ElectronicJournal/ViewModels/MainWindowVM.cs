@@ -8,51 +8,52 @@ namespace ElectronicJournal.ViewModels
 	{
 		#region Fields
 		private readonly Lazy<Command> _exit;
-		private readonly Lazy<Command> _toDarkTheme;
-		private readonly Lazy<Command> _toLightTheme;
+		private readonly Lazy<Command> _changeTheme;
 		private readonly Lazy<Command> _minimize;
 		private readonly Lazy<Command> _collapse;
 		private readonly Lazy<Command> _expand;
 
-		private Visibility _expandVisibility;
 		private Visibility _collapseVisibility;
-		private Visibility _toLightThemeVisibility;
-		private Visibility _toDarkThemeVisibility;
-
+		private Visibility _expandVisibility;
 		private TrackedObject _content;
+		private bool _isOn;
 
 		#endregion Fields
 
-		#region Constructor
+		#region Constructors
 		public MainWindowVM()
 		{
 			_content = new AuthorizationVM();
 			_expandVisibility = Visibility.Visible;
 			_collapseVisibility = Visibility.Collapsed;
-			_toDarkThemeVisibility = GetVisibilityForTheme(theme: Theme.Type.Light);
-			_toLightThemeVisibility = GetVisibilityForTheme(theme: Theme.Type.Dark);
+			_isOn = Theme.CurrentTheme == Theme.Type.Dark;
 
 			_exit = Command.CreateLazyCommand(action: obj => CloseApp());
-			_toLightTheme = Command.CreateLazyCommand(action: obj => ToThemeWindow(newTheme: Theme.Type.Light));
-			_toDarkTheme = Command.CreateLazyCommand(action: obj => ToThemeWindow(newTheme: Theme.Type.Dark));
+			_changeTheme = Command.CreateLazyCommand(action: obj => Theme.Change(newTheme: Theme.Parse(themeName: obj.ToString())));
 			_minimize = Command.CreateLazyCommand(action: obj => Application.Current.MainWindow.WindowState = WindowState.Minimized);
 			_expand = Command.CreateLazyCommand(action: obj => ExpandWindow());
 			_collapse = Command.CreateLazyCommand(action: obj => CollapseWindow());
 		}
-		#endregion Constructor
+		#endregion Constructors
 
 		#region Properties
 		public Command Exit => _exit.Value;
 
-		public Command ToLightTheme => _toLightTheme.Value;
-
-		public Command ToDarkTheme => _toDarkTheme.Value;
+		public Command ChangeTheme => _changeTheme.Value;
 
 		public Command Minimize => _minimize.Value;
 
 		public Command Expand => _expand.Value;
 
 		public Command Collapse => _collapse.Value;
+
+		public string MinimizeImage => $"pack://application:,,,/Resources/Images/{Theme.CurrentTheme}/minimize.svg";
+
+		public string ExpandImage => $"pack://application:,,,/Resources/Images/{Theme.CurrentTheme}/expand.svg";
+
+		public string CollapseToWindowImage => $"pack://application:,,,/Resources/Images/{Theme.CurrentTheme}/collapse_to_window.svg";
+
+		public string CloseImage => $"pack://application:,,,/Resources/Images/{Theme.CurrentTheme}/close.svg";
 
 		public Visibility ExpandVisibility
 		{
@@ -74,26 +75,6 @@ namespace ElectronicJournal.ViewModels
 			}
 		}
 
-		public Visibility ToLightThemeVisibility
-		{
-			get => _toLightThemeVisibility;
-			set
-			{
-				_toLightThemeVisibility = value;
-				OnPropertyChanged(nameof(ToLightThemeVisibility));
-			}
-		}
-
-		public Visibility ToDarkThemeVisibility
-		{
-			get => _toDarkThemeVisibility;
-			set
-			{
-				_toDarkThemeVisibility = value;
-				OnPropertyChanged(nameof(ToDarkThemeVisibility));
-			}
-		}
-
 		public TrackedObject Content
 		{
 			get => _content;
@@ -104,8 +85,15 @@ namespace ElectronicJournal.ViewModels
 			}
 		}
 
-		public string Name => _content.ToString();
-
+		public bool IsOn
+		{
+			get => _isOn;
+			set
+			{
+				_isOn = value;
+				OnPropertyChanged(nameof(IsOn));
+			}
+		}
 		#endregion Properties
 
 		#region Methods
@@ -129,18 +117,6 @@ namespace ElectronicJournal.ViewModels
 
 		private void SwapResizeButtons()
 			=> (ExpandVisibility, CollapseVisibility) = (CollapseVisibility, ExpandVisibility);
-
-		private void ToThemeWindow(Theme.Type newTheme)
-		{
-			Theme.Change(newTheme: newTheme);
-			SwapThemeButton();
-		}
-
-		private void SwapThemeButton()
-			=> (ToLightThemeVisibility, ToDarkThemeVisibility) = (ToDarkThemeVisibility, ToLightThemeVisibility);
-
-		private Visibility GetVisibilityForTheme(Theme.Type theme)
-			=> Theme.CurrentTheme == theme ? Visibility.Visible : Visibility.Collapsed;
 		#endregion Methods
 	}
 }

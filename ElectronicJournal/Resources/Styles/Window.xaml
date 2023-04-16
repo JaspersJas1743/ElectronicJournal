@@ -7,12 +7,13 @@
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="ResizeMode" Value="CanResize"/>
             <Setter Property="AllowsTransparency" Value="True"/>
+            <Setter Property="Background" Value="{DynamicResource BackgroundColor}"/>
             <Setter Property="Icon" Value="/Resources/Images/icon.ico"/>
         </Style.Setters>
         <Style.Resources>
             <Style TargetType="{x:Type Border}">
                 <Style.Setters>
-                    <Setter Property="CornerRadius" Value="5"/>
+                    <Setter Property="CornerRadius" Value="10"/>
                 </Style.Setters>
                 <Style.Triggers>
                     <Trigger Property="Width" Value="{x:Static SystemParameters.MaximizedPrimaryScreenWidth}">
