@@ -273,6 +273,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AuthorizationModel.cs" />
+    <Compile Include="Resources\UserControls\SvgWithChangeOfTheme.xaml.cs">
+      <DependentUpon>SvgWithChangeOfTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\UserControls\ToggleSwitch.xaml.cs">
+      <DependentUpon>ToggleSwitch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Windows\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
@@ -282,6 +288,7 @@
     <Compile Include="Utilities\Notification.cs" />
     <Compile Include="Utilities\ObjectValidator.cs" />
     <Compile Include="Utilities\Theme.cs" />
+    <Compile Include="Utilities\ThemeChangedEventArgs.cs" />
     <Compile Include="ViewModels\PasswordRecoveryVM.cs" />
     <Compile Include="ViewModels\RegistrationVM.cs" />
     <Compile Include="ViewModels\Tools\TrackedObject.cs" />
@@ -312,7 +319,15 @@
     <Compile Include="Views\Authorization.xaml.cs">
       <DependentUpon>Authorization.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Resources\UserControls\SvgWithChangeOfTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\UserControls\ToggleSwitch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -320,7 +335,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Resources\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -421,18 +436,22 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Resource Include="Resources\Images\minimize1.svg" />
-    <Resource Include="Resources\Images\dark_theme.svg" />
-    <Resource Include="Resources\Images\light_theme.svg" />
-    <Resource Include="Resources\Images\close.svg" />
-    <Resource Include="Resources\Images\collapse_to_window.svg" />
-    <Resource Include="Resources\Images\expand.svg" />
-    <Resource Include="Resources\Images\minimize.svg" />
+    <Resource Include="Resources\Images\Dark\close.svg" />
+    <Resource Include="Resources\Images\Dark\collapse_to_window.svg" />
+    <Resource Include="Resources\Images\Dark\expand.svg" />
+    <Resource Include="Resources\Images\Dark\minimize.svg" />
+    <Resource Include="Resources\Images\Dark\students.svg" />
+    <Resource Include="Resources\Images\Light\students.svg" />
+    <Resource Include="Resources\Images\dark_sun.svg" />
+    <Resource Include="Resources\Images\light_moon.svg" />
+    <Resource Include="Resources\Images\Light\minimize.svg" />
+    <Resource Include="Resources\Images\Light\close.svg" />
+    <Resource Include="Resources\Images\Light\collapse_to_window.svg" />
+    <Resource Include="Resources\Images\Light\expand.svg" />
     <Resource Include="Resources\Images\hidden_password.svg" />
     <Resource Include="Resources\Images\show_password.svg" />
     <Resource Include="Resources\Images\login.svg" />
     <Resource Include="Resources\Images\password.svg" />
-    <Resource Include="Resources\Images\students.svg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

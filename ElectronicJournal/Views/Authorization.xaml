@@ -3,11 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:vm="clr-namespace:ElectronicJournal.ViewModels"
-      xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-      xmlns:myControl="clr-namespace:ElectronicJournal.Resources.UserControls"
-      MaxWidth="1000" MaxHeight="650" mc:Ignorable="d" d:DesignHeight="1024" 
-      d:DesignWidth="1440">
+      xmlns:uc="clr-namespace:ElectronicJournal.Resources.UserControls"
+      MaxWidth="1000" MaxHeight="650" mc:Ignorable="d"
+      d:DesignHeight="1024" d:DesignWidth="1440">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.22*"/>
@@ -22,13 +20,14 @@
         <Border BorderThickness="4" Grid.Column="1" Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" CornerRadius="20" Padding="20">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.05*"/>
-                    <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition Width="0.05*"/>
-                    <ColumnDefinition Width="0.4*"/>
-                    <ColumnDefinition Width="0.1*"/>
-                    <ColumnDefinition Width="0.1*"/>
-                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="17*"/>
+                    <ColumnDefinition Width="272*"/>
+                    <ColumnDefinition Width="17*"/>
+                    <ColumnDefinition Width="136*"/>
+                    <ColumnDefinition Width="34*"/>
+                    <ColumnDefinition Width="34*"/>
+                    <ColumnDefinition Width="136*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -44,19 +43,19 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <svgc:SvgViewbox Source="/Resources/Images/students.svg" Grid.Row="1" Grid.RowSpan="9" Grid.Column="1"/>
+                <uc:SvgWithChangeOfTheme Grid.Row="1" Grid.RowSpan="9" Grid.Column="1" SvgFileName="{Binding StudentsImage}"/>
 
-                <Viewbox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" KeyboardNavigation.TabNavigation="None">
+                <Viewbox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4">
                     <TextBlock Text="Добро пожаловать!"/>
                 </Viewbox>
 
-                <myControl:TextBoxWithImageAndPlaceholder Placeholder="Логин" ImageSource="/Resources/Images/login.svg"
-                                                          Grid.Column="3" Grid.Row="3" FontSize="8" Grid.ColumnSpan="4"
-                                                          Text="{Binding Login,Mode=TwoWay}"/>
+                <uc:TextBoxWithImageAndPlaceholder Placeholder="Логин" ImageSource="/Resources/Images/login.svg"
+                                                   Grid.Column="3" Grid.Row="3" FontSize="8" Grid.ColumnSpan="4"
+                                                   Text="{Binding Login,Mode=TwoWay}" />
 
-                <myControl:PasswordBoxWithPasswordViewer Placeholder="Пароль" ImageSource="/Resources/Images/password.svg"
-                                                         Grid.Column="3" Grid.Row="5" FontSize="8" Grid.ColumnSpan="4"
-                                                         Password="{Binding Password,Mode=TwoWay}"/>
+                <uc:PasswordBoxWithPasswordViewer Placeholder="Пароль" ImageSource="/Resources/Images/password.svg"
+                                                  Grid.Column="3" Grid.Row="5" FontSize="8" Grid.ColumnSpan="4"
+                                                  Password="{Binding Password,Mode=TwoWay}"/>
 
                 <Button Grid.Row="7" Grid.Column="3" Content="Войти" Grid.ColumnSpan="4" Command="{Binding Authorize}"/>
 

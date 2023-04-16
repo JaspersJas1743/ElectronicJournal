@@ -1,0 +1,67 @@
+﻿<Window x:Class="ElectronicJournal.Resources.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:ElectronicJournal.Resources.UserControls"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        mc:Ignorable="d" Name="ThisElement" Title="Электронный журнал" 
+        Style="{DynamicResource WindowStyle}" WindowStartupLocation="CenterScreen"
+        Height="512" Width="720" MinHeight="512" MinWidth="720" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.015*"/>
+            <RowDefinition Height="0.05*" MaxHeight="22"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.1*" MaxWidth="44"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="0.05*" MaxWidth="22"/>
+            <ColumnDefinition Width="0.05*" MaxWidth="22"/>
+            <ColumnDefinition Width="0.05*" MaxWidth="22"/>
+            <ColumnDefinition Width="0.015*" MaxWidth="12"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="7" Fill="Transparent" MouseDown="DraggingWindow"/>
+
+        <uc:ToggleSwitch ToggledCommand="{Binding ChangeTheme}" Grid.Row="1" Grid.Column="1" IsOn="{Binding IsOn}"
+                         OffToggledCommandParameter="Light" OnToggledCommandParameter="Dark">
+            <uc:ToggleSwitch.OnContent>
+                <svgc:SvgViewbox Source="/Resources/Images/light_moon.svg"/>
+            </uc:ToggleSwitch.OnContent>
+            <uc:ToggleSwitch.OffContent>
+                <svgc:SvgViewbox Source="/Resources/Images/dark_sun.svg"/>
+            </uc:ToggleSwitch.OffContent>
+        </uc:ToggleSwitch>
+
+        <Button Grid.Column="3" Grid.Row="1" Style="{DynamicResource WindowButton}" Foreground="#42AAFF" Command="{Binding Minimize}">
+            <Button.Content>
+                <uc:SvgWithChangeOfTheme SvgFileName="{Binding MinimizeImage}"/>
+            </Button.Content>
+        </Button>
+
+        <Button Foreground="{DynamicResource BackgroundOnMouseOver}" Command="{Binding Expand}" Grid.Column="4"
+                Grid.Row="1" Style="{DynamicResource WindowButton}" Visibility="{Binding ExpandVisibility}">
+            <Button.Content>
+                <uc:SvgWithChangeOfTheme SvgFileName="{Binding ExpandImage}"/>
+            </Button.Content>
+        </Button>
+
+        <Button Foreground="{DynamicResource BackgroundOnMouseOver}" Command="{Binding Collapse}" Grid.Column="4" 
+                Grid.Row="1" Style="{DynamicResource WindowButton}" Visibility="{Binding CollapseVisibility}">
+            <Button.Content>
+                <uc:SvgWithChangeOfTheme SvgFileName="{Binding CollapseToWindowImage}"/>
+            </Button.Content>
+        </Button>
+
+        <Button Grid.Column="5" Grid.Row="1" Style="{DynamicResource WindowButton}" Foreground="Red" Command="{Binding Exit}">
+            <Button.Content>
+                <uc:SvgWithChangeOfTheme SvgFileName="{Binding CloseImage}"/>
+            </Button.Content>
+        </Button>
+
+        <ContentControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="7" Content="{Binding Content}"/>
+    </Grid>
+</Window>

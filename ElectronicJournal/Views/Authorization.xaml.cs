@@ -1,5 +1,4 @@
-﻿using ElectronicJournal.ViewModels;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace ElectronicJournal.Views
 {

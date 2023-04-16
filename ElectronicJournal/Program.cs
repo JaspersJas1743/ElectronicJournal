@@ -1,4 +1,5 @@
-﻿using ElectronicJournal.ViewModels;
+﻿using ElectronicJournal.Resources.Windows;
+using ElectronicJournal.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
