@@ -201,6 +201,9 @@
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http.Json, Version=7.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Json.7.0.1\lib\net462\System.Net.Http.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
@@ -273,6 +276,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AuthorizationModel.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Resources\UserControls\SvgWithChangeOfTheme.xaml.cs">
       <DependentUpon>SvgWithChangeOfTheme.xaml</DependentUpon>
     </Compile>
@@ -282,6 +286,8 @@
     <Compile Include="Resources\Windows\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\ApiClient.cs" />
+    <Compile Include="Utilities\ApiException.cs" />
     <Compile Include="Utilities\CornerRadiusConverter.cs" />
     <Compile Include="Utilities\JWT.cs" />
     <Compile Include="Utilities\Navigation.cs" />

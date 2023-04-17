@@ -3,6 +3,7 @@ using ElectronicJournal.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Net.Http;
 
 namespace ElectronicJournal
 {
@@ -22,6 +23,7 @@ namespace ElectronicJournal
 					services.AddSingleton<AuthorizationVM>();
 					services.AddSingleton<RegistrationVM>();
 					services.AddSingleton<PasswordRecoveryVM>();
+					services.AddSingleton<HttpClient>();
 				}).Build();
 			App app = AppHost.Services.GetService<App>();
             app.Run();

@@ -1,6 +1,11 @@
 ﻿using ElectronicJournal.Models;
 using ElectronicJournal.Utilities;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Text.Json;
 using System.Windows;
 
 namespace ElectronicJournal.ViewModels
@@ -18,10 +23,25 @@ namespace ElectronicJournal.ViewModels
 		public AuthorizationVM()
 		{
 			_model = new AuthorizationModel();
-			_authorize = Command.CreateLazyCommand(action: obj =>
+			_authorize = Command.CreateLazyCommand(action: async obj =>
 			{
-				MessageBox.Show($"Login={Login};Password={Password};" +
-				$"\nToken={JWT.Generate(dataForGeneration: String.Concat(arg0: Login, arg1: Password))}");
+				//User/GetIfExist?login={Login}&password={Password}";
+				User user;
+				try
+				{
+					user = await ApiClient.SendAsync<User>(apiMethod: "User/GetIfExist", args: new Dictionary<string, string>()
+					{
+						["login"] = Login,
+						["password"] = Password
+					});
+				} catch (Exception ex)
+				{
+					MessageBox.Show(ex.Message);
+					return;
+				}
+
+				MessageBox.Show($"Добро пожаловать, {user.Name} {user.Patronymic}");
+				Navigation.Navigate<TimetableVM>();
 			});
 			_moveToRegistration = Command.CreateLazyCommand(action: obj => Navigation.Navigate<RegistrationVM>());
 			_moveToPasswordRecovery = Command.CreateLazyCommand(action: obj => Navigation.Navigate<PasswordRecoveryVM>());
