@@ -291,6 +291,7 @@
     <Compile Include="Utilities\ThemeChangedEventArgs.cs" />
     <Compile Include="ViewModels\PasswordRecoveryVM.cs" />
     <Compile Include="ViewModels\RegistrationVM.cs" />
+    <Compile Include="ViewModels\SvgWithChangeOfThemeVM.cs" />
     <Compile Include="ViewModels\Tools\TrackedObject.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="ViewModels\TimetableVM.cs" />
@@ -436,22 +437,26 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\Images\Dark\hidden_password.svg" />
+    <Resource Include="Resources\Images\Dark\login.svg" />
+    <Resource Include="Resources\Images\Dark\password.svg" />
+    <Resource Include="Resources\Images\Dark\show_password.svg" />
     <Resource Include="Resources\Images\Dark\close.svg" />
     <Resource Include="Resources\Images\Dark\collapse_to_window.svg" />
     <Resource Include="Resources\Images\Dark\expand.svg" />
     <Resource Include="Resources\Images\Dark\minimize.svg" />
     <Resource Include="Resources\Images\Dark\students.svg" />
     <Resource Include="Resources\Images\Light\students.svg" />
-    <Resource Include="Resources\Images\dark_sun.svg" />
-    <Resource Include="Resources\Images\light_moon.svg" />
+    <Resource Include="Resources\Images\sun.svg" />
+    <Resource Include="Resources\Images\moon.svg" />
     <Resource Include="Resources\Images\Light\minimize.svg" />
     <Resource Include="Resources\Images\Light\close.svg" />
     <Resource Include="Resources\Images\Light\collapse_to_window.svg" />
     <Resource Include="Resources\Images\Light\expand.svg" />
-    <Resource Include="Resources\Images\hidden_password.svg" />
-    <Resource Include="Resources\Images\show_password.svg" />
-    <Resource Include="Resources\Images\login.svg" />
-    <Resource Include="Resources\Images\password.svg" />
+    <Resource Include="Resources\Images\Light\hidden_password.svg" />
+    <Resource Include="Resources\Images\Light\show_password.svg" />
+    <Resource Include="Resources\Images\Light\login.svg" />
+    <Resource Include="Resources\Images\Light\password.svg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

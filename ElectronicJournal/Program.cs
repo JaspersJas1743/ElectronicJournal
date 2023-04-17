@@ -19,6 +19,9 @@ namespace ElectronicJournal
 					services.AddSingleton<App>();
 					services.AddSingleton<MainWindow>();
 					services.AddSingleton<MainWindowVM>();
+					services.AddSingleton<AuthorizationVM>();
+					services.AddSingleton<RegistrationVM>();
+					services.AddSingleton<PasswordRecoveryVM>();
 				}).Build();
 			App app = AppHost.Services.GetService<App>();
             app.Run();

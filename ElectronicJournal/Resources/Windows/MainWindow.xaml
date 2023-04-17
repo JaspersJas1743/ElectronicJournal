@@ -29,36 +29,40 @@
         <uc:ToggleSwitch ToggledCommand="{Binding ChangeTheme}" Grid.Row="1" Grid.Column="1" IsOn="{Binding IsOn}"
                          OffToggledCommandParameter="Light" OnToggledCommandParameter="Dark">
             <uc:ToggleSwitch.OnContent>
-                <svgc:SvgViewbox Source="/Resources/Images/light_moon.svg"/>
+                <svgc:SvgViewbox Source="/Resources/Images/moon.svg"/>
             </uc:ToggleSwitch.OnContent>
             <uc:ToggleSwitch.OffContent>
-                <svgc:SvgViewbox Source="/Resources/Images/dark_sun.svg"/>
+                <svgc:SvgViewbox Source="/Resources/Images/sun.svg"/>
             </uc:ToggleSwitch.OffContent>
         </uc:ToggleSwitch>
 
         <Button Grid.Column="3" Grid.Row="1" Style="{DynamicResource WindowButton}" Foreground="#42AAFF" Command="{Binding Minimize}">
             <Button.Content>
-                <uc:SvgWithChangeOfTheme SvgFileName="{Binding MinimizeImage}"/>
+                <uc:SvgWithChangeOfTheme LightThemeSource="/Resources/Images/Light/minimize.svg"
+                                         DarkThemeSource="/Resources/Images/Dark/minimize.svg"/>
             </Button.Content>
         </Button>
 
         <Button Foreground="{DynamicResource BackgroundOnMouseOver}" Command="{Binding Expand}" Grid.Column="4"
                 Grid.Row="1" Style="{DynamicResource WindowButton}" Visibility="{Binding ExpandVisibility}">
             <Button.Content>
-                <uc:SvgWithChangeOfTheme SvgFileName="{Binding ExpandImage}"/>
+                <uc:SvgWithChangeOfTheme LightThemeSource="/Resources/Images/Light/expand.svg"
+                                         DarkThemeSource="/Resources/Images/Dark/expand.svg"/>
             </Button.Content>
         </Button>
 
         <Button Foreground="{DynamicResource BackgroundOnMouseOver}" Command="{Binding Collapse}" Grid.Column="4" 
                 Grid.Row="1" Style="{DynamicResource WindowButton}" Visibility="{Binding CollapseVisibility}">
             <Button.Content>
-                <uc:SvgWithChangeOfTheme SvgFileName="{Binding CollapseToWindowImage}"/>
+                <uc:SvgWithChangeOfTheme LightThemeSource="/Resources/Images/Light/collapse_to_window.svg"
+                                         DarkThemeSource="/Resources/Images/Dark/collapse_to_window.svg"/>
             </Button.Content>
         </Button>
 
         <Button Grid.Column="5" Grid.Row="1" Style="{DynamicResource WindowButton}" Foreground="Red" Command="{Binding Exit}">
             <Button.Content>
-                <uc:SvgWithChangeOfTheme SvgFileName="{Binding CloseImage}"/>
+                <uc:SvgWithChangeOfTheme LightThemeSource="/Resources/Images/Light/close.svg"
+                                         DarkThemeSource="/Resources/Images/Dark/close.svg"/>
             </Button.Content>
         </Button>
 

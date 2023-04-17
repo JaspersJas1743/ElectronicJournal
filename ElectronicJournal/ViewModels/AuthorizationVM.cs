@@ -52,7 +52,6 @@ namespace ElectronicJournal.ViewModels
 		public Command Authorize => _authorize.Value;
 		public Command MoveToRegistration => _moveToRegistration.Value;
 		public Command MoveToPasswordRecovery => _moveToPasswordRecovery.Value;
-		public string StudentsImage => $"pack://application:,,,/Resources/Images/{Theme.CurrentTheme}/students.svg";
 		#endregion Properties
 	}
 }

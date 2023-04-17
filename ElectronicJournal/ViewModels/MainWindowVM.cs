@@ -47,14 +47,6 @@ namespace ElectronicJournal.ViewModels
 
 		public Command Collapse => _collapse.Value;
 
-		public string MinimizeImage => $"pack://application:,,,/Resources/Images/{Theme.CurrentTheme}/minimize.svg";
-
-		public string ExpandImage => $"pack://application:,,,/Resources/Images/{Theme.CurrentTheme}/expand.svg";
-
-		public string CollapseToWindowImage => $"pack://application:,,,/Resources/Images/{Theme.CurrentTheme}/collapse_to_window.svg";
-
-		public string CloseImage => $"pack://application:,,,/Resources/Images/{Theme.CurrentTheme}/close.svg";
-
 		public Visibility ExpandVisibility
 		{
 			get => _expandVisibility;

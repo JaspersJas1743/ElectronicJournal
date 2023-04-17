@@ -3,12 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectronicJournal.Resources.UserControls"
              xmlns:utility="clr-namespace:ElectronicJournal.Utilities"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" mc:Ignorable="d" 
              Name="ThisElement" d:DesignHeight="30" d:DesignWidth="200">
     <UserControl.Resources>
-        <sys:Double x:Key="StartCR">15</sys:Double>
         <utility:CornerRadiusConverter x:Key="CRConverter"/>
     </UserControl.Resources>
     <Grid>
@@ -44,14 +43,14 @@
                                             </Viewbox>
                                             
                                             <Viewbox Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                <TextBlock IsHitTestVisible="False" Margin="2 1 0 0" 
-                                                           Visibility="Collapsed" Name="PlaceholderText"
-                                                           Text="{Binding ElementName=ThisElement,Path=Placeholder}"
-                                                           Background="{Binding ElementName=MainGrid,Path=Background}"/>
+                                                <TextBlock Background="{Binding ElementName=MainGrid,Path=Background}" Visibility="Collapsed" 
+                                                           Name="PlaceholderText" Text="{Binding ElementName=ThisElement,Path=Placeholder}"
+                                                           IsHitTestVisible="False" Margin="2 1 0 0" />
                                             </Viewbox>
-                                            
-                                            <svgc:SvgViewbox Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Name="PlaceholderImage"
-                                                             Source="{Binding ElementName=ThisElement,Path=ImageSource}"/>
+
+                                            <local:SvgWithChangeOfTheme Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" x:Name="PlaceholderImage" 
+                                                            LightThemeSource="{Binding ElementName=ThisElement,Path=LightThemeImageSource}"
+                                                            DarkThemeSource="{Binding ElementName=ThisElement,Path=DarkThemeImageSource}"/>
                                         </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>

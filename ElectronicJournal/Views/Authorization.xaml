@@ -43,17 +43,21 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <uc:SvgWithChangeOfTheme Grid.Row="1" Grid.RowSpan="9" Grid.Column="1" SvgFileName="{Binding StudentsImage}"/>
+                <uc:SvgWithChangeOfTheme LightThemeSource="/Resources/Images/Light/students.svg"
+                                         DarkThemeSource="/Resources/Images/Dark/students.svg"
+                                         Grid.Row="1" Grid.RowSpan="9" Grid.Column="1"/>
 
                 <Viewbox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4">
                     <TextBlock Text="Добро пожаловать!"/>
                 </Viewbox>
 
-                <uc:TextBoxWithImageAndPlaceholder Placeholder="Логин" ImageSource="/Resources/Images/login.svg"
+                <uc:TextBoxWithImageAndPlaceholder Placeholder="Логин" LightThemeImageSource="/Resources/Images/Light/login.svg"
+                                                   DarkThemeImageSource="/Resources/Images/Dark/login.svg"
                                                    Grid.Column="3" Grid.Row="3" FontSize="8" Grid.ColumnSpan="4"
                                                    Text="{Binding Login,Mode=TwoWay}" />
 
-                <uc:PasswordBoxWithPasswordViewer Placeholder="Пароль" ImageSource="/Resources/Images/password.svg"
+                <uc:PasswordBoxWithPasswordViewer Placeholder="Пароль" LightThemeImageSource="/Resources/Images/Light/password.svg"
+                                                   DarkThemeImageSource="/Resources/Images/Dark/password.svg"
                                                   Grid.Column="3" Grid.Row="5" FontSize="8" Grid.ColumnSpan="4"
                                                   Password="{Binding Password,Mode=TwoWay}"/>
 

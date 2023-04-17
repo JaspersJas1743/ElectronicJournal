@@ -11,11 +11,15 @@ namespace ElectronicJournal.Resources.UserControls
             name: "Text", propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
         );
 
-        public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(
-            name: "ImageSource", propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
+        public static readonly DependencyProperty LightThemeImageSourceProperty = DependencyProperty.Register(
+            name: "LightThemeImageSource", propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
         );
 
-        public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
+		public static readonly DependencyProperty DarkThemeImageSourceProperty = DependencyProperty.Register(
+			name: "DarkThemeImageSource", propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
+		);
+
+		public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
             name: "Placeholder", propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
         );
 		#endregion Fields
@@ -32,13 +36,19 @@ namespace ElectronicJournal.Resources.UserControls
             set => SetValue(dp: TextProperty, value: value);
         }
 
-        public string ImageSource
-        {
-            get => (string)GetValue(dp: ImageSourceProperty);
-            set => SetValue(dp: ImageSourceProperty, value: value);
+        public string LightThemeImageSource
+		{
+            get => (string)GetValue(dp: LightThemeImageSourceProperty);
+            set => SetValue(dp: LightThemeImageSourceProperty, value: value);
         }
 
-        public string Placeholder
+		public string DarkThemeImageSource
+		{
+			get => (string)GetValue(dp: DarkThemeImageSourceProperty);
+			set => SetValue(dp: DarkThemeImageSourceProperty, value: value);
+		}
+
+		public string Placeholder
         {
             get => (string)GetValue(dp: PlaceholderProperty);
             set => SetValue(dp: PlaceholderProperty, value: value);
