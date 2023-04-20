@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="Moon" TargetType="{x:Type Image}">
+        <Style.Setters>
+            <Setter Property="Source">
+                <Setter.Value>
+                    <DrawingImage>
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                <DrawingGroup.Transform>
+                                    <TranslateTransform X="0.5" Y="0" />
+                                </DrawingGroup.Transform>
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Geometry="F0 M512,512z M0,0z M511.5,300.5C511.5,304.5 511.5,308.5 511.5,312.5 484.496,409.339 422.829,472.506 326.5,502 237.422,523.391 157.755,505.058 87.5,447 36.2571,400.348 6.92375,342.515 -0.5,273.5 -0.5,258.5 -0.5,243.5 -0.5,228.5 13.4349,121.401 70.4349,47.5674 170.5,7 176.88,5.15481 183.214,3.15481 189.5,1 204.692,-1.12958 212.525,5.37042 213,20.5 212.333,22.5 211.667,24.5 211,26.5 177.63,68.285 163.63,115.952 169,169.5 181.428,249.921 225.928,303.754 302.5,331 355.067,346.47 405.4,341.137 453.5,315 465.534,306.988 477.534,298.988 489.5,291 499.405,288.677 506.739,291.844 511.5,300.5z">
+                                        <GeometryDrawing.Brush>
+                                            <SolidColorBrush Color="#FFFEFFFE" Opacity="0.992" />
+                                        </GeometryDrawing.Brush>
+                                    </GeometryDrawing>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>

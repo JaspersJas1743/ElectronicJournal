@@ -4,24 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ElectronicJournal.Resources.UserControls"
-             xmlns:utility="clr-namespace:ElectronicJournal.Utilities"
-             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" mc:Ignorable="d" 
-             Name="ThisElement" d:DesignHeight="30" d:DesignWidth="200">
-    <UserControl.Resources>
-        <utility:CornerRadiusConverter x:Key="CRConverter"/>
-    </UserControl.Resources>
+             mc:Ignorable="d" Name="ThisElement" d:DesignHeight="30" d:DesignWidth="200">
     <Grid>
-        <TextBox  FontSize="{Binding ElementName=ThisElement,Path=FontSize}" VerticalContentAlignment="Center" 
-                  Text="{Binding ElementName=ThisElement,Path=Text,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
-                  x:Name="MainTextBox" TextChanged="OnMainTextBoxChanged">
+        <TextBox  Text="{Binding ElementName=ThisElement,Path=Text,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                  FontSize="{Binding ElementName=ThisElement,Path=FontSize}" VerticalContentAlignment="Center" 
+                  FontFamily="{Binding ElementName=ThisElement,Path=FontFamily}" x:Name="MainTextBox" 
+                  ContextMenu="{Binding ElementName=ThisElement,Path=ContextMenu}"
+                  FontWeight="{Binding ElementName=ThisElement,Path=FontWeight}"
+                  TextChanged="OnMainTextBoxChanged">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                     <Style.Setters>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type TextBox}">
-                                    <Border Background="{TemplateBinding Background}" BorderBrush="{x:Null}" SnapsToDevicePixels="True" 
-                                            CornerRadius="{Binding Converter={StaticResource CRConverter}}">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{x:Null}" 
+                                            SnapsToDevicePixels="True" CornerRadius="10">
                                         <Grid x:Name="MainGrid">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="10"/>
@@ -48,9 +46,11 @@
                                                            IsHitTestVisible="False" Margin="2 1 0 0" />
                                             </Viewbox>
 
-                                            <local:SvgWithChangeOfTheme Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" x:Name="PlaceholderImage" 
+                                            <Image Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" x:Name="PlaceholderImage" 
+                                                   Style="{Binding ElementName=ThisElement,Path=Image}"/>
+                                            <!--<local:SvgWithChangeOfTheme Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" x:Name="PlaceholderImage" 
                                                             LightThemeSource="{Binding ElementName=ThisElement,Path=LightThemeImageSource}"
-                                                            DarkThemeSource="{Binding ElementName=ThisElement,Path=DarkThemeImageSource}"/>
+                                                            DarkThemeSource="{Binding ElementName=ThisElement,Path=DarkThemeImageSource}"/>-->
                                         </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>

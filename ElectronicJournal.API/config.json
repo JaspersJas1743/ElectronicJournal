@@ -1,0 +1,3 @@
+{
+  "ConnectionStrings:ElectronicJournal": "workstation id=ElectronicJournal.mssql.somee.com;packet size=4096;user id=null_SQLLogin_1;pwd=t4pxix6bxf;data source=ElectronicJournal.mssql.somee.com;persist security info=False;initial catalog=ElectronicJournal;TrustServerCertificate=True"
+}

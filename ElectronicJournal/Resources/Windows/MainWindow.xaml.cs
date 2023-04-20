@@ -11,9 +11,6 @@ namespace ElectronicJournal.Resources.Windows
 		}
 
 		private void DraggingWindow(object sender, MouseButtonEventArgs e)
-		{
-			if (Mouse.LeftButton.Equals(obj: MouseButtonState.Pressed))
-				DragMove();
-		}
+			=> DragMove();
 	}
 }

@@ -8,6 +8,10 @@ namespace ElectronicJournal.API
 		public static void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
+
+			//builder.Configuration.SetBasePath(basePath: Directory.GetCurrentDirectory())
+			//	.AddJsonFile(path: "config.json");
+
 			builder.Services.AddDbContext<ElectronicJournalContext>(
 				opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("ElectronicJournal"))
 			);

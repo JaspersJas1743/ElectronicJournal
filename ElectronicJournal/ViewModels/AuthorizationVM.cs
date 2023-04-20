@@ -1,8 +1,10 @@
 ﻿using ElectronicJournal.Models;
 using ElectronicJournal.Utilities;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Net.Http;
 using System.Text.Json;
@@ -26,6 +28,12 @@ namespace ElectronicJournal.ViewModels
 			_authorize = Command.CreateLazyCommand(action: async obj =>
 			{
 				//User/GetIfExist?login={Login}&password={Password}";
+				List<ValidationResult> message = new List<ValidationResult>();
+				if (!ObjectValidator.Validate(instance: _model, message: out message))
+				{
+					MessageBox.Show(String.Join(separator: "\n", values: message));
+					return;
+				}
 				User user;
 				try
 				{

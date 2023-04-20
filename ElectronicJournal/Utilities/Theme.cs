@@ -6,14 +6,19 @@ namespace ElectronicJournal.Utilities
 {
 	public static class Theme
 	{
+		#region Fields
 		private static Configuration _config = ConfigurationManager.OpenExeConfiguration(userLevel: ConfigurationUserLevel.None);
+		#endregion Fields
 
+		#region Enums
 		public enum Type
 		{
 			Light,
 			Dark
 		}
+		#endregion Enums
 
+		#region Properties
 		public static Type CurrentTheme
 		{
 			get => Theme.Parse(themeName: _config.AppSettings.Settings["Theme"].Value);
@@ -24,9 +29,15 @@ namespace ElectronicJournal.Utilities
 				ConfigurationManager.RefreshSection(sectionName: _config.AppSettings.SectionInformation.Name);
 			}
 		}
+		#endregion Properties
 
+		#region Delegate
 		public delegate void ThemeChangedEventHandler(object sender, ThemeChangedEventArgs e);
+		#endregion Delegate
+
+		#region Events
 		public static event ThemeChangedEventHandler ThemeChanged;
+		#endregion Events
 
 		#region Methods
 		public static Type Parse(string themeName)

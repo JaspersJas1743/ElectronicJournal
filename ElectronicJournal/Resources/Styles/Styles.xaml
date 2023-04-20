@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Resources/Styles/PasswordBox.xaml"/>
         <ResourceDictionary Source="/Resources/Styles/TextBox.xaml"/>
         <ResourceDictionary Source="/Resources/Styles/TextBlock.xaml"/>
         <ResourceDictionary Source="/Resources/Styles/Button.xaml"/>
@@ -7,5 +8,18 @@
         <ResourceDictionary Source="/Resources/Styles/EmptyButton.xaml"/>
         <ResourceDictionary Source="/Resources/Styles/WindowButton.xaml"/>
         <ResourceDictionary Source="/Resources/Styles/Window.xaml"/>
+
+        <ResourceDictionary Source="/Resources/Images/Students.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/ShowPassword.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/HiddenPassword.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Password.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Login.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Minimize.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/CollapseToWindow.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Expand.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Close.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Sun.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Moon.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Icon.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -5,10 +5,14 @@
             <Setter Property="MaxWidth" Value="{x:Static SystemParameters.MaximizedPrimaryScreenWidth}"/>
             <Setter Property="MaxHeight" Value="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"/>
             <Setter Property="WindowStyle" Value="None" />
-            <Setter Property="ResizeMode" Value="CanResize"/>
             <Setter Property="AllowsTransparency" Value="True"/>
             <Setter Property="Background" Value="{DynamicResource BackgroundColor}"/>
             <Setter Property="Icon" Value="/Resources/Images/icon.ico"/>
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome ResizeBorderThickness="3" CaptionHeight="5"/>
+                </Setter.Value>
+            </Setter>
         </Style.Setters>
         <Style.Resources>
             <Style TargetType="{x:Type Border}">
@@ -16,12 +20,15 @@
                     <Setter Property="CornerRadius" Value="10"/>
                 </Style.Setters>
                 <Style.Triggers>
-                    <Trigger Property="Width" Value="{x:Static SystemParameters.MaximizedPrimaryScreenWidth}">
-                        <Setter Property="CornerRadius" Value="0"/>
-                    </Trigger>
-                    <Trigger Property="Height" Value="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}">
-                        <Setter Property="CornerRadius" Value="0"/>
-                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="Width" Value="{x:Static SystemParameters.MaximizedPrimaryScreenWidth}"/>
+                            <Condition Property="Height" Value="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"/>
+                        </MultiTrigger.Conditions>
+                        <MultiTrigger.Setters>
+                            <Setter Property="CornerRadius" Value="0"/>
+                        </MultiTrigger.Setters>
+                    </MultiTrigger>
                 </Style.Triggers>
             </Style>
         </Style.Resources>

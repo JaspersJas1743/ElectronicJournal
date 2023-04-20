@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="Close" TargetType="{x:Type Image}">
+        <Style.Setters>
+            <Setter Property="Source">
+                <Setter.Value>
+                    <DrawingImage>
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="{DynamicResource BorderColor}" Geometry="F0 M512,512z M0,0z M84.5,71.5C90.072,70.9896 95.4053,71.8229 100.5,74 152.014,125.68 203.68,177.18 255.5,228.5 307.32,177.18 358.986,125.68 410.5,74 420.771,69.2903 429.604,71.1236 437,79.5 440.333,86.5 440.333,93.5 437,100.5 385.32,152.014 333.82,203.68 282.5,255.5 333.82,307.32 385.32,358.986 437,410.5 441.71,420.771 439.876,429.604 431.5,437 424.5,440.333 417.5,440.333 410.5,437 358.986,385.32 307.32,333.82 255.5,282.5 203.68,333.82 152.014,385.32 100.5,437 90.229,441.71 81.3957,439.876 74,431.5 70.6667,424.5 70.6667,417.5 74,410.5 125.68,358.986 177.18,307.32 228.5,255.5 177.18,203.68 125.68,152.014 74,100.5 68.34,87.3005 71.84,77.6338 84.5,71.5z"/>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>
