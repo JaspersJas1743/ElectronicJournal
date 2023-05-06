@@ -8,6 +8,7 @@
         <ResourceDictionary Source="/Resources/Styles/EmptyButton.xaml"/>
         <ResourceDictionary Source="/Resources/Styles/WindowButton.xaml"/>
         <ResourceDictionary Source="/Resources/Styles/Window.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/MessageWindowButton.xaml"/>
 
         <ResourceDictionary Source="/Resources/Images/Students.xaml"/>
         <ResourceDictionary Source="/Resources/Images/ShowPassword.xaml"/>
@@ -21,5 +22,8 @@
         <ResourceDictionary Source="/Resources/Images/Sun.xaml"/>
         <ResourceDictionary Source="/Resources/Images/Moon.xaml"/>
         <ResourceDictionary Source="/Resources/Images/Icon.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/AttentionMessage.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/ErrorMessage.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/InformationMessage.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

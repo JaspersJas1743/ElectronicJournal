@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:uc="clr-namespace:ElectronicJournal.Resources.UserControls"
-      MaxWidth="1000" MaxHeight="650" mc:Ignorable="d"
+      mc:Ignorable="d" MaxWidth="1000" MaxHeight="650"
       d:DesignHeight="1024" d:DesignWidth="1440">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -49,24 +49,48 @@
                     <TextBlock Text="Добро пожаловать!"/>
                 </Viewbox>
 
-                <uc:TextBoxWithImageAndPlaceholder Placeholder="Логин" Image="{DynamicResource Login}" x:Name="LoginBox"
+                <uc:TextBoxWithImageAndPlaceholder Placeholder="Логин*" Image="{DynamicResource Login}" x:Name="LoginBox"
                                                    Grid.Column="3" Grid.Row="3" FontSize="12" Grid.ColumnSpan="4"
-                                                   Text="{Binding Login,Mode=TwoWay}" FontWeight="SemiBold"/>
+                                                   Text="{Binding Login,Mode=TwoWay}" FontWeight="SemiBold"
+                                                   BorderThickness="2">
+                    <uc:TextBoxWithImageAndPlaceholder.Style>
+                        <Style TargetType="uc:TextBoxWithImageAndPlaceholder">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding LoginIsValid}" Value="True">
+                                    <Setter Property="BorderBrush" Value="Lime"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding LoginIsValid}" Value="False">
+                                    <Setter Property="BorderBrush" Value="Red"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </uc:TextBoxWithImageAndPlaceholder.Style>
+                </uc:TextBoxWithImageAndPlaceholder>
 
-                <uc:PasswordBoxWithPasswordViewer Placeholder="Пароль" x:Name="PassBox" Image="{DynamicResource Password}"
+                <uc:PasswordBoxWithPasswordViewer Placeholder="Пароль*" x:Name="PassBox" Image="{DynamicResource Password}"
                                                   Grid.Column="3" Grid.Row="5" FontSize="12" Grid.ColumnSpan="4"
-                                                  Text="{Binding Password,Mode=TwoWay}"/>
+                                                  Text="{Binding Password,Mode=TwoWay}"
+                                                  BorderThickness="2">
+                    <uc:PasswordBoxWithPasswordViewer.Style>
+                        <Style TargetType="uc:PasswordBoxWithPasswordViewer">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PasswordIsValid}" Value="True">
+                                    <Setter Property="BorderBrush" Value="Lime"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding PasswordIsValid}" Value="False">
+                                    <Setter Property="BorderBrush" Value="Red"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </uc:PasswordBoxWithPasswordViewer.Style>
+                </uc:PasswordBoxWithPasswordViewer>
 
-                <Button Grid.Row="7" Grid.Column="3" Content="Войти" x:Name="AuthBtn" Grid.ColumnSpan="4" Command="{Binding Authorize}">
+                <Button Grid.Row="7" Grid.Column="3" Content="{Binding ButtonContent}" x:Name="AuthBtn" Grid.ColumnSpan="4" 
+                        Command="{Binding Authorize}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=LoginBox,Path=Text}"
-                                             Value="">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=PassBox,Path=Text}"
-                                             Value="">
+                                <DataTrigger Binding="{Binding ModelIsValid}" Value="False">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
                             </Style.Triggers>

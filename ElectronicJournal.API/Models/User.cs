@@ -25,7 +25,11 @@ public partial class User
 
     public string AuthKey { get; set; } = null!;
 
+    public string Password { get; set; } = null!;
+
     public string? Photo { get; set; }
+
+    public string? RegistrationCode { get; set; }
 
     public virtual Admin? Admin { get; set; }
 

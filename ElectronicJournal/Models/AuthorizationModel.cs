@@ -1,4 +1,8 @@
-﻿using ElectronicJournal.ViewModels;
+﻿using ElectronicJournal.Utilities;
+using ElectronicJournal.ViewModels;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.ComponentModel.DataAnnotations;
 
 namespace ElectronicJournal.Models
@@ -7,6 +11,12 @@ namespace ElectronicJournal.Models
 	{
 		private string _login;
 		private string _password;
+
+		public AuthorizationModel(string login, string password)
+		{
+			_login = login;
+			_password = password;
+		}
 
 		[Required(ErrorMessage = "Поле \"Логин\"является обязательным")]
 		[MinLength(length: 4, ErrorMessage = "Минимальная длина логина - 4 символа")]
@@ -31,5 +41,13 @@ namespace ElectronicJournal.Models
 				OnPropertyChanged("Password");
 			}
 		}
+
+		public bool LoginIsValid
+			=> ObjectValidator.ValidateProperty(instance: this, property: Login, propName: nameof(Login));
+
+		public bool PasswordIsValid
+			=> ObjectValidator.ValidateProperty(instance: this, property: Password, propName: nameof(Password));
+
+		public bool IsValid => ObjectValidator.Validate(instance: this);
 	}
 }

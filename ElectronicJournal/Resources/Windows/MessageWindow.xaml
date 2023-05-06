@@ -3,10 +3,60 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ElectronicJournal.Resources.Windows"
-        mc:Ignorable="d"
-        Title="MessageWindow" Height="450" Width="800">
+        mc:Ignorable="d" ResizeMode="NoResize" WindowStyle="None"
+        xmlns:vm="clr-namespace:ElectronicJournal.ViewModels"
+        AllowsTransparency="True" Background="{DynamicResource BackgroundColor}"
+        SnapsToDevicePixels="True" WindowStartupLocation="CenterOwner"
+        Title="MessageWindow" Height="200" Width="350" Style="{DynamicResource BasedWindowStyle}">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3.5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.6*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Image Width="100" Height="100" Name="Img"
+               VerticalAlignment="Center" Grid.RowSpan="2"
+               HorizontalAlignment="Center" Grid.Column="0"/>
+
+        <TextBlock TextWrapping="Wrap" FontSize="16" Name="Text"
+                   Grid.Column="1" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Text="Это очень длинное сообщение для меня, тут есть информация"/>
+
+        <Button Grid.Row="0" Grid.Column="1" Click="OnExitButtonClick"
+                Width="15" Height="15" VerticalAlignment="Top"
+                HorizontalAlignment="Right" Margin="0 7 7 0"
+                Style="{DynamicResource WindowButton}" Foreground="Red">
+            <Button.Content>
+                <Image Style="{DynamicResource Close}"/>
+            </Button.Content>
+        </Button>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
+                    FlowDirection="RightToLeft" >
+            <Button Content="Отмена" FontSize="20" Margin="5 0 0 0"
+                    Visibility="Collapsed" Name="CancelButton" 
+                    Height="35" Width="60" Click="OnCancelButtonClick" 
+                    Style="{DynamicResource MessageWindowButton}"/>
+
+            <Button Content="Нет" FontSize="20" Margin="5 0 0 0"
+                    Visibility="Collapsed" Name="NoButton" 
+                    Height="35" Width="60" Click="OnNoButtonClick" 
+                    Style="{DynamicResource MessageWindowButton}"/>
+
+            <Button Content="Ок" FontSize="20" Margin="5 0 0 0"
+                    Visibility="Collapsed" Name="OkButton" 
+                    Height="35" Width="60" Click="OnOkButtonClick" 
+                    Style="{DynamicResource MessageWindowButton}"/>
+
+            <Button Content="Да" FontSize="20" Margin="5 0 0 0"
+                    Visibility="Collapsed" Name="YesButton" 
+                    Height="35" Width="60" Click="OnYesButtonClick"  
+                    Style="{DynamicResource MessageWindowButton}"/>
+        </StackPanel>
     </Grid>
 </Window>
+ 

@@ -243,11 +243,13 @@
     </Compile>
     <Compile Include="Utilities\ApiClient.cs" />
     <Compile Include="Utilities\ApiException.cs" />
+    <Compile Include="Utilities\ConfigProvider.cs" />
+    <Compile Include="Utilities\Error.cs" />
     <Compile Include="Utilities\Navigation.cs" />
-    <Compile Include="Utilities\Notification.cs" />
     <Compile Include="Utilities\ObjectValidator.cs" />
     <Compile Include="Utilities\Theme.cs" />
     <Compile Include="Utilities\ThemeChangedEventArgs.cs" />
+    <Compile Include="ViewModels\MessageWindowVM.cs" />
     <Compile Include="ViewModels\PasswordRecoveryVM.cs" />
     <Compile Include="ViewModels\RegistrationVM.cs" />
     <Compile Include="ViewModels\SvgWithChangeOfThemeVM.cs" />
@@ -331,6 +333,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
+    <Page Include="Resources\Images\AttentionMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Images\ErrorMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Images\InformationMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\MessageWindowButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\UserControls\ToggleSwitch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -355,10 +373,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="Resources\Styles\Window.xaml">
+    <Page Include="Resources\Styles\Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Resource>
+    </Page>
     <Page Include="Resources\Windows\MessageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -467,6 +485,8 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\information.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -38,4 +38,48 @@
             </Setter>
         </Style.Setters>
     </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="MinimizeButton" BasedOn="{StaticResource WindowButton}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="#42AAFF"/>
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Style="{DynamicResource Minimize}"/>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="ExpandButton" BasedOn="{StaticResource WindowButton}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="{DynamicResource BackgroundOnMouseOver}"/>
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Style="{DynamicResource Expand}"/>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="CollapseButton" BasedOn="{StaticResource WindowButton}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="{DynamicResource BackgroundOnMouseOver}" />
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Style="{DynamicResource CollapseToWindow}"/>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="ExitButton" BasedOn="{StaticResource WindowButton}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Style="{DynamicResource Close}"/>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
 </ResourceDictionary>

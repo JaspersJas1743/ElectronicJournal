@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ElectronicJournal.Resources.UserControls
 {
@@ -11,6 +12,14 @@ namespace ElectronicJournal.Resources.UserControls
 		#region Fields
 		public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
 			name: "Text", propertyType: typeof(String), ownerType: typeof(PasswordBoxWithPasswordViewer)
+		);
+
+		public static readonly new DependencyProperty BorderBrushProperty = DependencyProperty.Register(
+			name: "BorderBrush", propertyType: typeof(Brush), ownerType: typeof(PasswordBoxWithPasswordViewer)
+		);
+
+		public static readonly new DependencyProperty BorderThicknessProperty = DependencyProperty.Register(
+			name: "BorderThickness", propertyType: typeof(Thickness), ownerType: typeof(PasswordBoxWithPasswordViewer)
 		);
 
 		public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(
@@ -32,6 +41,17 @@ namespace ElectronicJournal.Resources.UserControls
 		{
 			get => (string)GetValue(dp: TextProperty);
 			set => SetValue(dp: TextProperty, value: value);
+		}
+
+		public new Brush BorderBrush
+		{
+			get => (Brush)GetValue(dp: BorderBrushProperty);
+			set => SetValue(dp: BorderBrushProperty, value: value);
+		}
+		public new Thickness BorderThickness
+		{
+			get => (Thickness)GetValue(dp: BorderThicknessProperty);
+			set => SetValue(dp: BorderThicknessProperty, value: value);
 		}
 
 		public Style Image

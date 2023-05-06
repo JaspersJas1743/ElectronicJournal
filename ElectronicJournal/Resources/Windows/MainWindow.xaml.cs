@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using ElectronicJournal.Utilities;
+using System;
+using System.Windows;
 
 namespace ElectronicJournal.Resources.Windows
 {
@@ -8,9 +9,14 @@ namespace ElectronicJournal.Resources.Windows
 		public MainWindow()
 		{
 			InitializeComponent();
+			this.Width = ConfigProvider.Get<Double>(proprtyName: "Width");
+			this.Height = ConfigProvider.Get<Double>(proprtyName: "Height");
 		}
 
-		private void DraggingWindow(object sender, MouseButtonEventArgs e)
-			=> DragMove();
+		private void ThisWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			ConfigProvider.Set(propertyName: "Width", value: e.NewSize.Width);
+			ConfigProvider.Set(propertyName: "Height", value: e.NewSize.Height);
+		}
 	}
 }

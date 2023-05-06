@@ -1,4 +1,5 @@
-﻿using ElectronicJournal.Utilities;
+﻿using ElectronicJournal.Resources.Windows;
+using ElectronicJournal.Utilities;
 using System;
 using System.Windows;
 
@@ -27,6 +28,7 @@ namespace ElectronicJournal.ViewModels
 			_expandVisibility = Visibility.Visible;
 			_collapseVisibility = Visibility.Collapsed;
 			_isOn = Theme.CurrentTheme == Theme.Type.Dark;
+			Application.Current.MainWindow.StateChanged += OnMainWindowStateChanged;
 
 			_exit = Command.CreateLazyCommand(action: obj => CloseApp());
 			_changeTheme = Command.CreateLazyCommand(action: obj => Theme.Change(newTheme: Theme.Parse(themeName: obj.ToString())));
@@ -91,21 +93,21 @@ namespace ElectronicJournal.ViewModels
 		#region Methods
 		private void CloseApp()
 		{
-			if (Notification.Show(message: "Вы уверены, что хотите закрыть приложение?").Equals(obj: MessageBoxResult.Yes))
+
+			if (MessageWindow.Show(text: "Вы уверены, что хотите закрыть приложение?",
+				image: MessageWindow.MessageWindowImage.Information,
+				buttons: MessageWindow.MessageWindowButton.YesNo).Equals(obj: MessageWindow.MessageWindowResult.Yes))
 				Application.Current.Shutdown();
 		}
 
 		private void ExpandWindow()
-		{
-			Application.Current.MainWindow.WindowState = WindowState.Maximized;
-			SwapResizeButtons();
-		}
+			=> Application.Current.MainWindow.WindowState = WindowState.Maximized;
 
 		private void CollapseWindow()
-		{
-			Application.Current.MainWindow.WindowState = WindowState.Normal;
-			SwapResizeButtons();
-		}
+			=> Application.Current.MainWindow.WindowState = WindowState.Normal;
+
+		private void OnMainWindowStateChanged(object sender, EventArgs e)
+			=> SwapResizeButtons();
 
 		private void SwapResizeButtons()
 			=> (ExpandVisibility, CollapseVisibility) = (CollapseVisibility, ExpandVisibility);

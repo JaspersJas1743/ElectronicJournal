@@ -3,76 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:uc="clr-namespace:ElectronicJournal.Resources.UserControls"
-        mc:Ignorable="d" x:Name="ThisWindow" Title="Электронный журнал" 
+        mc:Ignorable="d" x:Name="ThisWindow" Title="Электронный журнал" SizeChanged="ThisWindow_SizeChanged"
         Style="{DynamicResource WindowStyle}" WindowStartupLocation="CenterScreen"
         Height="512" Width="720" MinHeight="512" MinWidth="720">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.015*"/>
-            <RowDefinition Height="0.05*" MaxHeight="22"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.015*" MaxWidth="12"/>
-            <ColumnDefinition Width="0.05*" MaxWidth="22"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.1*" MaxWidth="44"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="0.05*" MaxWidth="22"/>
-            <ColumnDefinition Width="0.05*" MaxWidth="22"/>
-            <ColumnDefinition Width="0.05*" MaxWidth="22"/>
-            <ColumnDefinition Width="0.015*" MaxWidth="12"/>
-        </Grid.ColumnDefinitions>
-
-        <Image Style="{DynamicResource Icon}" Grid.Row="1" Grid.Column="1" Margin="1.5"/>
-
-        <Viewbox Grid.Row="1" Grid.Column="2" Margin="2">
-            <TextBlock Text="Электронный журнал" />
-        </Viewbox>
-
-        <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="9" Fill="Transparent" 
-                   WindowChrome.IsHitTestVisibleInChrome="True" MouseLeftButtonDown="DraggingWindow"/>
-
-        <uc:ToggleSwitch ToggledCommand="{Binding ChangeTheme}" Grid.Row="1" Grid.Column="3" IsOn="{Binding IsOn}"
-                         OffToggledCommandParameter="Light" OnToggledCommandParameter="Dark" x:Name="ThemeChanger">
-            <uc:ToggleSwitch.OnContent>
-                <Image Style="{DynamicResource Moon}"/>
-            </uc:ToggleSwitch.OnContent>
-            <uc:ToggleSwitch.OffContent>
-                <Image Style="{DynamicResource Sun}"/>
-            </uc:ToggleSwitch.OffContent>
-        </uc:ToggleSwitch>
-
-        <Button Grid.Column="5" Grid.Row="1" Foreground="#42AAFF" Command="{Binding Minimize}" Style="{DynamicResource WindowButton}">
-            <Button.Content>
-                <Image Style="{DynamicResource Minimize}"/>
-            </Button.Content>
-        </Button>
-
-        <Button Foreground="{DynamicResource BackgroundOnMouseOver}" Command="{Binding Expand}" 
-                Style="{DynamicResource WindowButton}" Grid.Column="6"
-                Grid.Row="1" Visibility="{Binding ExpandVisibility}">
-            <Button.Content>
-                <Image Style="{DynamicResource Expand}"/>
-            </Button.Content>
-        </Button>
-
-        <Button Foreground="{DynamicResource BackgroundOnMouseOver}" Command="{Binding Collapse}" 
-                Style="{DynamicResource WindowButton}" Grid.Column="6" 
-                Grid.Row="1" Visibility="{Binding CollapseVisibility}">
-            <Button.Content>
-                <Image Style="{DynamicResource CollapseToWindow}"/>
-            </Button.Content>
-        </Button>
-
-        <Button Grid.Column="7" Grid.Row="1" Style="{DynamicResource WindowButton}" Foreground="Red" Command="{Binding Exit}"
-                x:Name="Exit">
-            <Button.Content>
-                <Image Style="{DynamicResource Close}"/>
-            </Button.Content>
-        </Button>
-
-        <ContentControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="9" Content="{Binding Content}"/>
+        <ContentControl Content="{Binding Content}"/>
     </Grid>
 </Window>

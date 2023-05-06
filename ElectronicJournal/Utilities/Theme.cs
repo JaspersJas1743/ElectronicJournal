@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Configuration;
 using System.Windows;
 
 namespace ElectronicJournal.Utilities
 {
 	public static class Theme
 	{
-		#region Fields
-		private static Configuration _config = ConfigurationManager.OpenExeConfiguration(userLevel: ConfigurationUserLevel.None);
-		#endregion Fields
-
 		#region Enums
 		public enum Type
 		{
@@ -21,13 +16,8 @@ namespace ElectronicJournal.Utilities
 		#region Properties
 		public static Type CurrentTheme
 		{
-			get => Theme.Parse(themeName: _config.AppSettings.Settings["Theme"].Value);
-			set
-			{
-				_config.AppSettings.Settings["Theme"].Value = value.ToString();
-				_config.Save();
-				ConfigurationManager.RefreshSection(sectionName: _config.AppSettings.SectionInformation.Name);
-			}
+			get => Theme.Parse(themeName: ConfigProvider.Get<String>(proprtyName: "Theme"));
+			set => ConfigProvider.Set(propertyName: "Theme", value: value.ToString());
 		}
 		#endregion Properties
 
