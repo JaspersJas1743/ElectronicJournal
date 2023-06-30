@@ -14,17 +14,16 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.6*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="0.55*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Image Width="100" Height="100" Name="Img"
                VerticalAlignment="Center" Grid.RowSpan="2"
                HorizontalAlignment="Center" Grid.Column="0"/>
 
         <TextBlock TextWrapping="Wrap" FontSize="16" Name="Text"
-                   Grid.Column="1" 
-                   VerticalAlignment="Center" HorizontalAlignment="Center"
-                   Text="Это очень длинное сообщение для меня, тут есть информация"/>
+                   Grid.Column="1" Width="180" Margin="0 0 10 0"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
         <Button Grid.Row="0" Grid.Column="1" Click="OnExitButtonClick"
                 Width="15" Height="15" VerticalAlignment="Top"

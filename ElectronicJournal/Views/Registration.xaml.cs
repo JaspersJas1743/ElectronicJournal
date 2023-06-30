@@ -8,5 +8,6 @@ namespace ElectronicJournal.Views
 		{
 			InitializeComponent();
 		}
+
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using ElectronicJournal.Resources.Windows;
-using ElectronicJournal.Utilities;
+using ElectronicJournal.Utilities.Config;
+using ElectronicJournal.Utilities.Navigation;
 using ElectronicJournal.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,7 +23,11 @@ namespace ElectronicJournal
 					services.AddSingleton<MainWindowVM>();
 					services.AddSingleton<AuthorizationVM>();
 					services.AddSingleton<RegistrationVM>();
+					services.AddSingleton<TimetableVM>();
 					services.AddSingleton<PasswordRecoveryVM>();
+					
+					services.AddScoped<IConfigProvider, ConfigurationProvider>();
+					services.AddScoped<INavigationProvider, NavigationProvider>();
 				}).Build();
 			App app = AppHost.Services.GetService<App>();
 			app.Run();

@@ -1,5 +1,7 @@
 ﻿using ElectronicJournal.Resources.Windows;
 using ElectronicJournal.Utilities;
+using ElectronicJournal.ViewModels.Tools;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
 
@@ -24,7 +26,7 @@ namespace ElectronicJournal.ViewModels
 		#region Constructors
 		public MainWindowVM()
 		{
-			_content = new AuthorizationVM();
+			_content = Program.AppHost.Services.GetService<AuthorizationVM>();
 			_expandVisibility = Visibility.Visible;
 			_collapseVisibility = Visibility.Collapsed;
 			_isOn = Theme.CurrentTheme == Theme.Type.Dark;

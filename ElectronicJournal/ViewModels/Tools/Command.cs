@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace ElectronicJournal.ViewModels
+namespace ElectronicJournal.ViewModels.Tools
 {
 	public class Command : ICommand
 	{
@@ -26,7 +26,7 @@ namespace ElectronicJournal.ViewModels
 		public void Execute(object parameter)
 			=> _execute(obj: parameter);
 
-        public static Lazy<Command> CreateLazyCommand(Action<object> action)
-            => new Lazy<Command>(valueFactory: () => new Command(execute: action));
+        public static Lazy<Command> CreateLazyCommand(Action<object> action, Predicate<object> canExecute = null)
+            => new Lazy<Command>(valueFactory: () => new Command(execute: action, canExecute: canExecute));
 	}
 }

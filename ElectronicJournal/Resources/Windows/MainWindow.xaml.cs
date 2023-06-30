@@ -1,22 +1,28 @@
-﻿using ElectronicJournal.Utilities;
+﻿using ElectronicJournal.Utilities.Config;
 using System;
+using System.ComponentModel;
 using System.Windows;
 
 namespace ElectronicJournal.Resources.Windows
 {
 	public partial class MainWindow : Window
 	{
-		public MainWindow()
+		private readonly IConfigProvider _configProvider;
+
+		public MainWindow(IConfigProvider configProvider)
 		{
 			InitializeComponent();
-			this.Width = ConfigProvider.Get<Double>(proprtyName: "Width");
-			this.Height = ConfigProvider.Get<Double>(proprtyName: "Height");
+			_configProvider = configProvider;
+			this.Width = _configProvider.Get<Double>(propertyName: nameof(this.Width));
+			this.Height = _configProvider.Get<Double>(propertyName: nameof(this.Height));
 		}
 
-		private void ThisWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+		private void OnWindowClosing(object sender, CancelEventArgs e)
 		{
-			ConfigProvider.Set(propertyName: "Width", value: e.NewSize.Width);
-			ConfigProvider.Set(propertyName: "Height", value: e.NewSize.Height);
+			if (this.WindowState == WindowState.Maximized)
+				(this.Width, this.Height) = (this.MinWidth, this.MinHeight);
+			_configProvider.Set(propertyName: nameof(this.Width), value: this.Width);
+			_configProvider.Set(propertyName: nameof(this.Height), value: this.Height);
 		}
 	}
 }

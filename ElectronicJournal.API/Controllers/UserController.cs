@@ -1,5 +1,5 @@
 ﻿using ElectronicJournal.API.DTOs;
-using ElectronicJournal.API.Models;
+using ElectronicJournal.API.DBModels;
 using ElectronicJournal.API.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -21,14 +21,14 @@ namespace ElectronicJournal.API.Controllers
 		}
 
 		[HttpGet(template: "GetToken/{login}")]
-		public async Task<ActionResult<string>> GetToken(string login)
+		public async Task<ActionResult<TokenDTO>> GetToken(string login)
 		{
 			string token = Confidentiality.GenerateJWT(data: login);
-			User _user = await _context.Users.FirstOrDefaultAsync(predicate: x => x.AuthKey.Equals(token));
-			if (_user is null)
-				return NotFound(value: new Error(message: "Некорректные данные пользователя", propertyName: "Login"));
+			User user = await _context.Users.FirstOrDefaultAsync(predicate: x => x.AuthKey.Equals(token));
+			if (user is null)
+				return NotFound(value: new Error { Message = "Неправильный логин и/или пароль" });
 
-			return Ok(token);
+			return Ok(value: new TokenDTO(token: token));
 		}
 
 		[Authorize]
@@ -39,10 +39,10 @@ namespace ElectronicJournal.API.Controllers
 			string token = await HttpContext.GetTokenAsync("access_token");
 			User user = await _context.Users.FirstOrDefaultAsync(predicate: x => x.AuthKey.Equals(token));
 
-			if (!user.Password.Equals(hashedPassword))
-				return NotFound(value: new Error(message: "Пароль не соответствует пользователю", propertyName: "Password"));
+			if (user is null || !user.Password.Equals(hashedPassword))
+				return NotFound(value: new Error { Message = "Неправильный логин и/или пароль"});
 
-			return Ok(UserDTO.Copy(user: user));
+			return Ok(value: UserDTO.Copy(user: user));
 		}
 	}
 }

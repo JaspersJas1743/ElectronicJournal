@@ -11,4 +11,7 @@
     <DataTemplate DataType="{x:Type vm:PasswordRecoveryVM}">
         <view:PasswordRecovery/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:TimetableVM}">
+        <view:Timetable/>
+    </DataTemplate>
 </ResourceDictionary>

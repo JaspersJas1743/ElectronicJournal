@@ -1,31 +1,36 @@
 ﻿using ElectronicJournal.Models;
 using ElectronicJournal.Resources.Windows;
-using ElectronicJournal.Utilities;
+using ElectronicJournal.Utilities.Api;
+using ElectronicJournal.Utilities.Navigation;
+using ElectronicJournal.Utilities.Validator;
+using ElectronicJournal.ViewModels.Tools;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace ElectronicJournal.ViewModels
 {
 	public class AuthorizationVM : TrackedObject
 	{
 		#region Fields
+		private readonly INavigationProvider _navigationProvider;
 		private AuthorizationModel _model;
 		private string _buttonContent;
 		private readonly Lazy<Command> _authorize;
 		private readonly Lazy<Command> _moveToRegistration;
 		private readonly Lazy<Command> _moveToPasswordRecovery;
+		private bool _authIsSucces;
 		#endregion Fields
 
 		#region Constructor
-		public AuthorizationVM()
+		public AuthorizationVM(INavigationProvider navigationProvider)
 		{
-			_model = new AuthorizationModel(login: String.Empty, password: String.Empty);
+			_navigationProvider = navigationProvider;
+			_model = new AuthorizationModel();
 			_buttonContent = "Войти";
+			_authIsSucces = true;
 			_authorize = Command.CreateLazyCommand(action: async obj =>
 			{
 				var authTask = TryAuth();
@@ -33,29 +38,35 @@ namespace ElectronicJournal.ViewModels
 				int count = 0;
 				while (!authTask.IsCompleted)
 				{
-					if (count == 4)
+					if (count == 3)
 						count = 0;
+					ButtonContent = "Загрузка" + new String(c: '.', count: ++count);
 
 					await Task.Delay(millisecondsDelay: 250);
-
-					ButtonContent = "Загрузка" + new String(c: '.', count: count);
-					++count;
 				}
 
 				(bool result, string message) = await authTask;
 				ButtonContent = "Войти";
 				if (result)
 				{
-					MessageWindow.ShowMessage(text: message);
-					Navigation.Navigate<TimetableVM>();
+					_navigationProvider.MoveTo<TimetableVM>();
+					return;
 				}
-				else MessageWindow.ShowError(text: message);
+				MessageWindow.ShowError(text: message);
+				_authIsSucces = false;
 
-			});
-			_moveToRegistration = Command.CreateLazyCommand(action: obj => MessageWindow.ShowMessage(text: "Переход на страницу регистрации"));
-			_moveToPasswordRecovery = Command.CreateLazyCommand(action: obj => MessageWindow.ShowInformation(text: "Переход на страницу восстановления пароля"));
+			}, canExecute: obj => _model.IsValid && ButtonContent.Equals("Войти"));
+			_moveToRegistration = Command.CreateLazyCommand(action: obj => _navigationProvider.MoveTo<RegistrationVM>());
+			_moveToPasswordRecovery = Command.CreateLazyCommand(action: obj => _navigationProvider.MoveTo<PasswordRecoveryVM>());
 		}
 		#endregion Constructor
+
+		#region Classes
+		private class TokenAnswer
+		{
+			public string Token { get; set; }
+		}
+		#endregion Classes
 
 		#region Properties
 		public string Login
@@ -78,11 +89,17 @@ namespace ElectronicJournal.ViewModels
 			}
 		}
 
-		public bool LoginIsValid => _model.LoginIsValid;
-
-		public bool PasswordIsValid => _model.PasswordIsValid;
-
 		public bool ModelIsValid => _model.IsValid && ButtonContent.Equals("Войти");
+
+		public bool AuthIsSuccess
+		{
+			get => _authIsSucces;
+			set
+			{
+				_authIsSucces = value;
+				OnPropertyChanged(propertyName: nameof(AuthIsSuccess));
+			}
+		}
 
 		public string ButtonContent
 		{
@@ -103,7 +120,6 @@ namespace ElectronicJournal.ViewModels
 		private void OnModelPropertyChanged([CallerMemberName] string propertyName = "")
 		{
 			OnPropertyChanged(propertyName: propertyName);
-			OnPropertyChanged(propertyName: propertyName + "IsValid");
 			OnPropertyChanged(propertyName: nameof(ModelIsValid));
 		}
 
@@ -115,8 +131,8 @@ namespace ElectronicJournal.ViewModels
 
 			try
 			{
-				string token = await ApiClient.SendAndGetStringAsync(apiMethod: "User/GetToken", arg: Login);
-				ApiClient.SetTokenForAuthorization(token: token);
+				TokenAnswer token = await ApiClient.SendAndGetAsync<TokenAnswer>(apiMethod: "User/GetToken", arg: Login);
+				ApiClient.SetTokenForAuthorization(token: token.Token);
 				User user = await ApiClient.SendAndGetAsync<User>(apiMethod: "User/CheckPassword", arg: Password);
 				return (Result: true, Message: $"Добро пожаловать, {user.Surname} {user.Name} {user.Patronymic}");
 			}

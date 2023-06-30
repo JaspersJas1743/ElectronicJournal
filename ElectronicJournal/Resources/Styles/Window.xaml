@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:uc="clr-namespace:ElectronicJournal.Resources.UserControls"
+                    xmlns:uc="clr-namespace:ElectronicJournal.Resources.CustomElements"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style TargetType="{x:Type Window}" x:Key="BasedWindowStyle">
         <Style.Setters>

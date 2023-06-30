@@ -3,9 +3,11 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:uc="clr-namespace:ElectronicJournal.Resources.UserControls"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:uc="clr-namespace:ElectronicJournal.Resources.CustomElements"
       mc:Ignorable="d" MaxWidth="1000" MaxHeight="650"
-      d:DesignHeight="1024" d:DesignWidth="1440">
+      d:DesignHeight="650" d:DesignWidth="1000">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.22*"/>
@@ -20,89 +22,71 @@
         <Border BorderThickness="4" Grid.Column="1" Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" CornerRadius="20" Padding="20">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="17*"/>
-                    <ColumnDefinition Width="272*"/>
-                    <ColumnDefinition Width="17*"/>
-                    <ColumnDefinition Width="136*"/>
-                    <ColumnDefinition Width="34*"/>
-                    <ColumnDefinition Width="34*"/>
-                    <ColumnDefinition Width="136*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.7*"/>
+                    <ColumnDefinition Width="0.05*"/>
+                    <ColumnDefinition Width="0.9*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="0.6*"/>
-                    <RowDefinition Height="0.45*"/>
-                    <RowDefinition Height="0.65*"/>
-                    <RowDefinition Height="0.15*"/>
-                    <RowDefinition Height="0.65*"/>
-                    <RowDefinition Height="0.7*"/>
-                    <RowDefinition Height="0.9*"/>
-                    <RowDefinition Height="0.05*"/>
                     <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.2*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
-                
-                <Image Grid.Row="1" Grid.Column="1" Grid.RowSpan="9" Style="{DynamicResource Students}"/>
 
-                <Viewbox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4">
+                <Image Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Style="{DynamicResource Students}"/>
+
+                <Viewbox Grid.Row="1" Grid.Column="2">
                     <TextBlock Text="Добро пожаловать!"/>
                 </Viewbox>
+                <Grid Grid.Row="2" Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.25*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.7*"/>
+                        <RowDefinition Height="1.3*"/>
+                        <RowDefinition Height="0.6*" MaxHeight="17"/>
+                    </Grid.RowDefinitions>
 
-                <uc:TextBoxWithImageAndPlaceholder Placeholder="Логин*" Image="{DynamicResource Login}" x:Name="LoginBox"
-                                                   Grid.Column="3" Grid.Row="3" FontSize="12" Grid.ColumnSpan="4"
-                                                   Text="{Binding Login,Mode=TwoWay}" FontWeight="SemiBold"
-                                                   BorderThickness="2">
-                    <uc:TextBoxWithImageAndPlaceholder.Style>
-                        <Style TargetType="uc:TextBoxWithImageAndPlaceholder">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding LoginIsValid}" Value="True">
-                                    <Setter Property="BorderBrush" Value="Lime"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding LoginIsValid}" Value="False">
-                                    <Setter Property="BorderBrush" Value="Red"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </uc:TextBoxWithImageAndPlaceholder.Style>
-                </uc:TextBoxWithImageAndPlaceholder>
+                    <uc:TextBoxWithImageAndPlaceholder 
+                        Placeholder="Логин*" Image="{DynamicResource Login}" x:Name="LoginBox" 
+                        Grid.Column="0" BorderThickness="2" Text="{Binding Login,Mode=TwoWay}"
+                        Grid.Row="1" FontSize="12" Grid.ColumnSpan="2" FontWeight="SemiBold">
+                    </uc:TextBoxWithImageAndPlaceholder>
 
-                <uc:PasswordBoxWithPasswordViewer Placeholder="Пароль*" x:Name="PassBox" Image="{DynamicResource Password}"
-                                                  Grid.Column="3" Grid.Row="5" FontSize="12" Grid.ColumnSpan="4"
-                                                  Text="{Binding Password,Mode=TwoWay}"
-                                                  BorderThickness="2">
-                    <uc:PasswordBoxWithPasswordViewer.Style>
-                        <Style TargetType="uc:PasswordBoxWithPasswordViewer">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding PasswordIsValid}" Value="True">
-                                    <Setter Property="BorderBrush" Value="Lime"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding PasswordIsValid}" Value="False">
-                                    <Setter Property="BorderBrush" Value="Red"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </uc:PasswordBoxWithPasswordViewer.Style>
-                </uc:PasswordBoxWithPasswordViewer>
+                    <uc:PasswordBoxWithPasswordViewer 
+                        Placeholder="Пароль*" x:Name="PassBox" Image="{DynamicResource Password}"
+                        Grid.Column="0" Grid.Row="3" FontSize="12" Grid.ColumnSpan="2"
+                        Text="{Binding Password,Mode=TwoWay}" BorderThickness="2">
+                    </uc:PasswordBoxWithPasswordViewer>
 
-                <Button Grid.Row="7" Grid.Column="3" Content="{Binding ButtonContent}" x:Name="AuthBtn" Grid.ColumnSpan="4" 
+                    <Button 
+                        Grid.Row="5" Grid.Column="0" Content="{Binding ButtonContent}" x:Name="AuthBtn" Grid.ColumnSpan="2" 
                         Command="{Binding Authorize}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ModelIsValid}" Value="False">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.75"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
 
-                <Button Grid.Column="3" Grid.Row="9" Style="{DynamicResource ClickableText}" Command="{Binding MoveToRegistration}"
-                        HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ContentStringFormat="Регистрация →"/>
+                    <Button
+                        Grid.Column="0" Grid.Row="6" Style="{DynamicResource ClickableText}" Command="{Binding MoveToRegistration}"
+                        HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ContentStringFormat="Регистрация →" Margin="0 2 0 0"/>
 
-                <Button Grid.Column="6" Grid.Row="9" Style="{DynamicResource ClickableText}" Command="{Binding MoveToPasswordRecovery}"
-                        HorizontalContentAlignment="Right" VerticalContentAlignment="Center" ContentStringFormat="Забыл пароль?"/>
+                    <Button 
+                        Grid.Column="1" Grid.Row="6" Style="{DynamicResource ClickableText}" Command="{Binding MoveToPasswordRecovery}"
+                        HorizontalContentAlignment="Right" VerticalContentAlignment="Center" ContentStringFormat="Забыл пароль?" Margin="0 2 0 0"/>
+                </Grid>
             </Grid>
         </Border>
     </Grid>

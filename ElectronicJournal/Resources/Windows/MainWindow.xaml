@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" x:Name="ThisWindow" Title="Электронный журнал" SizeChanged="ThisWindow_SizeChanged"
-        Style="{DynamicResource WindowStyle}" WindowStartupLocation="CenterScreen"
-        Height="512" Width="720" MinHeight="512" MinWidth="720">
+        mc:Ignorable="d" x:Name="ThisWindow" Title="Электронный журнал" 
+        Closing="OnWindowClosing" Style="{DynamicResource WindowStyle}" 
+        WindowStartupLocation="CenterScreen" Height="512" 
+        Width="720" MinHeight="512" MinWidth="720">
     <Grid>
         <ContentControl Content="{Binding Content}"/>
     </Grid>

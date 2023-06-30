@@ -1,4 +1,4 @@
-﻿using ElectronicJournal.API.Models;
+﻿using ElectronicJournal.API.DBModels;
 
 namespace ElectronicJournal.API.DTOs
 {

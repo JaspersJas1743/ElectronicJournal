@@ -1,4 +1,4 @@
-using ElectronicJournal.API.Models;
+using ElectronicJournal.API.DBModels;
 using ElectronicJournal.API.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +16,12 @@ namespace ElectronicJournal.API
 				opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("ElectronicJournal"))
 			);
 
-			builder.Services.AddControllers();
+			builder.Services.AddControllers().AddJsonOptions(configure:
+				options => options.JsonSerializerOptions.WriteIndented = true
+			);
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
+
 
 			builder.Services.AddAuthorization();
 			builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

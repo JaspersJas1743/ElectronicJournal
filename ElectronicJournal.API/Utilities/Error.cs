@@ -2,13 +2,6 @@
 {
 	public class Error
 	{
-		public Error(string message, string propertyName)
-		{
-			Message = message;
-			PropertyName = propertyName;
-		}
-
-		public string Message { get; }
-		public string PropertyName { get; }
+		public string Message { get; set; }
 	}
 }

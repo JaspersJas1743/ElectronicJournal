@@ -1,10 +1,22 @@
 ﻿using System;
 using System.Windows;
+using ElectronicJournal.Utilities.Config;
 
 namespace ElectronicJournal.Utilities
 {
 	public static class Theme
 	{
+		#region Fields
+		private static readonly IConfigProvider _configurationProvider;
+		#endregion Fields
+
+		#region Constructors
+		static Theme()
+		{
+			_configurationProvider = new ConfigurationProvider();
+		}
+		#endregion Constructors
+
 		#region Enums
 		public enum Type
 		{
@@ -16,18 +28,10 @@ namespace ElectronicJournal.Utilities
 		#region Properties
 		public static Type CurrentTheme
 		{
-			get => Theme.Parse(themeName: ConfigProvider.Get<String>(proprtyName: "Theme"));
-			set => ConfigProvider.Set(propertyName: "Theme", value: value.ToString());
+			get => Theme.Parse(themeName: _configurationProvider.Get<String>(propertyName: "Theme"));
+			set => _configurationProvider.Set(propertyName: "Theme", value: value.ToString());
 		}
 		#endregion Properties
-
-		#region Delegate
-		public delegate void ThemeChangedEventHandler(object sender, ThemeChangedEventArgs e);
-		#endregion Delegate
-
-		#region Events
-		public static event ThemeChangedEventHandler ThemeChanged;
-		#endregion Events
 
 		#region Methods
 		public static Type Parse(string themeName)
@@ -38,10 +42,8 @@ namespace ElectronicJournal.Utilities
 
 		public static void Change(Type newTheme)
 		{
-			Type oldTheme = CurrentTheme;
 			CurrentTheme = newTheme;
 			Load();
-			ThemeChanged?.Invoke(sender: null, e: new ThemeChangedEventArgs(oldTheme: oldTheme, newTheme: newTheme));
 		}
 
 		private static void Load()

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ElectronicJournal.ViewModels
+namespace ElectronicJournal.ViewModels.Tools
 {
 	public class TrackedObject : INotifyPropertyChanged
 	{
