@@ -8,13 +8,30 @@ namespace ElectronicJournal.Resources.CustomElements
 {
 	public partial class CodeEntryPanel : UserControl
 	{
+		#region Fields
+		private static readonly DependencyProperty EntryCodeProperty = DependencyProperty.Register(
+			name: "EntryCode", propertyType: typeof(String), ownerType: typeof(CodeEntryPanel), new PropertyMetadata()
+		);
+
+		public const int MaxCountOfCell = 6;
+		#endregion Fields
+
+		#region Constructors
 		public CodeEntryPanel()
 		{
 			InitializeComponent();
 		}
+		#endregion Constructors
 
-		public string Text => String.Concat(values: MainGrid.Children.OfType<TextBox>().Select(x => x.Text)).Trim();
+		#region Properties
+		public string EntryCode
+		{
+			get => (string)GetValue(dp: EntryCodeProperty);
+			set => SetValue(dp: EntryCodeProperty, value: value);
+		}
+		#endregion Properties
 
+		#region Methods
 		private void OnCharChanged(object sender, TextChangedEventArgs e)
 		{
 			TextBox tb = (TextBox)sender;
@@ -27,13 +44,8 @@ namespace ElectronicJournal.Resources.CustomElements
 				if (tb.Name.Equals(String.Empty))
 					tb.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
 			}
-		}
-
-		private void OnTextBoxGotFocus(object sender, RoutedEventArgs e)
-		{
-			TextBox tb = (TextBox)sender;
-			if (tb.Text.Length > 0)
-				tb.SelectionStart = 1;
+			tb.SelectionStart = tb.Text.Length;
+			SetValue(EntryCodeProperty, String.Concat(values: MainGrid.Children.OfType<TextBox>().Select(x => x.Text)).Trim());
 		}
 
 		private void OnTextBoxPreviewKeyDown(object sender, KeyEventArgs e)
@@ -42,5 +54,6 @@ namespace ElectronicJournal.Resources.CustomElements
 			if (e.Key == Key.Back && tb.Text.Length == 0)
 				tb.MoveFocus(new TraversalRequest(FocusNavigationDirection.Previous));
 		}
+		#endregion Methods
 	}
 }

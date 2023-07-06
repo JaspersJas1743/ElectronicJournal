@@ -3,10 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:ce="clr-namespace:ElectronicJournal.Resources.CustomElements"
-             xmlns:local="clr-namespace:ElectronicJournal.Views" mc:Ignorable="d" 
-             MaxWidth="1000" MaxHeight="650" d:DesignHeight="650" d:DesignWidth="1000">
+             mc:Ignorable="d" MaxWidth="1000" MaxHeight="650" 
+             d:DesignHeight="650" d:DesignWidth="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.22*"/>
@@ -18,7 +17,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.187*"/>
         </Grid.RowDefinitions>
-        <Border BorderThickness="4" Grid.Column="1" Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" CornerRadius="20" Padding="20">
+        <Border BorderThickness="4" BorderBrush="{DynamicResource BorderColor}" 
+                Grid.Column="1" Grid.Row="1" CornerRadius="20" Padding="20">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.7*"/>
@@ -32,11 +32,14 @@
                     <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
 
-                <Image Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Style="{DynamicResource Students}"/>
+                <Image 
+                    Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" 
+                    Style="{DynamicResource Students}"/>
 
                 <Viewbox Grid.Row="1" Grid.Column="2">
-                    <TextBlock Text="Добро пожаловать!"/>
+                    <TextBlock Text="Добро пожаловать!" Padding="2"/>
                 </Viewbox>
+                
                 <Grid Grid.Row="2" Grid.Column="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.05*"/>
@@ -44,7 +47,7 @@
                         <RowDefinition Height="0.1*"/>
                         <RowDefinition Height="0.6*"/>
                         <RowDefinition Height="0.1*"/>
-                        <RowDefinition Height="0.71*"/>
+                        <RowDefinition Height="0.7*"/>
                         <RowDefinition Height="0.6*" MaxHeight="17"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -56,22 +59,41 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border CornerRadius="15" Background="{DynamicResource MainElementColor}" SnapsToDevicePixels="True" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="20 0 20 0">
+                    <Border 
+                        CornerRadius="15" SnapsToDevicePixels="True" 
+                        Background="{DynamicResource MainElementColor}" 
+                        Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="20 0 20 0">
                         <Viewbox>
                             <TextBlock Margin="7 0 7 0">
                                 Для регистрации необходимо ввести <LineBreak/> 
-                                регистрационный код, выданный <LineBreak/>
-                                Вашим учебным заведением
+                                  регистрационный код, выданный <LineBreak/>
+                                    Вашим учебным заведением
                             </TextBlock>
                         </Viewbox>
                     </Border>
 
-                    <ce:CodeEntryPanel x:Name="CodePanel" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6"/>
-                    
-                    <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Content="Зарегистрироваться"/>
+                    <ce:CodeEntryPanel 
+                        x:Name="CodePanel" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" 
+                        EntryCode="{Binding Code,Mode=OneWayToSource}"/>
+
                     <Button 
-                        Style="{DynamicResource ClickableText}" ContentStringFormat="← У меня есть аккаунт" Grid.Row="6" Command="{Binding Back}" 
-                        Grid.Column="0" Grid.ColumnSpan="6" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 2 0 0"/>
+                        Grid.Column="0" Grid.ColumnSpan="6" Command="{Binding Registration}"
+                        Grid.Row="5" Content="{Binding ButtonContent}">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.75"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <Button 
+                        VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 2 0 0"
+                        Style="{DynamicResource ClickableText}" Grid.Row="6" Command="{Binding Back}" 
+                        ContentStringFormat="← У меня есть аккаунт" Grid.Column="0" Grid.ColumnSpan="6"/>
                 </Grid>
             </Grid>
         </Border>

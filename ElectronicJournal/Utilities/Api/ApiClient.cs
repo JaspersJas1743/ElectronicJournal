@@ -30,6 +30,9 @@ namespace ElectronicJournal.Utilities.Api
 			);
 		}
 
+		public static void SetIdForUser(int id)
+			=> _client.DefaultRequestHeaders.Add(name: "UserId", value: id.ToString());
+
 		public static async Task<T> SendAndGetAsync<T>(string apiMethod, string arg = null)
 		{
 			Uri uri = new Uri(uriString: CreateUrl(apiMethod: apiMethod, arg: arg));

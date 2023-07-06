@@ -29,13 +29,9 @@ namespace ElectronicJournal.API.Utilities
 
 		public static async Task<string> GenerateHashAsync(string data)
 		{
-			string result = String.Empty;
-			using (SHA1 hash = SHA1.Create())
-			{
-				byte[] bytes = await hash.ComputeHashAsync(inputStream: new MemoryStream(buffer: Encoding.UTF8.GetBytes(s: data)));
-				result = String.Concat(values: bytes.Select(x => x.ToString("X2")));
-			}
-			return result;
+			using SHA1 hash = SHA1.Create();
+			byte[] bytes = await hash.ComputeHashAsync(inputStream: new MemoryStream(buffer: Encoding.UTF8.GetBytes(s: data)));
+			return String.Concat(values: bytes.Select(x => x.ToString("X2")));
 		}
 	}
 }

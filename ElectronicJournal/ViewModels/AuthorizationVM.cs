@@ -1,6 +1,7 @@
 ﻿using ElectronicJournal.Models;
 using ElectronicJournal.Resources.Windows;
 using ElectronicJournal.Utilities.Api;
+using ElectronicJournal.Utilities.Api.Models;
 using ElectronicJournal.Utilities.Navigation;
 using ElectronicJournal.Utilities.Validator;
 using ElectronicJournal.ViewModels.Tools;
@@ -15,13 +16,15 @@ namespace ElectronicJournal.ViewModels
 	public class AuthorizationVM : TrackedObject
 	{
 		#region Fields
+		private const string DefaultButtonContent = "Войти";
+
 		private readonly INavigationProvider _navigationProvider;
+
 		private AuthorizationModel _model;
 		private string _buttonContent;
 		private readonly Lazy<Command> _authorize;
 		private readonly Lazy<Command> _moveToRegistration;
 		private readonly Lazy<Command> _moveToPasswordRecovery;
-		private bool _authIsSucces;
 		#endregion Fields
 
 		#region Constructor
@@ -29,12 +32,11 @@ namespace ElectronicJournal.ViewModels
 		{
 			_navigationProvider = navigationProvider;
 			_model = new AuthorizationModel();
-			_buttonContent = "Войти";
-			_authIsSucces = true;
+			_buttonContent = DefaultButtonContent;
 			_authorize = Command.CreateLazyCommand(action: async obj =>
 			{
 				var authTask = TryAuth();
-				
+
 				int count = 0;
 				while (!authTask.IsCompleted)
 				{
@@ -46,27 +48,18 @@ namespace ElectronicJournal.ViewModels
 				}
 
 				(bool result, string message) = await authTask;
-				ButtonContent = "Войти";
+				ButtonContent = DefaultButtonContent;
 				if (result)
 				{
 					_navigationProvider.MoveTo<TimetableVM>();
 					return;
 				}
 				MessageWindow.ShowError(text: message);
-				_authIsSucces = false;
-
-			}, canExecute: obj => _model.IsValid && ButtonContent.Equals("Войти"));
+			}, canExecute: obj => _model.IsValid && ButtonContent.Equals(DefaultButtonContent));
 			_moveToRegistration = Command.CreateLazyCommand(action: obj => _navigationProvider.MoveTo<RegistrationVM>());
 			_moveToPasswordRecovery = Command.CreateLazyCommand(action: obj => _navigationProvider.MoveTo<PasswordRecoveryVM>());
 		}
 		#endregion Constructor
-
-		#region Classes
-		private class TokenAnswer
-		{
-			public string Token { get; set; }
-		}
-		#endregion Classes
 
 		#region Properties
 		public string Login
@@ -90,16 +83,6 @@ namespace ElectronicJournal.ViewModels
 		}
 
 		public bool ModelIsValid => _model.IsValid && ButtonContent.Equals("Войти");
-
-		public bool AuthIsSuccess
-		{
-			get => _authIsSucces;
-			set
-			{
-				_authIsSucces = value;
-				OnPropertyChanged(propertyName: nameof(AuthIsSuccess));
-			}
-		}
 
 		public string ButtonContent
 		{
@@ -131,9 +114,10 @@ namespace ElectronicJournal.ViewModels
 
 			try
 			{
-				TokenAnswer token = await ApiClient.SendAndGetAsync<TokenAnswer>(apiMethod: "User/GetToken", arg: Login);
+				TokenResponse token = await ApiClient.SendAndGetAsync<TokenResponse>(apiMethod: "User/GetToken", arg: Login);
 				ApiClient.SetTokenForAuthorization(token: token.Token);
-				User user = await ApiClient.SendAndGetAsync<User>(apiMethod: "User/CheckPassword", arg: Password);
+				ApiClient.SetIdForUser(id: token.Id);
+				User user = await ApiClient.SendAndGetAsync<User>(apiMethod: "User/GetUserIfPasswordExist", arg: Password);
 				return (Result: true, Message: $"Добро пожаловать, {user.Surname} {user.Name} {user.Patronymic}");
 			}
 			catch (Exception ex)

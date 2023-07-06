@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ElectronicJournal.Resources.CustomElements"
              mc:Ignorable="d" d:DesignHeight="50" d:DesignWidth="350">
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
@@ -17,22 +16,22 @@
 
         <TextBox
             Grid.Column="0" Grid.Row="2" Margin="2 0 5 0" Style="{DynamicResource CellFromTB}" 
-            TextChanged="OnCharChanged" GotFocus="OnTextBoxGotFocus"/>
+            TextChanged="OnCharChanged"/>
         <TextBox 
             Grid.Column="1" Grid.Row="2" Margin="3 0 5 0" Style="{DynamicResource CellFromTB}" 
-            TextChanged="OnCharChanged" GotFocus="OnTextBoxGotFocus" PreviewKeyDown="OnTextBoxPreviewKeyDown"/>
+            TextChanged="OnCharChanged" PreviewKeyDown="OnTextBoxPreviewKeyDown"/>
         <TextBox 
             Grid.Column="2" Grid.Row="2" Margin="3 0 5 0" Style="{DynamicResource CellFromTB}" 
-            TextChanged="OnCharChanged" GotFocus="OnTextBoxGotFocus" PreviewKeyDown="OnTextBoxPreviewKeyDown"/>
+            TextChanged="OnCharChanged" PreviewKeyDown="OnTextBoxPreviewKeyDown"/>
         <TextBox 
             Grid.Column="3" Grid.Row="2" Margin="3 0 5 0" Style="{DynamicResource CellFromTB}" 
-            TextChanged="OnCharChanged" GotFocus="OnTextBoxGotFocus" PreviewKeyDown="OnTextBoxPreviewKeyDown"/>
+            TextChanged="OnCharChanged" PreviewKeyDown="OnTextBoxPreviewKeyDown"/>
         <TextBox 
             Grid.Column="4" Grid.Row="2" Margin="3 0 5 0" Style="{DynamicResource CellFromTB}" 
-            TextChanged="OnCharChanged" GotFocus="OnTextBoxGotFocus" PreviewKeyDown="OnTextBoxPreviewKeyDown"/>
+            TextChanged="OnCharChanged" PreviewKeyDown="OnTextBoxPreviewKeyDown"/>
         <TextBox 
-            Grid.Column="5" Grid.Row="2" Margin="5 0 2 0" Style="{DynamicResource CellFromTB}" Name="LastChar"
-            TextChanged="OnCharChanged" GotFocus="OnTextBoxGotFocus" PreviewKeyDown="OnTextBoxPreviewKeyDown"/>
+            Grid.Column="5" Grid.Row="2" Margin="5 0 2 0" Style="{DynamicResource CellFromTB}" 
+            TextChanged="OnCharChanged" PreviewKeyDown="OnTextBoxPreviewKeyDown" x:Name="LastChar"/>
 
     </Grid>
 </UserControl>

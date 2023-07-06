@@ -246,6 +246,7 @@
     </Compile>
     <Compile Include="Utilities\Api\ApiClient.cs" />
     <Compile Include="Utilities\Api\ApiException.cs" />
+    <Compile Include="Utilities\Api\Models\TokenResponse.cs" />
     <Compile Include="Utilities\Config\ConfigurationProvider.cs" />
     <Compile Include="Utilities\Config\IConfigProvider.cs" />
     <Compile Include="Utilities\Error.cs" />

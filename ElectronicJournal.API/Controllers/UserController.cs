@@ -24,25 +24,34 @@ namespace ElectronicJournal.API.Controllers
 		public async Task<ActionResult<TokenDTO>> GetToken(string login)
 		{
 			string token = Confidentiality.GenerateJWT(data: login);
-			User user = await _context.Users.FirstOrDefaultAsync(predicate: x => x.AuthKey.Equals(token));
+			User? user = await _context.Users.FirstOrDefaultAsync(predicate: x => x.AuthKey == token);
 			if (user is null)
 				return NotFound(value: new Error { Message = "Неправильный логин и/или пароль" });
 
-			return Ok(value: new TokenDTO(token: token));
+			return Ok(value: new TokenDTO(token: token, id: user.Id));
 		}
 
 		[Authorize]
-		[HttpGet(template: "CheckPassword/{password}")]
-		public async Task<ActionResult<UserDTO>> Check(string password)
+		[HttpGet(template: "GetUserIfPasswordExist/{password}")]
+		public async Task<ActionResult<UserDTO>> GetUserIfPasswordExist(string password)
 		{
 			string hashedPassword = await Confidentiality.GenerateHashAsync(data: password);
-			string token = await HttpContext.GetTokenAsync("access_token");
-			User user = await _context.Users.FirstOrDefaultAsync(predicate: x => x.AuthKey.Equals(token));
-
+			int id = Int32.Parse(s: HttpContext.Request.Headers["UserId"]);
+			User? user = await _context.Users.FindAsync(keyValues: id);
 			if (user is null || !user.Password.Equals(hashedPassword))
-				return NotFound(value: new Error { Message = "Неправильный логин и/или пароль"});
+				return NotFound(value: new Error { Message = "Неправильный логин и/или пароль" });
 
 			return Ok(value: UserDTO.Copy(user: user));
+		}
+
+		[HttpGet(template: "CheckRegistrationCode/{code}")]
+		public async Task<ActionResult<int>> CheckRegistrationCode(string code)
+		{
+			User? user = await _context.Users.FirstOrDefaultAsync(predicate: x => x.RegistrationCode == code);
+			if (user is null)
+				return NotFound(value: new Error { Message = "Проверьте правильность ввода или обратитесь в организацию" });
+
+			return Ok(value: new TokenDTO(token: null, id: user.Id));
 		}
 	}
 }
