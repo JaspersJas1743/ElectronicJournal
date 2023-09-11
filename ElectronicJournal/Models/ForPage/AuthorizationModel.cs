@@ -3,7 +3,7 @@ using ElectronicJournal.ViewModels.Tools;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ElectronicJournal.Models
+namespace ElectronicJournal.Models.ForPage
 {
 	public class AuthorizationModel : TrackedObject
 	{

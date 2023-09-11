@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ElectronicJournal.Utilities.Navigation
 {
-	internal class NavigationProvider : INavigationProvider
+	public class NavigationProvider : INavigationProvider
 	{
 		public void MoveTo<NewPage>() where NewPage : TrackedObject
 		{

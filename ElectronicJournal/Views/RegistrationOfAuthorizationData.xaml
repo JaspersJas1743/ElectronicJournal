@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="ElectronicJournal.Views.RegistrationOfAuthorizationData"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:uc="clr-namespace:ElectronicJournal.Resources.CustomElements"
+             mc:Ignorable="d" MaxWidth="1000" MaxHeight="650" 
+             d:DesignHeight="650" d:DesignWidth="1000">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.22*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.22*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.187*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.187*"/>
+        </Grid.RowDefinitions>
+        <Border BorderThickness="4" Grid.Column="1" Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" CornerRadius="20" Padding="20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.7*"/>
+                    <ColumnDefinition Width="0.05*"/>
+                    <ColumnDefinition Width="0.9*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.3*"/>
+                </Grid.RowDefinitions>
+
+                <Image Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Style="{DynamicResource Students}"/>
+
+                <Viewbox Grid.Row="1" Grid.Column="2">
+                    <TextBlock Text="Добро пожаловать!" Padding="2"/>
+                </Viewbox>
+                <Grid Grid.Row="2" Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="1.3*"/>
+                        <RowDefinition Height="0.6*" MaxHeight="17"/>
+                    </Grid.RowDefinitions>
+
+                    <uc:TextBoxWithImageAndPlaceholder 
+                        Placeholder="Логин*" Image="{DynamicResource Login}" x:Name="LoginBox" 
+                        Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontWeight="SemiBold" 
+                        Text="{Binding Login,Mode=TwoWay}">
+                    </uc:TextBoxWithImageAndPlaceholder>
+
+                    <uc:PasswordBoxWithPasswordViewer 
+                        Placeholder="Пароль*" Image="{DynamicResource Password}" 
+                        x:Name="PassBox" Text="{Binding Password,Mode=TwoWay}"
+                        Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
+                    </uc:PasswordBoxWithPasswordViewer>
+
+                    <uc:PasswordBoxWithPasswordViewer 
+                        Grid.Column="0" Grid.Row="5" x:Name="ConfirmPassBox" Grid.ColumnSpan="2"
+                        Placeholder="Повторите пароль*" Image="{DynamicResource Password}" 
+                        Text="{Binding PasswordConfirmation,Mode=TwoWay}">
+                    </uc:PasswordBoxWithPasswordViewer>
+
+                    <Button 
+                        Grid.Row="7" Grid.Column="0" Content="{Binding ButtonContent}" Grid.ColumnSpan="2" 
+                        Command="{Binding Registration}">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.75"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <Button 
+                        VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 2 0 0"
+                        Style="{DynamicResource ClickableText}" Grid.Row="8" Command="{Binding Back}" 
+                        ContentStringFormat="← У меня есть аккаунт" Grid.Column="0" Grid.ColumnSpan="6"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

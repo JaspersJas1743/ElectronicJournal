@@ -48,7 +48,7 @@ namespace ElectronicJournal.Resources.CustomElements
 		#endregion Properties
 
 		#region Methods
-		private void Tb_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+		private void OnPreviewExecuted(object sender, ExecutedRoutedEventArgs e)
 			=> e.Handled = new[] { ApplicationCommands.Copy, ApplicationCommands.Cut }.Contains(e.Command);
 
 		private void OnHiddenPasswordClick(object sender, RoutedEventArgs e)

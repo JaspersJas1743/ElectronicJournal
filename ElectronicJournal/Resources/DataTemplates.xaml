@@ -14,4 +14,7 @@
     <DataTemplate DataType="{x:Type vm:TimetableVM}">
         <view:Timetable/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:RegistrationOfAuthorizationDataVM}">
+        <view:RegistrationOfAuthorizationData/>
+    </DataTemplate>
 </ResourceDictionary>

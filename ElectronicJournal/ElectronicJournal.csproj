@@ -111,8 +111,8 @@
     <Reference Include="Microsoft.Extensions.Logging, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Logging.7.0.0\lib\net462\Microsoft.Extensions.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.7.0.0\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=7.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.7.0.1\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Configuration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Logging.Configuration.7.0.0\lib\net462\Microsoft.Extensions.Logging.Configuration.dll</HintPath>
@@ -209,8 +209,8 @@
     <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.7.0.2\lib\net462\System.Text.Json.dll</HintPath>
+    <Reference Include="System.Text.Json, Version=7.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.7.0.3\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -233,8 +233,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\AuthorizationModel.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ForPage\AuthorizationModel.cs" />
+    <Compile Include="Models\ForAPI\User.cs" />
+    <Compile Include="Models\ForPage\RegistrationOfAuthorizationDataModel.cs" />
     <Compile Include="Resources\CustomElements\CodeEntryPanel.xaml.cs">
       <DependentUpon>CodeEntryPanel.xaml</DependentUpon>
     </Compile>
@@ -246,15 +247,19 @@
     </Compile>
     <Compile Include="Utilities\Api\ApiClient.cs" />
     <Compile Include="Utilities\Api\ApiException.cs" />
+    <Compile Include="Utilities\Api\ConnectionChecker\ApiConnectionChecker.cs" />
+    <Compile Include="Utilities\Api\ConnectionChecker\IConnectionChecker.cs" />
     <Compile Include="Utilities\Api\Models\TokenResponse.cs" />
     <Compile Include="Utilities\Config\ConfigurationProvider.cs" />
     <Compile Include="Utilities\Config\IConfigProvider.cs" />
     <Compile Include="Utilities\Error.cs" />
+    <Compile Include="Utilities\Api\ConnectionChecker\InternetConnectionChecker.cs" />
     <Compile Include="Utilities\Navigation\INavigationProvider.cs" />
     <Compile Include="Utilities\Navigation\NavigationProvider.cs" />
     <Compile Include="Utilities\Validator\ObjectValidator.cs" />
     <Compile Include="Utilities\Theme.cs" />
     <Compile Include="ViewModels\PasswordRecoveryVM.cs" />
+    <Compile Include="ViewModels\RegistrationOfAuthorizationDataVM.cs" />
     <Compile Include="ViewModels\RegistrationVM.cs" />
     <Compile Include="ViewModels\Tools\TrackedObject.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
@@ -264,6 +269,9 @@
     </Compile>
     <Compile Include="Views\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RegistrationOfAuthorizationData.xaml.cs">
+      <DependentUpon>RegistrationOfAuthorizationData.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Timetable.xaml.cs">
       <DependentUpon>Timetable.xaml</DependentUpon>
@@ -400,6 +408,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\RegistrationOfAuthorizationData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Timetable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -494,6 +506,17 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="NETWORKLIST">
+      <Guid>{DCB00D01-570F-4A9B-8D69-199FDBA5723B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

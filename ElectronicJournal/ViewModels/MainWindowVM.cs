@@ -1,8 +1,10 @@
 ﻿using ElectronicJournal.Resources.Windows;
 using ElectronicJournal.Utilities;
+using ElectronicJournal.Utilities.Api.ConnectionChecker;
 using ElectronicJournal.ViewModels.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace ElectronicJournal.ViewModels
@@ -20,7 +22,6 @@ namespace ElectronicJournal.ViewModels
 		private Visibility _expandVisibility;
 		private TrackedObject _content;
 		private bool _isOn;
-
 		#endregion Fields
 
 		#region Constructors
@@ -32,11 +33,11 @@ namespace ElectronicJournal.ViewModels
 			_isOn = Theme.CurrentTheme == Theme.Type.Dark;
 			Application.Current.MainWindow.StateChanged += OnMainWindowStateChanged;
 
-			_exit = Command.CreateLazyCommand(action: obj => CloseApp());
+			_exit = Command.CreateLazyCommand(action: _ => CloseApp());
 			_changeTheme = Command.CreateLazyCommand(action: obj => Theme.Change(newTheme: Theme.Parse(themeName: obj.ToString())));
-			_minimize = Command.CreateLazyCommand(action: obj => Application.Current.MainWindow.WindowState = WindowState.Minimized);
-			_expand = Command.CreateLazyCommand(action: obj => ExpandWindow());
-			_collapse = Command.CreateLazyCommand(action: obj => CollapseWindow());
+			_minimize = Command.CreateLazyCommand(action: _ => Application.Current.MainWindow.WindowState = WindowState.Minimized);
+			_expand = Command.CreateLazyCommand(action: _ => ExpandWindow());
+			_collapse = Command.CreateLazyCommand(action: _ => CollapseWindow());
 		}
 		#endregion Constructors
 
@@ -97,6 +98,7 @@ namespace ElectronicJournal.ViewModels
 		{
 
 			if (MessageWindow.Show(text: "Вы уверены, что хотите закрыть приложение?",
+				windowTitle: "Сообщение",
 				image: MessageWindow.MessageWindowImage.Information,
 				buttons: MessageWindow.MessageWindowButton.YesNo).Equals(obj: MessageWindow.MessageWindowResult.Yes))
 				Application.Current.Shutdown();

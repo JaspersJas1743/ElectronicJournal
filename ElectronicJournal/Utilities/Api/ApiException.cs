@@ -13,6 +13,11 @@ namespace ElectronicJournal.Utilities.Api
 	[Serializable]
 	public class ApiException : Exception
 	{
+		private static HttpStatusCode[] _handlers = new[] 
+		{
+			HttpStatusCode.NotFound, HttpStatusCode.BadRequest, HttpStatusCode.Unauthorized 
+		};
+
 		public ApiException() { }
 		
 		public ApiException(string message) 
@@ -32,7 +37,7 @@ namespace ElectronicJournal.Utilities.Api
 
 		public static async Task ThrowIfBadResponseAsync(HttpResponseMessage response, JsonSerializerOptions jsonSerializerOptions)
 		{
-			if (new[] { HttpStatusCode.NotFound, HttpStatusCode.Unauthorized }.Contains(value: response.StatusCode))
+			if (_handlers.Contains(value: response.StatusCode))
 			{
 				Error error = await JsonSerializer.DeserializeAsync<Error>(
 					utf8Json: await response.Content.ReadAsStreamAsync(),

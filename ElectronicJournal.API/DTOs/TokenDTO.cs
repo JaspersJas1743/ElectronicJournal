@@ -5,11 +5,11 @@
 		public TokenDTO(string token, int id)
 		{
 			Token = token;
-			ID = id;
+			Id = id;
 		}
 
 		public string Token { get; set; }
 
-		public int ID { get; set; }
+		public int Id { get; set; }
 	}
 }

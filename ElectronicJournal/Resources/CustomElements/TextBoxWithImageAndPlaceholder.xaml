@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ElectronicJournal.Resources.CustomElements"
              mc:Ignorable="d" Name="ThisElement" d:DesignHeight="40" d:DesignWidth="200">
     <Grid>
         <TextBox  Text="{Binding ElementName=ThisElement,Path=Text,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
@@ -11,8 +10,9 @@
                   ContextMenu="{Binding ElementName=ThisElement,Path=ContextMenu}"
                   FontFamily="{Binding ElementName=ThisElement,Path=FontFamily}" 
                   FontWeight="{Binding ElementName=ThisElement,Path=FontWeight}"
-                  BorderBrush="{Binding ElementName=ThisElement,Path=Background}"
-                  FontSize="{Binding ElementName=ThisElement,Path=FontSize}">
+                  FontSize="{Binding ElementName=ThisElement,Path=FontSize}"
+                  BorderThickness="{Binding ElementName=ThisElement,Path=BorderThickness}"
+                  BorderBrush="{Binding ElementName=ThisElement,Path=BorderBrush}">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                     <Style.Setters>
@@ -38,7 +38,7 @@
                                             </Grid.RowDefinitions>
                                             
                                             <Viewbox Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                <ScrollViewer x:Name="PART_ContentHost"/>
+                                                <ScrollViewer x:Name="PART_ContentHost" FontSize="{TemplateBinding FontSize}"/>
                                             </Viewbox>
                                             
                                             <Viewbox Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center">

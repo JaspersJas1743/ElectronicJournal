@@ -12,13 +12,11 @@ namespace ElectronicJournal.ViewModels
 	public class RegistrationVM : TrackedObject
 	{
 		#region Fields
-		private const string DefaultButtonContent = "Зарегистрироваться";
-
 		private readonly INavigationProvider _navigationProvider;
 
 		private readonly Lazy<Command> _backCommand;
 		private readonly Lazy<Command> _registrationCommand;
-		private string _buttonContent;
+
 		private string _code;
 		#endregion Fields
 
@@ -26,36 +24,23 @@ namespace ElectronicJournal.ViewModels
 		public RegistrationVM(INavigationProvider navigationProvider)
 		{
 			_navigationProvider = navigationProvider;
-			_backCommand = Command.CreateLazyCommand(action: obj => _navigationProvider.MoveTo<AuthorizationVM>());
+			
+			DefaultButtonContent = "Зарегистрироваться";
 			_buttonContent = DefaultButtonContent;
-			_registrationCommand = Command.CreateLazyCommand(action: async obj =>
+
+			_backCommand = Command.CreateLazyCommand(
+				action: _ => _navigationProvider.MoveTo<AuthorizationVM>(),
+				canExecute: _ => ButtonContent.Equals(DefaultButtonContent)
+			);
+
+			_registrationCommand = Command.CreateLazyCommand(action: async _ => 
 			{
-				// TODO: Запрос к апи на проверку кода регистрации (имеется ли такой)
-				// Если да, то установить айди челика в ApiClient и перейти на страницу
-				// создания логина и пароля
-				//Если нет, соответственно, ошибку выдать
-				var checkRegistrationCodeTask = TryCheckRegistrationCode();
-
-				int count = 0;
-				while (!checkRegistrationCodeTask.IsCompleted)
-				{
-					if (count == 3)
-						count = 0;
-
-					ButtonContent = "Загрузка" + new String(c: '.', count: ++count);
-
-					await Task.Delay(millisecondsDelay: 250);
-				}
-
-				(bool result, string message) = await checkRegistrationCodeTask;
-				ButtonContent = DefaultButtonContent;
-				if (result)
-				{
-					MessageWindow.ShowInformation(text: message);
-					return;
-				}
-				MessageWindow.ShowError(text: message);
-			}, canExecute: obj => Code?.Length == CodeEntryPanel.MaxCountOfCell && ButtonContent.Equals(DefaultButtonContent));
+				if (await TryExecuteTask(taskForExecute: TryCheckRegistrationCode))
+					_navigationProvider.MoveTo<RegistrationOfAuthorizationDataVM>();
+				else
+					MessageWindow.ShowError(text: "Проверьте правильность кода или обратитесь в Вашу организацию");
+			}, 
+			canExecute: _ => Code?.Length == CodeEntryPanel.MaxCountOfCell && ButtonContent.Equals(DefaultButtonContent));
 		}
 		#endregion Constructors
 
@@ -63,16 +48,6 @@ namespace ElectronicJournal.ViewModels
 		public Command Registration => _registrationCommand.Value;
 
 		public Command Back => _backCommand.Value;
-
-		public string ButtonContent
-		{
-			get => _buttonContent;
-			set
-			{
-				_buttonContent = value;
-				OnPropertyChanged(propertyName: nameof(ButtonContent));
-			}
-		}
 
 		public string Code
 		{
@@ -86,17 +61,17 @@ namespace ElectronicJournal.ViewModels
 		#endregion Properties
 
 		#region Methods
-		private async Task<(bool Result, string Message)> TryCheckRegistrationCode()
+		private async Task<bool> TryCheckRegistrationCode()
 		{
 			try
 			{
-				TokenResponse tokenResponse = await ApiClient.SendAndGetAsync<TokenResponse>(apiMethod: "User/CheckRegistrationCode", arg: Code);
-				ApiClient.SetIdForUser(id: tokenResponse.Id);
-				return (Result: true, Message: $"Переход на страницу установки логина и пароля для аккаунта пользователя №{tokenResponse.Id}");
+				int userId = await ApiClient.GetAsync<int>(apiMethod: "User/GetUserIdByRegistrationCode", arg: Code);
+				ApiClient.SetIdForUser(id: userId);
+				return true;
 			}
-			catch (Exception ex)
+			catch
 			{
-				return (Result: false, Message: ex.Message);
+				return false;
 			}
 		}
 
