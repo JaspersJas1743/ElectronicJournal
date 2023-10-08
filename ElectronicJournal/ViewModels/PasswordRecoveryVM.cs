@@ -4,7 +4,7 @@ using System;
 
 namespace ElectronicJournal.ViewModels
 {
-	public class PasswordRecoveryVM : TrackedObject
+	public class PasswordRecoveryVM : VM
 	{
 		#region Fields
 		private readonly Lazy<Command> _backCommand;

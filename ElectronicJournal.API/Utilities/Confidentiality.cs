@@ -8,23 +8,26 @@ namespace ElectronicJournal.API.Utilities
 {
 	public static class Confidentiality
 	{
-		public static string GenerateJWT(string data)
+		public static async Task<string> GenerateJWT(string data)
 		{
-			Claim[] claims = new Claim[1] 
-			{ 
-				new Claim(ClaimTypes.Name, data) 
-			};
+			string token = String.Empty;
+			await Task.Run(() =>
+			{
+                var jwt = new JwtSecurityToken(
+                    issuer: AuthorizationOptions.ISSUER,
+                    audience: AuthorizationOptions.AUDIENCE,
+                    claims: new Claim[1] 
+					{ 
+						new Claim(ClaimTypes.Name, data) 
+					},
+                    signingCredentials: new SigningCredentials(
+                        key: AuthorizationOptions.SECURITYKEY,
+                        algorithm: SecurityAlgorithms.HmacSha256)
+                    );
 
-			var jwt = new JwtSecurityToken(
-				issuer: AuthorizationOptions.ISSUER,
-				audience: AuthorizationOptions.AUDIENCE,
-				claims: claims,
-				signingCredentials: new SigningCredentials(
-					key: AuthorizationOptions.SECURITYKEY, 
-					algorithm: SecurityAlgorithms.HmacSha256)
-				);
-
-			return new JwtSecurityTokenHandler().WriteToken(jwt);
+                token = new JwtSecurityTokenHandler().WriteToken(jwt);
+            });
+			return token;
 		}
 
 		public static async Task<string> GenerateHashAsync(string data)

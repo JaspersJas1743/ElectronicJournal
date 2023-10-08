@@ -1,4 +1,4 @@
-﻿namespace ElectronicJournal.Utilities
+﻿namespace ElectronicJournalAPI
 {
 	public class Error
 	{

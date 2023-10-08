@@ -1,80 +1,84 @@
 ﻿using ElectronicJournal.Resources.CustomElements;
 using ElectronicJournal.Resources.Windows;
-using ElectronicJournal.Utilities.Api;
-using ElectronicJournal.Utilities.Api.Models;
 using ElectronicJournal.Utilities.Navigation;
 using ElectronicJournal.ViewModels.Tools;
+using ElectronicJournalAPI;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ElectronicJournal.ViewModels
 {
-	public class RegistrationVM : TrackedObject
-	{
-		#region Fields
-		private readonly INavigationProvider _navigationProvider;
+    public class RegistrationVM : VM
+    {
+        #region Fields
+        private readonly INavigationProvider _navigationProvider;
 
-		private readonly Lazy<Command> _backCommand;
-		private readonly Lazy<Command> _registrationCommand;
+        private readonly Lazy<Command> _backCommand;
+        private readonly Lazy<Command> _registrationCommand;
 
-		private string _code;
-		#endregion Fields
+        private string _code;
+        #endregion Fields
 
-		#region Constructors
-		public RegistrationVM(INavigationProvider navigationProvider)
-		{
-			_navigationProvider = navigationProvider;
-			
-			DefaultButtonContent = "Зарегистрироваться";
-			_buttonContent = DefaultButtonContent;
+        #region Constructors
+        public RegistrationVM(INavigationProvider navigationProvider)
+            : base(defaultButtonContent: "Зарегистрироваться")
+        {
+            _navigationProvider = navigationProvider;
+            _backCommand = Command.CreateLazyCommand(
+                action: _ => _navigationProvider.MoveTo<AuthorizationVM>(),
+                canExecute: _ => CanMoveToAnotherPage
+            );
 
-			_backCommand = Command.CreateLazyCommand(
-				action: _ => _navigationProvider.MoveTo<AuthorizationVM>(),
-				canExecute: _ => ButtonContent.Equals(DefaultButtonContent)
-			);
+            _registrationCommand = Command.CreateLazyCommand(action: async _ =>
+            {
+                try
+                {
+                    if (await ExecuteTask(taskForExecute: VerifyRegistrationCodeAsync))
+                    {
+                        _navigationProvider.MoveTo<RegistrationOfAuthorizationDataVM>(parameters: new Dictionary<string, object>()
+                        {
+                            [nameof(RegistrationOfAuthorizationDataVM.RegistrationCode)] = Code
+                        });
+                    }
+                    else
+                        MessageWindow.ShowError(text: "Проверьте правильность кода или обратитесь в Вашу организацию");
+                } catch (Exception ex)
+                {
+                    MessageWindow.ShowError(text: ex.Message);
+                }
+            },
+            canExecute: _ => Code?.Length == CodeEntryPanel.MaxCountOfCell && CanMoveToAnotherPage);
+        }
+        #endregion Constructors
 
-			_registrationCommand = Command.CreateLazyCommand(action: async _ => 
-			{
-				if (await TryExecuteTask(taskForExecute: TryCheckRegistrationCode))
-					_navigationProvider.MoveTo<RegistrationOfAuthorizationDataVM>();
-				else
-					MessageWindow.ShowError(text: "Проверьте правильность кода или обратитесь в Вашу организацию");
-			}, 
-			canExecute: _ => Code?.Length == CodeEntryPanel.MaxCountOfCell && ButtonContent.Equals(DefaultButtonContent));
-		}
-		#endregion Constructors
+        #region Properties
+        public Command Registration => _registrationCommand.Value;
 
-		#region Properties
-		public Command Registration => _registrationCommand.Value;
+        public Command Back => _backCommand.Value;
 
-		public Command Back => _backCommand.Value;
+        public string Code
+        {
+            get => _code;
+            set
+            {
+                _code = value;
+                OnPropertyChanged(propertyName: nameof(Code));
+            }
+        }
+        #endregion Properties
 
-		public string Code
-		{
-			get => _code;
-			set
-			{
-				_code = value;
-				OnPropertyChanged(propertyName: nameof(Code));
-			}
-		}
-		#endregion Properties
+        #region Classes
+        public class RegistrationCodeResponse
+        {
+            public bool IsVerified { get; set; }
+        }
+        #endregion Classes
 
-		#region Methods
-		private async Task<bool> TryCheckRegistrationCode()
-		{
-			try
-			{
-				int userId = await ApiClient.GetAsync<int>(apiMethod: "User/GetUserIdByRegistrationCode", arg: Code);
-				ApiClient.SetIdForUser(id: userId);
-				return true;
-			}
-			catch
-			{
-				return false;
-			}
-		}
+        #region Methods
+        private async Task<bool> VerifyRegistrationCodeAsync()
+            => await new ElectronicJournalApi(registrationCode: Code).VerifyRegistrationCode();
 
-		#endregion Methods
-	}
+        #endregion Methods
+    }
 }

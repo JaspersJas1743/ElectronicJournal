@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElectronicJournalAPI;
+using System;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;

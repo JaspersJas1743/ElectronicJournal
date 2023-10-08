@@ -4,7 +4,7 @@ using System;
 
 namespace ElectronicJournal.ViewModels
 {
-	public class TimetableVM : TrackedObject
+	public class TimetableVM : VM
 	{
 		#region Fields
 		private readonly INavigationProvider _navigationProvider;

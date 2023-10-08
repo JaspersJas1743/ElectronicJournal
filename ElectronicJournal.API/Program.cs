@@ -1,12 +1,13 @@
 using AspNetCoreRateLimit;
 using ElectronicJournal.API.DBModels;
 using ElectronicJournal.API.Utilities;
-using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
+using FluentValidation;
+using HealthChecks.UI.Client;
 
 namespace ElectronicJournal.API
 {
@@ -63,7 +64,7 @@ namespace ElectronicJournal.API
             builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
             builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
-            builder.Services.AddInMemoryRateLimiting();
+			builder.Services.AddInMemoryRateLimiting();
 
             builder.Services.AddAuthorization();
 			
@@ -91,9 +92,7 @@ namespace ElectronicJournal.API
 			}
 
 			app.MapHealthChecks(pattern: "/state", options: CreateHealthCheckOptions(predicate: _ => true));
-
 			app.MapHealthChecks(pattern: "/state/api", options: CreateHealthCheckOptions(predicate: reg => reg.Tags.Contains(item: "api")));
-
 			app.MapHealthChecks(pattern: "/state/db", options: CreateHealthCheckOptions(predicate: reg => reg.Tags.Contains(item: "db")));
 
             app.UseIpRateLimiting();
