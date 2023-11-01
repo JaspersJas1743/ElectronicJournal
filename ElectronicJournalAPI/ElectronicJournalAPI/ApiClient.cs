@@ -30,7 +30,7 @@ namespace ElectronicJournalAPI
         #region Constructors
         static ApiClient()
         {
-            _client.Timeout = TimeSpan.FromSeconds(value: 1.5);
+            _client.Timeout = TimeSpan.FromSeconds(value: 2);
             _client.DefaultRequestHeaders.Clear();
             _client.DefaultRequestHeaders.Add("Accept", "application/json");
         }
@@ -97,10 +97,7 @@ namespace ElectronicJournalAPI
             {
                 uri.Append("?");
                 foreach (var pair in arg)
-                {
-                    uri.Append(value: $"{pair.Key}={pair.Value}");
-                    uri.Append("&");
-                }
+                    uri.Append(value: $"{pair.Key}={pair.Value}&");
                 uri.Remove(startIndex: uri.Length - 1, length: 1);
             }
             return new Uri(uriString: uri.ToString());

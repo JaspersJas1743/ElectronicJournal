@@ -58,10 +58,12 @@ namespace ElectronicJournal.ViewModels.Tools
                 var task = taskForExecute();
                 await Exec(task: task);
                 await task;
-            } catch (TaskCanceledException ex)
+            }
+            catch (TaskCanceledException ex)
             {
                 throw new ApiException(message: "Удаленный сервер не доступен в данный момент", inner: ex);
-            } catch { throw; }
+            }
+            catch { throw; }
         }
 
         private async Task Exec(Task task)

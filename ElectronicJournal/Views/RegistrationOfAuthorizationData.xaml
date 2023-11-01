@@ -4,25 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:uc="clr-namespace:ElectronicJournal.Resources.CustomElements"
-             mc:Ignorable="d" MaxWidth="1000" MaxHeight="650" 
-             d:DesignHeight="650" d:DesignWidth="1000">
+             mc:Ignorable="d" MaxWidth="1920" MaxHeight="1440" 
+             d:DesignHeight="1440" d:DesignWidth="1920">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.22*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MaxWidth="1200"/>
             <ColumnDefinition Width="0.22*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.187*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MaxHeight="850"/>
             <RowDefinition Height="0.187*"/>
         </Grid.RowDefinitions>
-        <Border BorderThickness="4" Grid.Column="1" Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" CornerRadius="20" Padding="20">
+        <Border BorderThickness="4" BorderBrush="{DynamicResource BorderColor}"
+                Grid.Column="1" Grid.Row="1" CornerRadius="20" Padding="20">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.7*"/>
-                    <ColumnDefinition Width="0.05*"/>
-                    <ColumnDefinition Width="0.9*"/>
+                    <ColumnDefinition Width="0.05*" MaxWidth="10"/>
+                    <ColumnDefinition Width="0.9*" MaxWidth="500"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.3*"/>
@@ -42,15 +43,15 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0"/>
-                        <RowDefinition Height="1*"/>
                         <RowDefinition Height="0.1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="0.1*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*" MaxHeight="60"/>
+                        <RowDefinition Height="0.1*" MaxHeight="10"/>
+                        <RowDefinition Height="1*" MaxHeight="60"/>
+                        <RowDefinition Height="0.1*" MaxHeight="10"/>
+                        <RowDefinition Height="1*" MaxHeight="60"/>
                         <RowDefinition Height="0.2*"/>
-                        <RowDefinition Height="1.3*"/>
-                        <RowDefinition Height="0.6*" MaxHeight="17"/>
+                        <RowDefinition Height="1.3*" MaxHeight="80"/>
+                        <RowDefinition Height="0.6*" MaxHeight="25"/>
                     </Grid.RowDefinitions>
 
                     <uc:TextBoxWithImageAndPlaceholder 

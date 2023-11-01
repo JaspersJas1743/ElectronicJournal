@@ -1,374 +1,453 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace ElectronicJournal.API.DBModels;
 
 public partial class ElectronicJournalContext : DbContext
 {
-	public ElectronicJournalContext()
-	{
-	}
+    public ElectronicJournalContext()
+    {
+    }
 
-	public ElectronicJournalContext(DbContextOptions<ElectronicJournalContext> options)
-		: base(options)
-	{
-	}
+    public ElectronicJournalContext(DbContextOptions<ElectronicJournalContext> options)
+        : base(options)
+    {
+    }
 
-	public virtual DbSet<Admin> Admins { get; set; }
+    public virtual DbSet<Admin> Admins { get; set; }
 
-	public virtual DbSet<Attachment> Attachments { get; set; }
+    public virtual DbSet<Attachment> Attachments { get; set; }
 
-	public virtual DbSet<CoupleTiming> CoupleTimings { get; set; }
+    public virtual DbSet<CoupleTiming> CoupleTimings { get; set; }
 
-	public virtual DbSet<Group> Groups { get; set; }
+    public virtual DbSet<Gender> Genders { get; set; }
 
-	public virtual DbSet<Homework> Homeworks { get; set; }
+    public virtual DbSet<Group> Groups { get; set; }
 
-	public virtual DbSet<Lesson> Lessons { get; set; }
+    public virtual DbSet<Homework> Homeworks { get; set; }
 
-	public virtual DbSet<Mark> Marks { get; set; }
+    public virtual DbSet<Lesson> Lessons { get; set; }
 
-	public virtual DbSet<Message> Messages { get; set; }
+    public virtual DbSet<LessonTopic> LessonTopics { get; set; }
 
-	public virtual DbSet<Parent> Parents { get; set; }
+    public virtual DbSet<Mark> Marks { get; set; }
 
-	public virtual DbSet<Role> Roles { get; set; }
+    public virtual DbSet<MarksEnum> MarksEnums { get; set; }
 
-	public virtual DbSet<Specialisation> Specialisations { get; set; }
+    public virtual DbSet<Message> Messages { get; set; }
 
-	public virtual DbSet<Student> Students { get; set; }
+    public virtual DbSet<Parent> Parents { get; set; }
 
-	public virtual DbSet<Teacher> Teachers { get; set; }
+    public virtual DbSet<Role> Roles { get; set; }
 
-	public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Specialization> Specializations { get; set; }
 
-	protected override void OnModelCreating(ModelBuilder modelBuilder)
-	{
-		modelBuilder.Entity<Admin>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Admins__3214EC27005CBC75");
+    public virtual DbSet<Student> Students { get; set; }
 
-			entity.HasIndex(e => e.User, "UQ__Admins__BD20C6F176F78631").IsUnique();
+    public virtual DbSet<Teacher> Teachers { get; set; }
 
-			entity.Property(e => e.Id).HasColumnName("ID");
+    public virtual DbSet<User> Users { get; set; }
 
-			entity.HasOne(d => d.RoleNavigation).WithMany(p => p.Admins)
-				.HasForeignKey(d => d.Role)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Admins__Role__59FA5E80");
-
-			entity.HasOne(d => d.UserNavigation).WithOne(p => p.Admin)
-				.HasForeignKey<Admin>(d => d.User)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Admins__User__59063A47");
-		});
-
-		modelBuilder.Entity<Attachment>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Attachme__3214EC276A4ED7C0");
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-			entity.Property(e => e.Path).HasMaxLength(100);
-
-			entity.HasMany(d => d.Messages).WithMany(p => p.Attachments)
-				.UsingEntity<Dictionary<string, object>>(
-					"AttachmentsMessage",
-					r => r.HasOne<Message>().WithMany()
-						.HasForeignKey("MessagesId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__Attachmen__Messa__6D0D32F4"),
-					l => l.HasOne<Attachment>().WithMany()
-						.HasForeignKey("AttachmentsId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__Attachmen__Attac__6C190EBB"),
-					j =>
-					{
-						j.HasKey("AttachmentsId", "MessagesId").HasName("PK__Attachme__F9D9A2E231052F3A");
-						j.ToTable("Attachments_Messages");
-						j.IndexerProperty<int>("AttachmentsId").HasColumnName("Attachments_ID");
-						j.IndexerProperty<int>("MessagesId").HasColumnName("Messages_ID");
-					});
-		});
-
-		modelBuilder.Entity<CoupleTiming>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__CoupleTi__3214EC278E3AF25F");
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-			entity.Property(e => e.Auditorium).HasMaxLength(5);
-			entity.Property(e => e.DayOfWeek).HasMaxLength(255);
-
-			entity.HasOne(d => d.GroupNavigation).WithMany(p => p.CoupleTimings)
-				.HasForeignKey(d => d.Group)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__CoupleTim__Group__693CA210");
-
-			entity.HasOne(d => d.LessonNavigation).WithMany(p => p.CoupleTimings)
-				.HasForeignKey(d => d.Lesson)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__CoupleTim__Lesso__68487DD7");
-		});
-
-		modelBuilder.Entity<Group>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Groups__3214EC2787B547FE");
-
-			entity.HasIndex(e => e.ClassTeacher, "UQ__Groups__9CAC3D257BC2C412").IsUnique();
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-			entity.Property(e => e.Name).HasMaxLength(50);
-
-			entity.HasOne(d => d.ClassTeacherNavigation).WithOne(p => p.Group)
-				.HasForeignKey<Group>(d => d.ClassTeacher)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Groups__ClassTea__5FB337D6");
-
-			entity.HasOne(d => d.SpecialisationNavigation).WithMany(p => p.Groups)
-				.HasForeignKey(d => d.Specialisation)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Groups__Speciali__60A75C0F");
-		});
-
-		modelBuilder.Entity<Homework>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Homework__3214EC277039E204");
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-
-			entity.HasOne(d => d.GroupNavigation).WithMany(p => p.Homeworks)
-				.HasForeignKey(d => d.Group)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Homeworks__Group__656C112C");
-
-			entity.HasOne(d => d.LessonNavigation).WithMany(p => p.Homeworks)
-				.HasForeignKey(d => d.Lesson)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Homeworks__Lesso__6477ECF3");
-
-			entity.HasMany(d => d.Attachments).WithMany(p => p.Homeworks)
-				.UsingEntity<Dictionary<string, object>>(
-					"HomeworksAttachment",
-					r => r.HasOne<Attachment>().WithMany()
-						.HasForeignKey("AttachmentsId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__Homeworks__Attac__787EE5A0"),
-					l => l.HasOne<Homework>().WithMany()
-						.HasForeignKey("HomeworksId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__Homeworks__Homew__778AC167"),
-					j =>
-					{
-						j.HasKey("HomeworksId", "AttachmentsId").HasName("PK__Homework__107051EC05741EF1");
-						j.ToTable("Homeworks_Attachments");
-						j.IndexerProperty<int>("HomeworksId").HasColumnName("Homeworks_ID");
-						j.IndexerProperty<int>("AttachmentsId").HasColumnName("Attachments_ID");
-					});
-		});
-
-		modelBuilder.Entity<Lesson>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Lessons__3214EC277AC59F42");
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-			entity.Property(e => e.Name).HasMaxLength(70);
-		});
-
-		modelBuilder.Entity<Mark>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Marks__3214EC277AE3F314");
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-			entity.Property(e => e.Description).HasMaxLength(50);
-			entity.Property(e => e.Mark1)
-				.HasMaxLength(255)
-				.HasColumnName("Mark");
-
-			entity.HasOne(d => d.LessonNavigation).WithMany(p => p.Marks)
-				.HasForeignKey(d => d.Lesson)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Marks__Lesson__6383C8BA");
-
-			entity.HasOne(d => d.StudentNavigation).WithMany(p => p.Marks)
-				.HasForeignKey(d => d.Student)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Marks__Student__619B8048");
-
-			entity.HasOne(d => d.TeacherNavigation).WithMany(p => p.Marks)
-				.HasForeignKey(d => d.Teacher)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Marks__Teacher__628FA481");
-		});
-
-		modelBuilder.Entity<Message>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Messages__3214EC27446B713C");
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-			entity.Property(e => e.ReadDatetime).HasColumnType("datetime");
-			entity.Property(e => e.SendDatetime).HasColumnType("datetime");
-
-			entity.HasOne(d => d.ReceiverNavigation).WithMany(p => p.MessageReceiverNavigations)
-				.HasForeignKey(d => d.Receiver)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Messages__Receiv__66603565");
-
-			entity.HasOne(d => d.SenderNavigation).WithMany(p => p.MessageSenderNavigations)
-				.HasForeignKey(d => d.Sender)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Messages__Sender__6754599E");
-		});
-
-		modelBuilder.Entity<Parent>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Parents__3214EC274422AE31");
-
-			entity.HasIndex(e => e.User, "UQ__Parents__BD20C6F1E94ACEA7").IsUnique();
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-
-			entity.HasOne(d => d.ChildNavigation).WithMany(p => p.Parents)
-				.HasForeignKey(d => d.Child)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Parents__Child__5EBF139D");
-
-			entity.HasOne(d => d.UserNavigation).WithOne(p => p.Parent)
-				.HasForeignKey<Parent>(d => d.User)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Parents__User__5DCAEF64");
-		});
-
-		modelBuilder.Entity<Role>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Roles__3214EC27FC10B286");
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-			entity.Property(e => e.Name).HasMaxLength(50);
-		});
-
-		modelBuilder.Entity<Specialisation>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Speciali__3214EC27F14D6030");
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-			entity.Property(e => e.Name).HasMaxLength(50);
-
-			entity.HasMany(d => d.Lessons).WithMany(p => p.Specialisations)
-				.UsingEntity<Dictionary<string, object>>(
-					"SpecialisationsLesson",
-					r => r.HasOne<Lesson>().WithMany()
-						.HasForeignKey("LessonsId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__Specialis__Lesso__7C4F7684"),
-					l => l.HasOne<Specialisation>().WithMany()
-						.HasForeignKey("SpecialisationsId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__Specialis__Speci__7B5B524B"),
-					j =>
-					{
-						j.HasKey("SpecialisationsId", "LessonsId").HasName("PK__Speciali__CA6DB7B385AED312");
-						j.ToTable("Specialisations_Lessons");
-						j.IndexerProperty<int>("SpecialisationsId").HasColumnName("Specialisations_ID");
-						j.IndexerProperty<int>("LessonsId").HasColumnName("Lessons_ID");
-					});
-		});
-
-		modelBuilder.Entity<Student>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Students__3214EC272E07BAE9");
-
-			entity.HasIndex(e => e.User, "UQ__Students__BD20C6F176094BAC").IsUnique();
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-
-			entity.HasOne(d => d.GroupNavigation).WithMany(p => p.Students)
-				.HasForeignKey(d => d.Group)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Students__Group__5CD6CB2B");
-
-			entity.HasOne(d => d.UserNavigation).WithOne(p => p.Student)
-				.HasForeignKey<Student>(d => d.User)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Students__User__5BE2A6F2");
-		});
-
-		modelBuilder.Entity<Teacher>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Teachers__3214EC2760F04C5A");
-
-			entity.HasIndex(e => e.User, "UQ__Teachers__BD20C6F1D6F993A4").IsUnique();
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-
-			entity.HasOne(d => d.UserNavigation).WithOne(p => p.Teacher)
-				.HasForeignKey<Teacher>(d => d.User)
-				.OnDelete(DeleteBehavior.ClientSetNull)
-				.HasConstraintName("FK__Teachers__User__5AEE82B9");
-
-			entity.HasMany(d => d.Groups).WithMany(p => p.Teachers)
-				.UsingEntity<Dictionary<string, object>>(
-					"TeachersGroup",
-					r => r.HasOne<Group>().WithMany()
-						.HasForeignKey("GroupsId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__Teachers___Group__74AE54BC"),
-					l => l.HasOne<Teacher>().WithMany()
-						.HasForeignKey("TeachersId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__Teachers___Teach__73BA3083"),
-					j =>
-					{
-						j.HasKey("TeachersId", "GroupsId").HasName("PK__Teachers__C94C3195A53FA712");
-						j.ToTable("Teachers_Groups");
-						j.IndexerProperty<int>("TeachersId").HasColumnName("Teachers_ID");
-						j.IndexerProperty<int>("GroupsId").HasColumnName("Groups_ID");
-					});
-
-			entity.HasMany(d => d.Lessons).WithMany(p => p.Teachers)
-				.UsingEntity<Dictionary<string, object>>(
-					"TeachersLesson",
-					r => r.HasOne<Lesson>().WithMany()
-						.HasForeignKey("LessonsId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__Teachers___Lesso__70DDC3D8"),
-					l => l.HasOne<Teacher>().WithMany()
-						.HasForeignKey("TeachersId")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("FK__Teachers___Teach__6FE99F9F"),
-					j =>
-					{
-						j.HasKey("TeachersId", "LessonsId").HasName("PK__Teachers__0FF214AED2C27BC8");
-						j.ToTable("Teachers_Lessons");
-						j.IndexerProperty<int>("TeachersId").HasColumnName("Teachers_ID");
-						j.IndexerProperty<int>("LessonsId").HasColumnName("Lessons_ID");
-					});
-		});
-
-		modelBuilder.Entity<User>(entity =>
-		{
-			entity.HasKey(e => e.Id).HasName("PK__Users__3214EC27C555FB1D");
-
-			entity.HasIndex(e => e.AuthKey, "UK_AuthKey").IsUnique();
-
-			entity.HasIndex(e => e.Password, "UK_Password").IsUnique();
-
-			entity.Property(e => e.Id).HasColumnName("ID");
-			entity.Property(e => e.AuthKey).HasMaxLength(255);
-			entity.Property(e => e.Birthday).HasColumnType("date");
-			entity.Property(e => e.Email).HasMaxLength(50);
-			entity.Property(e => e.Name).HasMaxLength(50);
-			entity.Property(e => e.Password).HasMaxLength(255);
-			entity.Property(e => e.Patronymic).HasMaxLength(50);
-			entity.Property(e => e.Phone)
-				.HasMaxLength(15)
-				.IsUnicode(false);
-			entity.Property(e => e.Photo).HasMaxLength(100);
-			entity.Property(e => e.RegistrationCode).HasMaxLength(255);
-			entity.Property(e => e.Role).HasMaxLength(255);
-			entity.Property(e => e.Sex).HasMaxLength(255);
-			entity.Property(e => e.Surname).HasMaxLength(50);
-		});
-
-		OnModelCreatingPartial(modelBuilder);
-	}
-
-	partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    public virtual DbSet<UserRole> UserRoles { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Admin>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Admins__3214EC27532B9E84");
+
+            entity.HasIndex(e => e.User, "UQ__Admins__BD20C6F155B1E28B").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+
+            entity.HasOne(d => d.RoleNavigation).WithMany(p => p.Admins)
+                .HasForeignKey(d => d.Role)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Admins__Role__38B96646");
+
+            entity.HasOne(d => d.UserNavigation).WithOne(p => p.Admin)
+                .HasForeignKey<Admin>(d => d.User)
+                .HasConstraintName("FK__Admins__User__39AD8A7F");
+        });
+
+        modelBuilder.Entity<Attachment>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Attachme__3214EC27299A51CA");
+
+            entity.HasIndex(e => e.Path, "UQ__Attachme__A15FA6CB89E8722D").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Path).HasMaxLength(100);
+
+            entity.HasMany(d => d.Messages).WithMany(p => p.Attachments)
+                .UsingEntity<Dictionary<string, object>>(
+                    "AttachmentsMessage",
+                    r => r.HasOne<Message>().WithMany()
+                        .HasForeignKey("MessagesId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Attachmen__Messa__3B95D2F1"),
+                    l => l.HasOne<Attachment>().WithMany()
+                        .HasForeignKey("AttachmentsId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Attachmen__Attac__3AA1AEB8"),
+                    j =>
+                    {
+                        j.HasKey("AttachmentsId", "MessagesId").HasName("PK__Attachme__F9D9A2E2AEED3CC3");
+                        j.ToTable("Attachments_Messages");
+                        j.IndexerProperty<int>("AttachmentsId").HasColumnName("Attachments_ID");
+                        j.IndexerProperty<int>("MessagesId").HasColumnName("Messages_ID");
+                    });
+        });
+
+        modelBuilder.Entity<CoupleTiming>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__CoupleTi__3214EC2773BDAEA0");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Auditorium).HasMaxLength(5);
+            entity.Property(e => e.Date).HasColumnType("date");
+
+            entity.HasOne(d => d.GroupNavigation).WithMany(p => p.CoupleTimings)
+                .HasForeignKey(d => d.Group)
+                .HasConstraintName("FK__CoupleTim__Group__3C89F72A");
+
+            entity.HasOne(d => d.LessonNavigation).WithMany(p => p.CoupleTimings)
+                .HasForeignKey(d => d.Lesson)
+                .HasConstraintName("FK__CoupleTim__Lesso__2E70E1FD");
+
+            entity.HasOne(d => d.TopicNavigation).WithMany(p => p.CoupleTimings)
+                .HasForeignKey(d => d.Topic)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__CoupleTim__Topic__3E723F9C");
+        });
+
+        modelBuilder.Entity<Gender>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Genders__3214EC2795BE775B");
+
+            entity.HasIndex(e => e.Name, "UQ__Genders__737584F67F316710").IsUnique();
+
+            entity.Property(e => e.Id)
+                .HasMaxLength(3)
+                .HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Group>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Groups__3214EC27FD6E4F1A");
+
+            entity.HasIndex(e => e.Name, "UQ__Groups__737584F64748FB92").IsUnique();
+
+            entity.HasIndex(e => e.ClassTeacher, "UQ__Groups__9CAC3D25DD98815B").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(11);
+
+            entity.HasOne(d => d.ClassTeacherNavigation).WithOne(p => p.Group)
+                .HasForeignKey<Group>(d => d.ClassTeacher)
+                .HasConstraintName("FK__Groups__ClassTea__3F6663D5");
+
+            entity.HasOne(d => d.SpecializationNavigation).WithMany(p => p.Groups)
+                .HasForeignKey(d => d.Specialization)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Groups__Speciali__405A880E");
+        });
+
+        modelBuilder.Entity<Homework>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Homework__3214EC2761D26139");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Text).HasMaxLength(255);
+
+            entity.HasOne(d => d.GroupNavigation).WithMany(p => p.Homeworks)
+                .HasForeignKey(d => d.Group)
+                .HasConstraintName("FK__Homeworks__Group__414EAC47");
+
+            entity.HasOne(d => d.LessonNavigation).WithMany(p => p.Homeworks)
+                .HasForeignKey(d => d.Lesson)
+                .HasConstraintName("FK__Homeworks__Lesso__2B947552");
+
+            entity.HasMany(d => d.Attachments).WithMany(p => p.Homeworks)
+                .UsingEntity<Dictionary<string, object>>(
+                    "HomeworksAttachment",
+                    r => r.HasOne<Attachment>().WithMany()
+                        .HasForeignKey("AttachmentsId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Homeworks__Attac__4336F4B9"),
+                    l => l.HasOne<Homework>().WithMany()
+                        .HasForeignKey("HomeworksId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Homeworks__Homew__442B18F2"),
+                    j =>
+                    {
+                        j.HasKey("HomeworksId", "AttachmentsId").HasName("PK__Homework__107051ECCCB9F5A2");
+                        j.ToTable("Homeworks_Attachments");
+                        j.IndexerProperty<int>("HomeworksId").HasColumnName("Homeworks_ID");
+                        j.IndexerProperty<int>("AttachmentsId").HasColumnName("Attachments_ID");
+                    });
+        });
+
+        modelBuilder.Entity<Lesson>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Lessons__3214EC270EF1F0AB");
+
+            entity.HasIndex(e => e.Name, "UQ__Lessons__737584F6D55BB868").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(70);
+        });
+
+        modelBuilder.Entity<LessonTopic>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__LessonTo__3214EC27DE81D917");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Topic).HasMaxLength(255);
+
+            entity.HasOne(d => d.LessonNavigation).WithMany(p => p.LessonTopics)
+                .HasForeignKey(d => d.Lesson)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__LessonTop__Lesso__26CFC035");
+        });
+
+        modelBuilder.Entity<Mark>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Marks__3214EC27CF1A17DC");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Description).HasMaxLength(50);
+            entity.Property(e => e.Mark1).HasColumnName("Mark");
+
+            entity.HasOne(d => d.LessonNavigation).WithMany(p => p.Marks)
+                .HasForeignKey(d => d.Lesson)
+                .HasConstraintName("FK__Marks__Lesson__29AC2CE0");
+
+            entity.HasOne(d => d.Mark1Navigation).WithMany(p => p.Marks)
+                .HasForeignKey(d => d.Mark1)
+                .HasConstraintName("FK__Marks__Mark__4707859D");
+
+            entity.HasOne(d => d.StudentNavigation).WithMany(p => p.Marks)
+                .HasForeignKey(d => d.Student)
+                .HasConstraintName("FK__Marks__Student__47FBA9D6");
+
+            entity.HasOne(d => d.TeacherNavigation).WithMany(p => p.Marks)
+                .HasForeignKey(d => d.Teacher)
+                .HasConstraintName("FK__Marks__Teacher__48EFCE0F");
+        });
+
+        modelBuilder.Entity<MarksEnum>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__MarksEnu__3214EC272C74BE46");
+
+            entity.ToTable("MarksEnum");
+
+            entity.HasIndex(e => e.Value, "UQ__MarksEnu__07D9BBC2D294B526").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Value).HasMaxLength(1);
+        });
+
+        modelBuilder.Entity<Message>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Messages__3214EC2738827A57");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.ReadDatetime).HasColumnType("datetime");
+            entity.Property(e => e.SendDatetime).HasColumnType("datetime");
+
+            entity.HasOne(d => d.SenderNavigation).WithMany(p => p.Messages)
+                .HasForeignKey(d => d.Sender)
+                .HasConstraintName("FK__Messages__Sender__49E3F248");
+
+            entity.HasMany(d => d.Users).WithMany(p => p.MessagesNavigation)
+                .UsingEntity<Dictionary<string, object>>(
+                    "MessagesUser",
+                    r => r.HasOne<User>().WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Messages___Users__4BCC3ABA"),
+                    l => l.HasOne<Message>().WithMany()
+                        .HasForeignKey("MessagesId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Messages___Messa__4AD81681"),
+                    j =>
+                    {
+                        j.HasKey("MessagesId", "UsersId").HasName("PK__Messages__2EFA06DB2371EF3F");
+                        j.ToTable("Messages_Users");
+                        j.IndexerProperty<int>("MessagesId").HasColumnName("Messages_ID");
+                        j.IndexerProperty<int>("UsersId").HasColumnName("Users_ID");
+                    });
+        });
+
+        modelBuilder.Entity<Parent>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Parents__3214EC274248229F");
+
+            entity.HasIndex(e => e.User, "UQ__Parents__BD20C6F1C1666574").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+
+            entity.HasOne(d => d.ChildNavigation).WithMany(p => p.Parents)
+                .HasForeignKey(d => d.Child)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Parents__Child__4CC05EF3");
+
+            entity.HasOne(d => d.UserNavigation).WithOne(p => p.Parent)
+                .HasForeignKey<Parent>(d => d.User)
+                .HasConstraintName("FK__Parents__User__4DB4832C");
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Roles__3214EC27BCC9239E");
+
+            entity.HasIndex(e => e.Name, "UQ__Roles__737584F6B40B989A").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Specialization>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Speciali__3214EC27783A3067");
+
+            entity.HasIndex(e => e.Name, "UQ__Speciali__737584F62E4C0FD6").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(7);
+
+            entity.HasMany(d => d.Lessons).WithMany(p => p.Specializations)
+                .UsingEntity<Dictionary<string, object>>(
+                    "SpecializationsLesson",
+                    r => r.HasOne<Lesson>().WithMany()
+                        .HasForeignKey("LessonsId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Specializ__Lesso__436BFEE3"),
+                    l => l.HasOne<Specialization>().WithMany()
+                        .HasForeignKey("SpecializationsId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Specializ__Speci__4F9CCB9E"),
+                    j =>
+                    {
+                        j.HasKey("SpecializationsId", "LessonsId").HasName("PK__Speciali__04B712E6BC5F669E");
+                        j.ToTable("Specializations_Lessons");
+                        j.IndexerProperty<int>("SpecializationsId").HasColumnName("Specializations_ID");
+                        j.IndexerProperty<int>("LessonsId").HasColumnName("Lessons_ID");
+                    });
+        });
+
+        modelBuilder.Entity<Student>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Students__3214EC274160EE4F");
+
+            entity.HasIndex(e => e.User, "UQ__Students__BD20C6F1DE793D3D").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+
+            entity.HasOne(d => d.GroupNavigation).WithMany(p => p.Students)
+                .HasForeignKey(d => d.Group)
+                .HasConstraintName("FK__Students__Group__5090EFD7");
+
+            entity.HasOne(d => d.UserNavigation).WithOne(p => p.Student)
+                .HasForeignKey<Student>(d => d.User)
+                .HasConstraintName("FK__Students__User__51851410");
+        });
+
+        modelBuilder.Entity<Teacher>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Teachers__3214EC2753E0F5AA");
+
+            entity.HasIndex(e => e.User, "UQ__Teachers__BD20C6F16ABA7B71").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+
+            entity.HasOne(d => d.UserNavigation).WithOne(p => p.Teacher)
+                .HasForeignKey<Teacher>(d => d.User)
+                .HasConstraintName("FK__Teachers__User__52793849");
+
+            entity.HasMany(d => d.Groups).WithMany(p => p.Teachers)
+                .UsingEntity<Dictionary<string, object>>(
+                    "TeachersGroup",
+                    r => r.HasOne<Group>().WithMany()
+                        .HasForeignKey("GroupsId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Teachers___Group__536D5C82"),
+                    l => l.HasOne<Teacher>().WithMany()
+                        .HasForeignKey("TeachersId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Teachers___Teach__546180BB"),
+                    j =>
+                    {
+                        j.HasKey("TeachersId", "GroupsId").HasName("PK__Teachers__C94C3195A842312D");
+                        j.ToTable("Teachers_Groups");
+                        j.IndexerProperty<int>("TeachersId").HasColumnName("Teachers_ID");
+                        j.IndexerProperty<int>("GroupsId").HasColumnName("Groups_ID");
+                    });
+
+            entity.HasMany(d => d.Lessons).WithMany(p => p.Teachers)
+                .UsingEntity<Dictionary<string, object>>(
+                    "TeachersLesson",
+                    r => r.HasOne<Lesson>().WithMany()
+                        .HasForeignKey("LessonsId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Teachers___Lesso__37FA4C37"),
+                    l => l.HasOne<Teacher>().WithMany()
+                        .HasForeignKey("TeachersId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Teachers___Teach__5649C92D"),
+                    j =>
+                    {
+                        j.HasKey("TeachersId", "LessonsId").HasName("PK__Teachers__0FF214AE05203EE4");
+                        j.ToTable("Teachers_Lessons");
+                        j.IndexerProperty<int>("TeachersId").HasColumnName("Teachers_ID");
+                        j.IndexerProperty<int>("LessonsId").HasColumnName("Lessons_ID");
+                    });
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC27021659CD");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Birthday).HasColumnType("date");
+            entity.Property(e => e.ConfirmationCode).HasMaxLength(5);
+            entity.Property(e => e.Email).HasMaxLength(50);
+            entity.Property(e => e.Gender).HasMaxLength(3);
+            entity.Property(e => e.Login).HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(50);
+            entity.Property(e => e.Password).HasMaxLength(255);
+            entity.Property(e => e.Patronymic).HasMaxLength(50);
+            entity.Property(e => e.Phone).HasMaxLength(15);
+            entity.Property(e => e.Photo).HasMaxLength(100);
+            entity.Property(e => e.RegistrationCode).HasMaxLength(6);
+            entity.Property(e => e.Surname).HasMaxLength(50);
+
+            entity.HasOne(d => d.GenderNavigation).WithMany(p => p.Users)
+                .HasForeignKey(d => d.Gender)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Users__Gender__573DED66");
+
+            entity.HasOne(d => d.UserRoleNavigation).WithMany(p => p.Users)
+                .HasForeignKey(d => d.UserRole)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Users__UserRole__5832119F");
+        });
+
+        modelBuilder.Entity<UserRole>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__UserRole__3214EC27C4C88E57");
+
+            entity.HasIndex(e => e.Name, "UQ__UserRole__737584F6C6C87564").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

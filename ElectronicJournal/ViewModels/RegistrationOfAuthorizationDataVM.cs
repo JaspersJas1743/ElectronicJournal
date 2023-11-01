@@ -1,8 +1,8 @@
-﻿using ElectronicJournalAPI;
-using ElectronicJournal.Models;
+﻿using ElectronicJournal.Models;
 using ElectronicJournal.Resources.Windows;
 using ElectronicJournal.Utilities.Navigation;
 using ElectronicJournal.ViewModels.Tools;
+using ElectronicJournalAPI;
 using FluentValidation;
 using System;
 using System.Threading.Tasks;
@@ -35,7 +35,8 @@ namespace ElectronicJournal.ViewModels
                 {
                     await ExecuteTask(taskForExecute: SignUpAsync);
                     _navigationProvider.MoveTo<AuthorizationVM>();
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     MessageWindow.ShowError(text: ex.Message);
                 }
@@ -91,15 +92,12 @@ namespace ElectronicJournal.ViewModels
 
         public Command Back => _backCommand.Value;
 
-        public string RegistrationCode { get; set; }
+        public RegistrationModule RegistrationModule { get; set; }
         #endregion Properties
 
         #region Methods
         private async Task SignUpAsync()
-        {
-            ElectronicJournalApi api = new ElectronicJournalApi(registrationCode: RegistrationCode);
-            await api.SignUpAsync(login: Login, password: Password);
-        }
+            => await RegistrationModule.SignUpAsync(login: Login, password: Password);
         #endregion Methods
     }
 }

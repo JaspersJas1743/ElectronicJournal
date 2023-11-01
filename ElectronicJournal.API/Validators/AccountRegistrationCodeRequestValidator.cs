@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace ElectronicJournal.API.Validators
 {
-    public class AccountRegistrationCodeRequestValidator: AbstractValidator<AccountController.RegistrationCodeRequest>
+    public class AccountRegistrationCodeRequestValidator : AbstractValidator<AccountController.RegistrationCodeRequest>
     {
-        public AccountRegistrationCodeRequestValidator() 
+        public AccountRegistrationCodeRequestValidator()
         {
             RuleFor(registrationCode => registrationCode.RegistrationCode)
                 .NotNull().WithMessage(errorMessage: "Регистрационный код является обязательным к заполнению")

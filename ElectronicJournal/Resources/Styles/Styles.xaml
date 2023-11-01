@@ -25,5 +25,6 @@
         <ResourceDictionary Source="/Resources/Images/AttentionMessage.xaml"/>
         <ResourceDictionary Source="/Resources/Images/ErrorMessage.xaml"/>
         <ResourceDictionary Source="/Resources/Images/InformationMessage.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Phone.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

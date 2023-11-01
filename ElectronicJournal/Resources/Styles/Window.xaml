@@ -78,7 +78,7 @@
                                             Grid.Column="6" Command="{Binding Collapse}" Style="{DynamicResource CollapseButton}"/>
 
                                     <Button Grid.Column="7" Command="{Binding Exit}" Style="{DynamicResource ExitButton}"
-                                            WindowChrome.IsHitTestVisibleInChrome="True"/>
+                                            WindowChrome.IsHitTestVisibleInChrome="True" IsCancel="True"/>
                                 </Grid>
                                 <ContentPresenter Content="{TemplateBinding Content}" Grid.Row="2"/>
                             </Grid>

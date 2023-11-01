@@ -1,11 +1,11 @@
-﻿using FluentValidation;
-using ElectronicJournal.API.Controllers;
+﻿using ElectronicJournal.API.Controllers;
+using FluentValidation;
 
 namespace ElectronicJournal.API.Validators
 {
-    public class AccountLogInDataValidator: AbstractValidator<AccountController.LogInData>
+    public class AccountLogInDataValidator : AbstractValidator<AccountController.LogInData>
     {
-        public AccountLogInDataValidator() 
+        public AccountLogInDataValidator()
         {
             RuleFor(logIn => logIn.Login)
                 .NotNull().WithMessage(errorMessage: "Логин является обязательным к заполнению")

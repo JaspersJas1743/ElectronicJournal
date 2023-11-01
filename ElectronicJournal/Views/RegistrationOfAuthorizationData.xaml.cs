@@ -2,11 +2,9 @@
 
 namespace ElectronicJournal.Views
 {
-	public partial class RegistrationOfAuthorizationData : UserControl
-	{
-		public RegistrationOfAuthorizationData()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class RegistrationOfAuthorizationData : UserControl
+    {
+        public RegistrationOfAuthorizationData()
+            => InitializeComponent();
+    }
 }

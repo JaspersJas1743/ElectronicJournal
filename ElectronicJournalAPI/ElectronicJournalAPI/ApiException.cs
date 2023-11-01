@@ -35,14 +35,14 @@ namespace ElectronicJournalAPI
 
         public static async Task ThrowIfBadResponseAsync(HttpResponseMessage response, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (_handlers.Contains(value: response.StatusCode))
-            {
-                Error error = await JsonSerializer.DeserializeAsync<Error>(
-                    utf8Json: await response.Content.ReadAsStreamAsync(),
-                    options: jsonSerializerOptions
-                );
-                throw new ApiException(message: error.Message);
-            }
+            if (!_handlers.Contains(value: response.StatusCode))
+                return;
+
+            Error error = await JsonSerializer.DeserializeAsync<Error>(
+                utf8Json: await response.Content.ReadAsStreamAsync(),
+                options: jsonSerializerOptions
+            );
+            throw new ApiException(message: error.Message);
         }
 
     }

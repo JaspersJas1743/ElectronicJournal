@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace ElectronicJournal.Utilities.Validator
 {
-    public class RegistrationOfAuthorizationDataModelValidator: AbstractValidator<RegistrationOfAuthorizationDataModel>
+    public class RegistrationOfAuthorizationDataModelValidator : AbstractValidator<RegistrationOfAuthorizationDataModel>
     {
         public RegistrationOfAuthorizationDataModelValidator()
         {

@@ -2,8 +2,8 @@
 
 namespace ElectronicJournal.Utilities.Api.ConnectionChecker
 {
-	public interface IConnectionChecker
-	{
-		Task<bool> CheckConnection();
-	}
+    public interface IConnectionChecker
+    {
+        Task<bool> CheckConnection();
+    }
 }

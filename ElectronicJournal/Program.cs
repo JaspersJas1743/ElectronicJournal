@@ -28,7 +28,6 @@ namespace ElectronicJournal
                     services.AddSingleton<RegistrationVM>();
                     services.AddSingleton<RegistrationOfAuthorizationDataVM>();
                     services.AddSingleton<TimetableVM>();
-                    services.AddSingleton<PasswordRecoveryVM>();
 
                     services.AddScoped<IConfigProvider, ConfigurationProvider>();
                     services.AddScoped<INavigationProvider, NavigationProvider>();

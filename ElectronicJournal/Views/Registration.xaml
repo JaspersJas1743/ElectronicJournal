@@ -4,17 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ce="clr-namespace:ElectronicJournal.Resources.CustomElements"
-             mc:Ignorable="d" MaxWidth="1000" MaxHeight="650" 
-             d:DesignHeight="650" d:DesignWidth="1000">
+             mc:Ignorable="d" MaxWidth="1920" MaxHeight="1440" 
+             d:DesignHeight="1440" d:DesignWidth="1920">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.22*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MaxWidth="1200"/>
             <ColumnDefinition Width="0.22*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.187*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MaxHeight="850"/>
             <RowDefinition Height="0.187*"/>
         </Grid.RowDefinitions>
         <Border BorderThickness="4" BorderBrush="{DynamicResource BorderColor}" 
@@ -22,8 +22,8 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.7*"/>
-                    <ColumnDefinition Width="0.05*"/>
-                    <ColumnDefinition Width="0.9*"/>
+                    <ColumnDefinition Width="0.05*" MaxWidth="10"/>
+                    <ColumnDefinition Width="0.9*" MaxWidth="500"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.3*"/>
@@ -45,10 +45,10 @@
                         <RowDefinition Height="0.05*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.1*"/>
-                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="0.6*" MaxHeight="75"/>
                         <RowDefinition Height="0.1*"/>
-                        <RowDefinition Height="0.7*"/>
-                        <RowDefinition Height="0.6*" MaxHeight="17"/>
+                        <RowDefinition Height="0.7*" MaxHeight="80"/>
+                        <RowDefinition Height="0.3*" MaxHeight="25"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -64,7 +64,7 @@
                         Background="{DynamicResource MainElementColor}" 
                         Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="20 0 20 0">
                         <Viewbox>
-                            <TextBlock Margin="7 0 7 0">
+                            <TextBlock Margin="10 0 10 0">
                                 Для регистрации необходимо ввести <LineBreak/> 
                                   регистрационный код, выданный <LineBreak/>
                                     Вашим учебным заведением

@@ -18,6 +18,7 @@ namespace ElectronicJournal.ViewModels
         private readonly Lazy<Command> _registrationCommand;
 
         private string _code;
+        private RegistrationModule _rm;
         #endregion Fields
 
         #region Constructors
@@ -38,7 +39,7 @@ namespace ElectronicJournal.ViewModels
                     {
                         _navigationProvider.MoveTo<RegistrationOfAuthorizationDataVM>(parameters: new Dictionary<string, object>()
                         {
-                            [nameof(RegistrationOfAuthorizationDataVM.RegistrationCode)] = Code
+                            ["RegistrationModule"] = _rm
                         });
                     }
                     else
@@ -77,8 +78,19 @@ namespace ElectronicJournal.ViewModels
 
         #region Methods
         private async Task<bool> VerifyRegistrationCodeAsync()
-            => await new ElectronicJournalApi(registrationCode: Code).VerifyRegistrationCode();
+        {
+            try
+            {
+                _rm = await RegistrationModule.Create(registrationCode: Code);
+                RegistrationCodeResponse response = await ApiClient.GetAsync<RegistrationCodeResponse>(
+                    apiMethod: "Account/VerifyRegistrationCode", argQuery: new Dictionary<string, string> {
+                                    { "RegistrationCode", Code }
+                    }
+                );
 
+                return response.IsVerified;
+            } catch { return false; }
+        }
         #endregion Methods
     }
 }

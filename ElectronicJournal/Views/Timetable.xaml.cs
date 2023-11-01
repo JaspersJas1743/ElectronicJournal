@@ -2,11 +2,9 @@
 
 namespace ElectronicJournal.Views
 {
-	public partial class Timetable : UserControl
-	{
-		public Timetable()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class Timetable : UserControl
+    {
+        public Timetable()
+            => InitializeComponent();
+    }
 }

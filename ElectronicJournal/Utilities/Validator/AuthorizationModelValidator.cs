@@ -5,7 +5,7 @@ namespace ElectronicJournal.Utilities.Validator
 {
     public class AuthorizationModelValidator : AbstractValidator<AuthorizationModel>
     {
-        public AuthorizationModelValidator() 
+        public AuthorizationModelValidator()
         {
             RuleFor(authorizationModel => authorizationModel.Login)
                 .NotNull().WithMessage(errorMessage: "Поле \"Логин\" является обязательным")

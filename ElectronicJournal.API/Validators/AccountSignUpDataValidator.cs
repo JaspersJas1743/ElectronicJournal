@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace ElectronicJournal.API.Validators
 {
-    public class AccountSignUpDataValidator: AbstractValidator<AccountController.SignUpData>
+    public class AccountSignUpDataValidator : AbstractValidator<AccountController.SignUpData>
     {
         public AccountSignUpDataValidator()
         {

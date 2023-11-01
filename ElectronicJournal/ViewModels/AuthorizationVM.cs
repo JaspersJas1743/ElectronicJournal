@@ -1,7 +1,6 @@
 ﻿using ElectronicJournal.Models;
 using ElectronicJournal.Resources.Windows;
 using ElectronicJournal.Utilities.Navigation;
-using ElectronicJournal.Utilities.Validator;
 using ElectronicJournal.ViewModels.Tools;
 using ElectronicJournalAPI;
 using FluentValidation;
@@ -17,7 +16,6 @@ namespace ElectronicJournal.ViewModels
 
         private readonly Lazy<Command> _authorize;
         private readonly Lazy<Command> _moveToRegistration;
-        private readonly Lazy<Command> _moveToPasswordRecovery;
 
         private readonly IValidator<AuthorizationModel> _authorizationModelValidator;
         private AuthorizationModel _model;
@@ -37,7 +35,8 @@ namespace ElectronicJournal.ViewModels
                 {
                     await ExecuteTask(taskForExecute: SignInAsync);
                     _navigationProvider.MoveTo<TimetableVM>();
-                } catch (Exception ex) 
+                }
+                catch (Exception ex)
                 {
                     MessageWindow.ShowError(text: ex.Message);
                 }
@@ -46,11 +45,6 @@ namespace ElectronicJournal.ViewModels
 
             _moveToRegistration = Command.CreateLazyCommand(
                 action: _ => _navigationProvider.MoveTo<RegistrationVM>(),
-                canExecute: _ => CanMoveToAnotherPage
-            );
-
-            _moveToPasswordRecovery = Command.CreateLazyCommand(
-                action: _ => _navigationProvider.MoveTo<PasswordRecoveryVM>(),
                 canExecute: _ => CanMoveToAnotherPage
             );
         }
@@ -79,13 +73,12 @@ namespace ElectronicJournal.ViewModels
 
         public Command Authorize => _authorize.Value;
         public Command MoveToRegistration => _moveToRegistration.Value;
-        public Command MoveToPasswordRecovery => _moveToPasswordRecovery.Value;
         #endregion Properties
 
         #region Methods
         private async Task SignInAsync()
         {
-            ElectronicJournalApi api = new ElectronicJournalApi(login: Login, password: Password);
+            AuthorizationModule api = AuthorizationModule.Create(login: Login, password: Password);
             await api.SignInAsync();
         }
         #endregion Methods
