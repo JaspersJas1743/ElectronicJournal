@@ -15,6 +15,7 @@ namespace ElectronicJournal.API.Utilities.Security.JWT
                 claims: new List<Claim>
                 {
                     new Claim(type: ClaimTypes.Name, value: tokenOwner.Login),
+                    new Claim(type: ClaimTypes.NameIdentifier, value: tokenOwner.Id.ToString()),
                     new Claim(type: ClaimTypes.Role, value: tokenOwner.UserRoleNavigation.Name)
                 },
                 signingCredentials: new SigningCredentials(

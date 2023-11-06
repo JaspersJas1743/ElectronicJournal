@@ -1,0 +1,125 @@
+﻿<UserControl x:Class="ElectronicJournal.Views.Menu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ce="clr-namespace:ElectronicJournal.Resources.CustomElements"
+             xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" MaxWidth="1920" MaxHeight="1440" d:DesignHeight="1440" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <DrawingImage x:Key="Default">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                    <DrawingGroup Opacity="1" Transform="0.1,0,0,-0.1,0,512">
+                        <GeometryDrawing Brush="{DynamicResource BorderColor}" Geometry="F1 M512,512z M0,0z M2285,5114C1916,5090 1469,5029 1255,4973 959,4896 747,4777 545,4575 299,4329 178,4079 106,3662 -35,2857 -32,2154 116,1395 253,695 688,255 1384,115 1540,84 1807,46 2035,24 2284,-1 2832,-1 3085,23 3488,63 3783,114 3983,180 4487,348 4840,726 4974,1241 5017,1409 5075,1791 5100,2085 5158,2755 5068,3680 4905,4085 4745,4482 4416,4791 4000,4933 3800,5001 3480,5058 3088,5096 2934,5110 2415,5122 2285,5114z M3090,4865C3295,4845 3558,4807 3713,4774 4298,4651 4659,4291 4775,3716 4807,3559 4845,3290 4867,3070 4891,2826 4891,2293 4867,2050 4788,1270 4691,978 4421,709 4368,657 4311,604 4294,592L4263,571 4257,708C4248,927 4207,1098 4120,1275 3908,1705 3445,1979 2826,2041 2674,2056 2301,2048 2166,2026 1605,1936 1196,1673 1000,1275 914,1099 872,928 863,713 860,640 855,580 852,580 849,580 816,606 778,637 623,764 485,968 407,1185 315,1444 230,2096 230,2550 230,2939 298,3538 375,3826 493,4271 787,4582 1225,4725 1412,4787 1831,4851 2225,4880 2400,4892 2898,4884 3090,4865z M2975,1791C3579,1680 3939,1354 4016,849 4038,709 4031,453 4005,434 3996,427 3945,408 3892,391 3534,277 2759,206 2240,239 1811,267 1431,326 1215,398L1105,435 1098,485C1087,574 1090,752 1105,852 1184,1379 1581,1713 2235,1805 2388,1827 2829,1818 2975,1791z" />
+                        <GeometryDrawing Brush="{DynamicResource BorderColor}" Geometry="F1 M512,512z M0,0z M2416,4270C2079,4216 1800,4017 1646,3720 1559,3551 1523,3385 1533,3191 1555,2751 1853,2381 2285,2254 2407,2219 2613,2210 2744,2234 3022,2287 3261,2444 3416,2676 3523,2836 3578,3003 3587,3196 3611,3688 3290,4124 2815,4246 2702,4274 2516,4286 2416,4270z M2765,4025C2984,3966 3187,3796 3284,3590 3342,3466 3355,3404 3355,3240 3354,3102 3353,3090 3321,2997 3237,2754 3045,2563 2802,2483 2721,2457 2704,2455 2555,2455 2402,2455 2391,2457 2308,2486 2058,2575 1885,2750 1798,3002 1768,3090 1766,3103 1765,3240 1765,3404 1777,3466 1836,3590 1945,3821 2171,3994 2422,4040 2495,4053 2693,4044 2765,4025z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </UserControl.Resources>
+    <Behaviors:Interaction.Triggers>
+        <Behaviors:EventTrigger EventName="Loaded">
+            <Behaviors:InvokeCommandAction Command="{Binding Loaded}"/>
+        </Behaviors:EventTrigger>
+    </Behaviors:Interaction.Triggers>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*" MaxWidth="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" BorderBrush="{DynamicResource BorderColor}" BorderThickness="0 3 3 0" CornerRadius="0 20 0 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.02*" MaxHeight="20"/>
+                    <RowDefinition Height="0.15*" MaxHeight="150"/>
+                    <RowDefinition Height="0.1*" MaxHeight="150"/>
+                    <RowDefinition Height="0.075*" MaxHeight="120"/>
+                    <RowDefinition Height="0.075*" MaxHeight="120"/>
+                    <RowDefinition Height="0.075*" MaxHeight="120"/>
+                    <RowDefinition Height="0.075*" MaxHeight="120"/>
+                    <RowDefinition Height="0.075*" MaxHeight="120"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.11*" MaxHeight="100"/>
+                    <RowDefinition Height="0.035*" MaxHeight="35"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.075*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.075*"/>
+                </Grid.ColumnDefinitions>
+                <Image Style="{DynamicResource Logo}" Grid.Row="1" Grid.Column="1"/>
+                <RadioButton GroupName="MenuItems" Grid.Column="1" VerticalContentAlignment="Center" Command="{Binding Profile}"
+                             Grid.Row="3" IsChecked="{Binding ElementName=ProfilePhoto,Path=IsChecked,Mode=TwoWay}">
+                    <RadioButton.Style>
+                        <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource RadioButtonInMenu}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=ProfilePhoto,Path=IsChecked}" Value="True">
+                                    <Setter Property="IsChecked" Value="True"/>
+                                    <Setter Property="Background" Value="{DynamicResource SelectedMenuItem}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </RadioButton.Style>
+                    <RadioButton.Content>
+                        <ce:MenuItem Image="{DynamicResource Profile}" Text="Профиль"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="MenuItems" Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center" 
+                             Command="{Binding Messages}" Style="{DynamicResource RadioButtonInMenu}">
+                    <RadioButton.Content>
+                        <ce:MenuItem Image="{DynamicResource Messages}" Text="Сообщения"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="MenuItems" Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center"
+                             Command="{Binding Homeworks}" Style="{DynamicResource RadioButtonInMenu}">
+                    <RadioButton.Content>
+                        <ce:MenuItem Image="{DynamicResource Homeworks}" Text="Домашние задания"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="MenuItems" Grid.Row="6" Grid.Column="1" VerticalContentAlignment="Center"
+                             Command="{Binding Marks}" Style="{DynamicResource RadioButtonInMenu}">
+                    <RadioButton.Content>
+                        <ce:MenuItem Image="{DynamicResource Marks}" Text="Оценки"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton GroupName="MenuItems" Grid.Row="7" Grid.Column="1" VerticalContentAlignment="Center"
+                             Command="{Binding Timetable}" Style="{DynamicResource RadioButtonInMenu}">
+                    <RadioButton.Content>
+                        <ce:MenuItem Image="{DynamicResource Timetable}" Text="Расписание"/>
+                    </RadioButton.Content>
+                </RadioButton>
+                <Grid Grid.Row="9" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="0.5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.25*"/>
+                        <ColumnDefinition Width="0.05*" MaxWidth="10"/>
+                        <ColumnDefinition Width="0.7*"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.Row="0" x:Name="ProfilePhoto" Style="{DynamicResource CheckBoxInMenu}" 
+                              Grid.RowSpan="3" Grid.Column="0" Command="{Binding Profile}">
+                        <CheckBox.Content>
+                            <Border CornerRadius="15">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="{Binding Photo,FallbackValue={StaticResource Default},TargetNullValue={StaticResource Default}}" 
+                                                Stretch="UniformToFill"/>
+                                </Border.Background>
+                            </Border>
+                        </CheckBox.Content>
+                    </CheckBox>
+                    <Viewbox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left">
+                        <TextBlock Text="{Binding Greeting}" Foreground="{DynamicResource GreetingColor}"/>
+                    </Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left">
+                        <TextBlock Text="{Binding FullName}"/>
+                    </Viewbox>
+                </Grid>
+            </Grid>
+        </Border>
+        <ContentControl Grid.Column="1" Content="{Binding Content}"/>
+    </Grid>
+</UserControl>

@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <SolidColorBrush x:Key="MainElementColor" Color="#453b3b"/>
+    <SolidColorBrush x:Key="MainElementColor" Color="#222222"/>
     <SolidColorBrush x:Key="BackgroundColor" Color="Black"/>
     <SolidColorBrush x:Key="BackgroundOnMouseOver" Color="#222222"/>
     <SolidColorBrush x:Key="BorderColor" Color="White"/>
     <SolidColorBrush x:Key="FontColor" Color="White"/>
+    <SolidColorBrush x:Key="SelectedMenuItem" Color="#222222"/>
+    <SolidColorBrush x:Key="GreetingColor" Color="#999999"/>
 </ResourceDictionary>

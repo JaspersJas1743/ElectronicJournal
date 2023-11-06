@@ -1,5 +1,6 @@
 ﻿using ElectronicJournal.Resources.Windows;
 using ElectronicJournal.Utilities;
+using ElectronicJournal.Utilities.Config;
 using ElectronicJournal.ViewModels.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -7,35 +8,48 @@ using System.Windows;
 
 namespace ElectronicJournal.ViewModels
 {
-    public class MainWindowVM : VM
+    public class MainWindowVM : ContentPresenter
     {
         #region Fields
+        private readonly IConfigProvider _configProvider;
+
         private readonly Lazy<Command> _exit;
         private readonly Lazy<Command> _changeTheme;
         private readonly Lazy<Command> _minimize;
         private readonly Lazy<Command> _collapse;
         private readonly Lazy<Command> _expand;
+        private readonly Lazy<Command> _closing;
+        private readonly Lazy<Command> _stateChanged;
 
         private Visibility _collapseVisibility;
         private Visibility _expandVisibility;
-        private VM _content;
+        private double _width;
+        private double _height;
         private bool _isOn;
         #endregion Fields
 
         #region Constructors
-        public MainWindowVM()
+        public MainWindowVM(IConfigProvider configProvider)
         {
-            _content = Program.AppHost.Services.GetService<AuthorizationVM>();
-            _expandVisibility = Visibility.Visible;
-            _collapseVisibility = Visibility.Collapsed;
-            _isOn = Theme.CurrentTheme == Theme.Type.Dark;
-            Application.Current.MainWindow.StateChanged += OnMainWindowStateChanged;
+            _configProvider = configProvider;
+            Width = _configProvider.Get<Double>(propertyName: nameof(Width));
+            Height = _configProvider.Get<Double>(propertyName: nameof(Height));
+            Content = Program.AppHost.Services.GetService<AuthorizationVM>();
+            ExpandVisibility = Visibility.Visible;
+            CollapseVisibility = Visibility.Collapsed;
+            IsOn = Theme.CurrentTheme == Theme.Type.Dark;
 
             _exit = Command.CreateLazyCommand(action: _ => CloseApp());
             _changeTheme = Command.CreateLazyCommand(action: obj => Theme.Change(newTheme: Theme.Parse(themeName: obj.ToString())));
             _minimize = Command.CreateLazyCommand(action: _ => Application.Current.MainWindow.WindowState = WindowState.Minimized);
             _expand = Command.CreateLazyCommand(action: _ => ExpandWindow());
             _collapse = Command.CreateLazyCommand(action: _ => CollapseWindow());
+            _closing = Command.CreateLazyCommand(action: _ =>
+            {
+                _configProvider.Set(propertyName: nameof(Width), value: Width);
+                _configProvider.Set(propertyName: nameof(Height), value: Height);
+            });
+            _stateChanged = Command.CreateLazyCommand(action: _ => SwapResizeButtons());
         }
         #endregion Constructors
 
@@ -49,6 +63,8 @@ namespace ElectronicJournal.ViewModels
         public Command Expand => _expand.Value;
 
         public Command Collapse => _collapse.Value;
+        public Command Closing => _closing.Value;
+        public Command StateChanged => _stateChanged.Value;
 
         public Visibility ExpandVisibility
         {
@@ -56,7 +72,7 @@ namespace ElectronicJournal.ViewModels
             set
             {
                 _expandVisibility = value;
-                OnPropertyChanged(nameof(ExpandVisibility));
+                OnPropertyChanged(propertyName: nameof(ExpandVisibility));
             }
         }
 
@@ -66,27 +82,36 @@ namespace ElectronicJournal.ViewModels
             set
             {
                 _collapseVisibility = value;
-                OnPropertyChanged(nameof(CollapseVisibility));
+                OnPropertyChanged(propertyName: nameof(CollapseVisibility));
             }
         }
-
-        public VM Content
-        {
-            get => _content;
-            set
-            {
-                _content = value;
-                OnPropertyChanged(nameof(Content));
-            }
-        }
-
         public bool IsOn
         {
             get => _isOn;
             set
             {
                 _isOn = value;
-                OnPropertyChanged(nameof(IsOn));
+                OnPropertyChanged(propertyName: nameof(IsOn));
+            }
+        }
+
+        public double Width
+        {
+            get => _width;
+            set
+            {
+                _width = value;
+                OnPropertyChanged(propertyName: nameof(Width));
+            }
+        }
+
+        public double Height
+        {
+            get => _height;
+            set
+            {
+                _height = value;
+                OnPropertyChanged(propertyName: nameof(Height));
             }
         }
         #endregion Properties
@@ -94,7 +119,6 @@ namespace ElectronicJournal.ViewModels
         #region Methods
         private void CloseApp()
         {
-
             if (MessageWindow.Show(text: "Вы уверены, что хотите закрыть приложение?",
                 windowTitle: "Сообщение",
                 image: MessageWindow.MessageWindowImage.Information,
@@ -107,9 +131,6 @@ namespace ElectronicJournal.ViewModels
 
         private void CollapseWindow()
             => Application.Current.MainWindow.WindowState = WindowState.Normal;
-
-        private void OnMainWindowStateChanged(object sender, EventArgs e)
-            => SwapResizeButtons();
 
         private void SwapResizeButtons()
             => (ExpandVisibility, CollapseVisibility) = (CollapseVisibility, ExpandVisibility);

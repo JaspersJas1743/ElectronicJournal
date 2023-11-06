@@ -14,8 +14,8 @@ namespace ElectronicJournal.ViewModels
         #region Fields
         private readonly INavigationProvider _navigationProvider;
 
-        private readonly Lazy<Command> _registrationCommand;
-        private readonly Lazy<Command> _backCommand;
+        private readonly Lazy<Command> _registration;
+        private readonly Lazy<Command> _back;
         private readonly IValidator<RegistrationOfAuthorizationDataModel> _registrationOfAuthorizationDataModelValidator;
 
         private RegistrationOfAuthorizationDataModel _model;
@@ -29,12 +29,12 @@ namespace ElectronicJournal.ViewModels
             _model = new RegistrationOfAuthorizationDataModel();
             _registrationOfAuthorizationDataModelValidator = validator;
 
-            _registrationCommand = Command.CreateLazyCommand(action: async _ =>
+            _registration = Command.CreateLazyCommand(action: async _ =>
             {
                 try
                 {
                     await ExecuteTask(taskForExecute: SignUpAsync);
-                    _navigationProvider.MoveTo<AuthorizationVM>();
+                    _navigationProvider.MoveTo<MainWindowVM, AuthorizationVM>();
                 }
                 catch (Exception ex)
                 {
@@ -42,8 +42,8 @@ namespace ElectronicJournal.ViewModels
                 }
             }, canExecute: _ => validator.Validate(instance: _model).IsValid && CanMoveToAnotherPage);
 
-            _backCommand = Command.CreateLazyCommand(
-                action: _ => _navigationProvider.MoveTo<AuthorizationVM>(),
+            _back = Command.CreateLazyCommand(
+                action: _ => _navigationProvider.MoveTo<MainWindowVM, AuthorizationVM>(),
                 canExecute: _ => CanMoveToAnotherPage
             );
         }
@@ -88,9 +88,9 @@ namespace ElectronicJournal.ViewModels
             }
         }
 
-        public Command Registration => _registrationCommand.Value;
+        public Command Registration => _registration.Value;
 
-        public Command Back => _backCommand.Value;
+        public Command Back => _back.Value;
 
         public RegistrationModule RegistrationModule { get; set; }
         #endregion Properties

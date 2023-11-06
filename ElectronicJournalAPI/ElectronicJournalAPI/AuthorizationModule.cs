@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace ElectronicJournalAPI
 {
@@ -34,11 +35,16 @@ namespace ElectronicJournalAPI
         public static AuthorizationModule Create(string login, string password)
             => new AuthorizationModule(login: login, password: password);
 
-        public async Task SignInAsync()
+        public async Task<User> SignInAsync(CancellationToken cancellationToken = default)
         {
             LogInRequest request = new LogInRequest() { Login = _login, Password = _password };
-            LogInResponse response = await ApiClient.PostAsync<LogInResponse, LogInRequest>(apiMethod: "Account/SignIn", arg: request);
+            LogInResponse response = await ApiClient.PostAsync<LogInResponse, LogInRequest>(
+                apiMethod: "Account/SignIn",
+                arg: request,
+                cancellationToken: cancellationToken
+            );
             ApiClient.Token = response.Token;
+            return await User.Create();
         }
         #endregion Methods
     }

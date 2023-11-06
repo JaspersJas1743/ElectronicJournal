@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace ElectronicJournal.API.Validators
 {
-    public class AccountSignUpDataValidator : AbstractValidator<AccountController.SignUpData>
+    public class AccountSignUpRequestValidator : AbstractValidator<AccountController.SignUpRequest>
     {
-        public AccountSignUpDataValidator()
+        public AccountSignUpRequestValidator()
         {
             RuleFor(expression: signUp => signUp.RegistrationCode)
                 .NotNull().WithMessage(errorMessage: "Регистрационный код не может быть пустым")

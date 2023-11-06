@@ -10,8 +10,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border Background="{TemplateBinding Background}" 
-                                CornerRadius="15" SnapsToDevicePixels="True">
+                        <Border Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                             <Grid>
                                 <ScrollViewer x:Name="PART_ContentHost" Margin="10 0 0 0"/>
                             </Grid>

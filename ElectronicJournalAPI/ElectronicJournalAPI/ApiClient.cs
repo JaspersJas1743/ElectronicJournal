@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ElectronicJournalAPI
@@ -52,48 +53,66 @@ namespace ElectronicJournalAPI
 
         #region Methods
         #region Get
-        public static async Task<TOut> GetAsync<TOut>(Uri uri, Dictionary<string, string> argQuery = null)
+        public static async Task<HttpResponseMessage> GetAsync(Uri uri, CancellationToken cancellationToken = default)
         {
-            HttpResponseMessage response = await _client.GetAsync(requestUri: uri);
+            HttpResponseMessage response = await _client.GetAsync(requestUri: uri, cancellationToken: cancellationToken);
             await ApiException.ThrowIfBadResponseAsync(response: response, jsonSerializerOptions: _options);
-            return await response.Content.ReadFromJsonAsync<TOut>();
+            return response;
         }
 
-        public static async Task<TOut> GetAsync<TOut>(string apiMethod, Dictionary<string, string> argQuery = null)
-            => await GetAsync<TOut>(uri: CreateUri(apiMethod: apiMethod, arg: argQuery));
+        public static async Task<TOut> GetAsync<TOut>(Uri uri, CancellationToken cancellationToken = default)
+        {
+            HttpResponseMessage response = await GetAsync(uri: uri, cancellationToken: cancellationToken);
+            return await response.Content.ReadFromJsonAsync<TOut>(options: _options, cancellationToken: cancellationToken);
+        }
+
+        public static async Task<TOut> GetAsync<TOut>(string apiMethod, Dictionary<string, string> argQuery = default, CancellationToken cancellationToken = default)
+            => await GetAsync<TOut>(uri: CreateUri(apiMethod: apiMethod, arg: argQuery), cancellationToken: cancellationToken);
+
+        public static async Task<byte[]> GetBytesAsync(Uri uri, CancellationToken cancellationToken = default)
+        {
+            HttpResponseMessage response = await GetAsync(uri: uri, cancellationToken: cancellationToken);
+            return await response.Content.ReadAsByteArrayAsync();
+        }
+
+        public static async Task<byte[]> GetBytesAsync(string apiMethod, Dictionary<string, string> argQuery = default, CancellationToken cancellationToken = default)
+            => await GetBytesAsync(uri: CreateUri(apiMethod: apiMethod, arg: argQuery), cancellationToken: cancellationToken);
         #endregion Get
 
         #region Post
-        public static async Task<TOut> PostAsync<TOut, TIn>(string apiMethod, TIn arg)
-            => await PostAsync<TOut, TIn>(uri: CreateUri(apiMethod: apiMethod), arg: arg);
+        public static async Task<TOut> PostAsync<TOut, TIn>(string apiMethod, TIn arg, CancellationToken cancellationToken = default)
+            => await PostAsync<TOut, TIn>(uri: CreateUri(apiMethod: apiMethod), arg: arg, cancellationToken: cancellationToken);
 
-        public static async Task<TOut> PostAsync<TOut, TIn>(Uri uri, TIn arg)
-            => await (await HelperForPostAsync<TIn>(uri: uri, arg: arg)).Content.ReadFromJsonAsync<TOut>(options: _options);
-
-        public static async Task PostAsync<TIn>(string apiMethod, TIn arg)
-            => await PostAsync<TIn>(uri: CreateUri(apiMethod: apiMethod), arg: arg);
-
-        public static async Task PostAsync<TIn>(Uri uri, TIn arg)
-            => await HelperForPostAsync<TIn>(uri: uri, arg: arg);
-
-        public static async Task PostAsync(string apiMethod, Dictionary<string, string> arg)
-            => await PostAsync(uri: CreateUri(apiMethod, arg: arg));
-
-        public static async Task PostAsync(Uri uri)
-            => await HelperForPostAsync(uri: uri, arg: String.Empty);
-
-        private static async Task<HttpResponseMessage> HelperForPostAsync<TIn>(Uri uri, TIn arg)
+        public static async Task<TOut> PostAsync<TOut, TIn>(Uri uri, TIn arg, CancellationToken cancellationToken = default)
         {
-            HttpResponseMessage response = await _client.PostAsync(requestUri: uri, content: JsonContent.Create<TIn>(inputValue: arg));
+            HttpResponseMessage response = await HelperForPostAsync<TIn>(uri: uri, arg: arg, cancellationToken: cancellationToken);
+            return await response.Content.ReadFromJsonAsync<TOut>(options: _options);
+        }
+
+        public static async Task PostAsync<TIn>(string apiMethod, TIn arg, CancellationToken cancellationToken = default)
+            => await PostAsync<TIn>(uri: CreateUri(apiMethod: apiMethod), arg: arg, cancellationToken: cancellationToken);
+
+        public static async Task PostAsync<TIn>(Uri uri, TIn arg, CancellationToken cancellationToken = default)
+            => await HelperForPostAsync<TIn>(uri: uri, arg: arg, cancellationToken: cancellationToken);
+
+        public static async Task PostAsync(string apiMethod, Dictionary<string, string> arg, CancellationToken cancellationToken = default)
+            => await PostAsync(uri: CreateUri(apiMethod, arg: arg), cancellationToken: cancellationToken);
+
+        public static async Task PostAsync(Uri uri, CancellationToken cancellationToken = default)
+            => await HelperForPostAsync(uri: uri, arg: String.Empty, cancellationToken: cancellationToken);
+
+        private static async Task<HttpResponseMessage> HelperForPostAsync<TIn>(Uri uri, TIn arg, CancellationToken cancellationToken = default)
+        {
+            HttpResponseMessage response = await _client.PostAsync(requestUri: uri, content: JsonContent.Create<TIn>(inputValue: arg), cancellationToken: cancellationToken);
             await ApiException.ThrowIfBadResponseAsync(response: response, jsonSerializerOptions: _options);
             return response;
         }
         #endregion Post
 
-        public static Uri CreateUri(string apiMethod, Dictionary<string, string> arg = null)
+        public static Uri CreateUri(string apiMethod, Dictionary<string, string> arg = default)
         {
             StringBuilder uri = new StringBuilder(value: _serverAddress + apiMethod);
-            if (arg != null)
+            if (arg != default)
             {
                 uri.Append("?");
                 foreach (var pair in arg)

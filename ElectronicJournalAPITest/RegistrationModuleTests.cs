@@ -1,6 +1,4 @@
-﻿using ElectronicJournalAPI;
-
-namespace ElectronicJournalAPITest
+﻿namespace ElectronicJournalAPI.Test
 {
     [TestClass]
     public class RegistrationModuleTests
@@ -15,7 +13,7 @@ namespace ElectronicJournalAPITest
 
         [TestMethod]
         public async Task TestCase_Registration_RegistrationModule_3()
-            => await TestAction(code: "2IUR87");
+            => await TestAction(code: "unagxr");
 
         [TestMethod]
         public async Task TestCase_RegistrationOfAuthorizationData_RegistrationModule_1()
@@ -35,7 +33,7 @@ namespace ElectronicJournalAPITest
 
         private async Task TestAction(string login, string password)
         {
-            RegistrationModule api = await RegistrationModule.Create(registrationCode: "2IUR87");
+            RegistrationModule api = await RegistrationModule.Create(registrationCode: "unagxr");
             await api.SignUpAsync(login: login, password: password);
         }
 

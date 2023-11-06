@@ -14,8 +14,8 @@ namespace ElectronicJournal.ViewModels
         #region Fields
         private readonly INavigationProvider _navigationProvider;
 
-        private readonly Lazy<Command> _backCommand;
-        private readonly Lazy<Command> _registrationCommand;
+        private readonly Lazy<Command> _back;
+        private readonly Lazy<Command> _registration;
 
         private string _code;
         private RegistrationModule _rm;
@@ -26,18 +26,18 @@ namespace ElectronicJournal.ViewModels
             : base(defaultButtonContent: "Зарегистрироваться")
         {
             _navigationProvider = navigationProvider;
-            _backCommand = Command.CreateLazyCommand(
-                action: _ => _navigationProvider.MoveTo<AuthorizationVM>(),
+            _back = Command.CreateLazyCommand(
+                action: _ => _navigationProvider.MoveTo<MainWindowVM, AuthorizationVM>(),
                 canExecute: _ => CanMoveToAnotherPage
             );
 
-            _registrationCommand = Command.CreateLazyCommand(action: async _ =>
+            _registration = Command.CreateLazyCommand(action: async _ =>
             {
                 try
                 {
                     if (await ExecuteTask(taskForExecute: VerifyRegistrationCodeAsync))
                     {
-                        _navigationProvider.MoveTo<RegistrationOfAuthorizationDataVM>(parameters: new Dictionary<string, object>()
+                        _navigationProvider.MoveTo<MainWindowVM, RegistrationOfAuthorizationDataVM>(parameters: new Dictionary<string, object>()
                         {
                             ["RegistrationModule"] = _rm
                         });
@@ -54,9 +54,9 @@ namespace ElectronicJournal.ViewModels
         #endregion Constructors
 
         #region Properties
-        public Command Registration => _registrationCommand.Value;
+        public Command Registration => _registration.Value;
 
-        public Command Back => _backCommand.Value;
+        public Command Back => _back.Value;
 
         public string Code
         {
@@ -82,13 +82,7 @@ namespace ElectronicJournal.ViewModels
             try
             {
                 _rm = await RegistrationModule.Create(registrationCode: Code);
-                RegistrationCodeResponse response = await ApiClient.GetAsync<RegistrationCodeResponse>(
-                    apiMethod: "Account/VerifyRegistrationCode", argQuery: new Dictionary<string, string> {
-                                    { "RegistrationCode", Code }
-                    }
-                );
-
-                return response.IsVerified;
+                return true;
             } catch { return false; }
         }
         #endregion Methods

@@ -6,13 +6,8 @@
              mc:Ignorable="d" MaxWidth="1920" MaxHeight="1440"
              d:DesignHeight="1440" d:DesignWidth="1920">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Viewbox Grid.Row="0">
-            <TextBlock Text="Расписание"/>
+        <Viewbox>
+            <TextBlock Text="Timetable"/>
         </Viewbox>
-        <Button Grid.Row="1" Content="Назад" Command="{Binding Back}"/>
     </Grid>
 </UserControl>

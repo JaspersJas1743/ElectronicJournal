@@ -8,15 +8,15 @@ namespace ElectronicJournal.Resources.CustomElements
     {
         #region Fields
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            name: "Text", propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
+            name: nameof(Text), propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
         );
 
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(
-            name: "Image", propertyType: typeof(Style), ownerType: typeof(TextBoxWithImageAndPlaceholder)
+            name: nameof(Image), propertyType: typeof(Style), ownerType: typeof(TextBoxWithImageAndPlaceholder)
         );
 
         public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
-            name: "Placeholder", propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
+            name: nameof(Placeholder), propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
         );
         #endregion Fields
 
@@ -50,16 +50,9 @@ namespace ElectronicJournal.Resources.CustomElements
         public int MaxLength => MainTextBox.MaxLength;
         #endregion Properties
 
-        #region Events
-        public event TextChangedEventHandler TextChanged;
-        #endregion Events
-
         #region Methods
         public new void Focus()
             => MainTextBox.Focus();
-
-        private void OnMainTextBoxChanged(object sender, TextChangedEventArgs e)
-            => TextChanged?.Invoke(sender: sender, e: e);
         #endregion Methods
     }
 }

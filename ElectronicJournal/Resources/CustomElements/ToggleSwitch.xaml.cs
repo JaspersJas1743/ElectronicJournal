@@ -9,27 +9,27 @@ namespace ElectronicJournal.Resources.CustomElements
     {
         #region Fields
         public static readonly DependencyProperty IsOnProperty = DependencyProperty.Register(
-            name: "IsOn", propertyType: typeof(Boolean), ownerType: typeof(ToggleSwitch)
+            name: nameof(IsOn), propertyType: typeof(Boolean), ownerType: typeof(ToggleSwitch)
         );
 
         public static readonly DependencyProperty ToggledCommandProperty = DependencyProperty.Register(
-            name: "ToggledCommand", propertyType: typeof(ICommand), ownerType: typeof(ToggleSwitch)
+            name: nameof(ToggledCommand), propertyType: typeof(ICommand), ownerType: typeof(ToggleSwitch)
         );
 
         public static readonly DependencyProperty OnToggledCommandParameterProperty = DependencyProperty.Register(
-            name: "OnToggledCommandParameter", propertyType: typeof(Object), ownerType: typeof(ToggleSwitch)
+            name: nameof(OnToggledCommandParameter), propertyType: typeof(Object), ownerType: typeof(ToggleSwitch)
         );
 
         public static readonly DependencyProperty OnContentProperty = DependencyProperty.Register(
-            name: "OnContent", propertyType: typeof(Object), ownerType: typeof(ToggleSwitch)
+            name: nameof(OnContent), propertyType: typeof(Object), ownerType: typeof(ToggleSwitch)
         );
 
         public static readonly DependencyProperty OffToggledCommandParameterProperty = DependencyProperty.Register(
-            name: "OffToggledCommandParameter", propertyType: typeof(Object), ownerType: typeof(ToggleSwitch)
+            name: nameof(OffToggledCommandParameter), propertyType: typeof(Object), ownerType: typeof(ToggleSwitch)
         );
 
         public static readonly DependencyProperty OffContentProperty = DependencyProperty.Register(
-            name: "OffContent", propertyType: typeof(Object), ownerType: typeof(ToggleSwitch)
+            name: nameof(OffContent), propertyType: typeof(Object), ownerType: typeof(ToggleSwitch)
         );
         #endregion Fields
 

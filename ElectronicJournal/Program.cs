@@ -4,6 +4,7 @@ using ElectronicJournal.Utilities.Config;
 using ElectronicJournal.Utilities.Navigation;
 using ElectronicJournal.Utilities.Validator;
 using ElectronicJournal.ViewModels;
+using ElectronicJournalAPI;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,6 +28,11 @@ namespace ElectronicJournal
                     services.AddSingleton<AuthorizationVM>();
                     services.AddSingleton<RegistrationVM>();
                     services.AddSingleton<RegistrationOfAuthorizationDataVM>();
+                    services.AddSingleton<MenuVM>();
+                    services.AddSingleton<ProfileVM>();
+                    services.AddSingleton<MessagesVM>();
+                    services.AddSingleton<HomeworksVM>();
+                    services.AddSingleton<MarksVM>();
                     services.AddSingleton<TimetableVM>();
 
                     services.AddScoped<IConfigProvider, ConfigurationProvider>();

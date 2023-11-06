@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using ElectronicJournal.ViewModels.Tools;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,21 +11,23 @@ namespace ElectronicJournal.Resources.CustomElements
     {
         #region Fields
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            name: "Text", propertyType: typeof(String), ownerType: typeof(PasswordBoxWithPasswordViewer)
+            name: nameof(Text), propertyType: typeof(String), ownerType: typeof(PasswordBoxWithPasswordViewer)
         );
 
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(
-            name: "Image", propertyType: typeof(Style), ownerType: typeof(PasswordBoxWithPasswordViewer)
+            name: nameof(Image), propertyType: typeof(Style), ownerType: typeof(PasswordBoxWithPasswordViewer)
         );
 
         public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
-            name: "Placeholder", propertyType: typeof(String), ownerType: typeof(PasswordBoxWithPasswordViewer)
+            name: nameof(Placeholder), propertyType: typeof(String), ownerType: typeof(PasswordBoxWithPasswordViewer)
         );
         #endregion Fields
 
         #region Constructor
         public PasswordBoxWithPasswordViewer()
-            => InitializeComponent();
+        {
+            InitializeComponent();
+        }
         #endregion Constructor
 
         #region Properties
@@ -47,10 +49,6 @@ namespace ElectronicJournal.Resources.CustomElements
             set => SetValue(dp: PlaceholderProperty, value: value);
         }
         #endregion Properties
-
-        #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
-        #endregion Events
 
         #region Methods
         private void OnPreviewExecuted(object sender, ExecutedRoutedEventArgs e)

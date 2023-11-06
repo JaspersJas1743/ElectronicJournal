@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Resources/Images/Students.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/ShowPassword.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/HiddenPassword.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Password.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Login.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Minimize.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/CollapseToWindow.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Expand.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Close.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Sun.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Moon.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Icon.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/AttentionMessage.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/ErrorMessage.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/InformationMessage.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Phone.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Logo.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Profile.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Messages.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Homeworks.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Marks.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Timetable.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

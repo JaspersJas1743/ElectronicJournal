@@ -5,6 +5,7 @@ using ElectronicJournal.ViewModels.Tools;
 using ElectronicJournalAPI;
 using FluentValidation;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ElectronicJournal.ViewModels
@@ -33,8 +34,11 @@ namespace ElectronicJournal.ViewModels
             {
                 try
                 {
-                    await ExecuteTask(taskForExecute: SignInAsync);
-                    _navigationProvider.MoveTo<TimetableVM>();
+                    User user = await ExecuteTask(taskForExecute: SignInAsync);
+                    _navigationProvider.MoveTo<MainWindowVM, MenuVM>(parameters: new Dictionary<string, object>
+                    {
+                        ["User"] = user
+                    });
                 }
                 catch (Exception ex)
                 {
@@ -44,7 +48,7 @@ namespace ElectronicJournal.ViewModels
             canExecute: _ => _authorizationModelValidator.Validate(instance: _model).IsValid && CanMoveToAnotherPage);
 
             _moveToRegistration = Command.CreateLazyCommand(
-                action: _ => _navigationProvider.MoveTo<RegistrationVM>(),
+                action: _ => _navigationProvider.MoveTo<MainWindowVM, RegistrationVM>(),
                 canExecute: _ => CanMoveToAnotherPage
             );
         }
@@ -76,10 +80,10 @@ namespace ElectronicJournal.ViewModels
         #endregion Properties
 
         #region Methods
-        private async Task SignInAsync()
+        private async Task<User> SignInAsync()
         {
             AuthorizationModule api = AuthorizationModule.Create(login: Login, password: Password);
-            await api.SignInAsync();
+            return await api.SignInAsync();
         }
         #endregion Methods
     }

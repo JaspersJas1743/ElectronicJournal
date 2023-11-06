@@ -2,7 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="MainElementColor" Color="#D9D9D9"/>
     <SolidColorBrush x:Key="BackgroundColor" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="BackgroundOnMouseOver" Color="#dddddd"/>
+    <SolidColorBrush x:Key="BackgroundOnMouseOver" Color="#DDDDDD"/>
     <SolidColorBrush x:Key="BorderColor" Color="#000000"/>
     <SolidColorBrush x:Key="FontColor" Color="#000000"/>
+    <SolidColorBrush x:Key="SelectedMenuItem" Color="#E3E2E2"/>
+    <SolidColorBrush x:Key="GreetingColor" Color="#999999"/>
 </ResourceDictionary>

@@ -14,9 +14,9 @@ namespace ElectronicJournal.ViewModels.Tools
         #endregion Fields
 
         #region Constructors
-        protected VM(string defaultButtonContent = "")
+        protected VM(string defaultButtonContent = default)
         {
-            _defaultButtonContent = "Войти";
+            _defaultButtonContent = defaultButtonContent;
             _buttonContent = _defaultButtonContent;
         }
         #endregion Constructors

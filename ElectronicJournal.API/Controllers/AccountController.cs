@@ -30,11 +30,11 @@ namespace ElectronicJournal.API.Controllers
         #endregion Constructors
 
         #region Records
-        public record LogInData(string Login, string Password);
+        public record LogInRequest(string Login, string Password);
         public record LogInResponse(string Token);
         public record RegistrationCodeRequest(string RegistrationCode);
         public record RegistrationCodeResponse(bool IsVerified);
-        public record SignUpData(string RegistrationCode, string Login, string Password);
+        public record SignUpRequest(string RegistrationCode, string Login, string Password);
         #endregion Records
 
         #region Methods
@@ -58,15 +58,15 @@ namespace ElectronicJournal.API.Controllers
         }
         #endregion Private
 
-        #region Get
+        #region GET
         [HttpGet(template: nameof(VerifyRegistrationCode))]
         public async Task<ActionResult<RegistrationCodeResponse>> VerifyRegistrationCode([FromQuery] RegistrationCodeRequest data)
             => Ok(value: new RegistrationCodeResponse(IsVerified: await VerifyRegistrationCode(registrationCode: data.RegistrationCode)));
-        #endregion Get
+        #endregion GET
 
-        #region Post
+        #region POST
         [HttpPost(template: nameof(SignIn))]
-        public async Task<ActionResult<LogInResponse>> SignIn([FromBody] LogInData data)
+        public async Task<ActionResult<LogInResponse>> SignIn([FromBody] LogInRequest data)
         {
             User? user = await FindUserByLoginAsync(login: data.Login);
             if (user is null || !await _hashProvider.VerifyHashAsync(toHash: data.Password, hashedData: user.Password))
@@ -76,7 +76,7 @@ namespace ElectronicJournal.API.Controllers
         }
 
         [HttpPost(template: nameof(SignUp))]
-        public async Task<ActionResult> SignUp([FromBody] SignUpData data)
+        public async Task<ActionResult> SignUp([FromBody] SignUpRequest data)
         {
             User? user = await _context.Users.FirstOrDefaultAsync(predicate: u => u.RegistrationCode == data.RegistrationCode);
             if (user is null)
@@ -100,7 +100,7 @@ namespace ElectronicJournal.API.Controllers
             }
             return Ok();
         }
-        #endregion Post
+        #endregion POST
         #endregion Methods
     }
 }

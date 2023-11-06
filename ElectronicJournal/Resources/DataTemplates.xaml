@@ -14,4 +14,19 @@
     <DataTemplate DataType="{x:Type vm:RegistrationOfAuthorizationDataVM}">
         <view:RegistrationOfAuthorizationData/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:MenuVM}">
+        <view:Menu/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:ProfileVM}">
+        <view:Profile/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:MessagesVM}">
+        <view:Messages/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:HomeworksVM}">
+        <view:Homeworks/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:MarksVM}">
+        <view:Marks/>
+    </DataTemplate>
 </ResourceDictionary>

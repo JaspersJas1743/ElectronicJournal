@@ -1,4 +1,4 @@
-﻿using ElectronicJournal.Utilities;
+﻿using ElectronicJournal.ViewModels.Tools;
 using System;
 
 namespace ElectronicJournal.Models
@@ -15,7 +15,7 @@ namespace ElectronicJournal.Models
             set
             {
                 _login = value;
-                OnPropertyChanged(nameof(Login));
+                OnPropertyChanged(propertyName: nameof(Login));
             }
         }
 
@@ -25,7 +25,7 @@ namespace ElectronicJournal.Models
             set
             {
                 _password = value;
-                OnPropertyChanged(nameof(Password));
+                OnPropertyChanged(propertyName: nameof(Password));
             }
 
         }
@@ -36,7 +36,7 @@ namespace ElectronicJournal.Models
             set
             {
                 _passwordСonfirmation = value;
-                OnPropertyChanged(nameof(PasswordConfirmation));
+                OnPropertyChanged(propertyName: nameof(PasswordConfirmation));
             }
 
         }

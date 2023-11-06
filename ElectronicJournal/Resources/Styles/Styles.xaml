@@ -9,22 +9,8 @@
         <ResourceDictionary Source="/Resources/Styles/Window.xaml"/>
         <ResourceDictionary Source="/Resources/Styles/MessageWindowButton.xaml"/>
         <ResourceDictionary Source="/Resources/Styles/CellFromTB.xaml"/>
-
-        <ResourceDictionary Source="/Resources/Images/Students.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/ShowPassword.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/HiddenPassword.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/Password.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/Login.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/Minimize.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/CollapseToWindow.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/Expand.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/Close.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/Sun.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/Moon.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/Icon.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/AttentionMessage.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/ErrorMessage.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/InformationMessage.xaml"/>
-        <ResourceDictionary Source="/Resources/Images/Phone.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/Label.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/RadioButtonInMenu.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/CheckBoxInMenu.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

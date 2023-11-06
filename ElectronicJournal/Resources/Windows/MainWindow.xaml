@@ -3,10 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d" x:Name="ThisWindow" Title="Электронный журнал" 
-        Closing="OnWindowClosing" Style="{DynamicResource WindowStyle}" 
-        WindowStartupLocation="CenterScreen" Height="512" 
-        Width="720" MinHeight="512" MinWidth="720">
+        Style="{DynamicResource WindowStyle}" Width="{Binding Width,Mode=TwoWay}" 
+        WindowStartupLocation="CenterScreen" Height="{Binding Height,Mode=TwoWay}" 
+        MinHeight="700" MinWidth="1120">
+    <Behaviors:Interaction.Triggers>
+        <Behaviors:EventTrigger EventName="Closing">
+            <Behaviors:InvokeCommandAction Command="{Binding Closing}"/>
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="StateChanged">
+            <Behaviors:InvokeCommandAction Command="{Binding StateChanged}"/>
+        </Behaviors:EventTrigger>
+    </Behaviors:Interaction.Triggers>
     <Grid>
         <ContentControl Content="{Binding Content}"/>
     </Grid>

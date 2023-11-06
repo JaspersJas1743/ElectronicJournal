@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace ElectronicJournal.API.Validators
 {
-    public class AccountLogInDataValidator : AbstractValidator<AccountController.LogInData>
+    public class AccountLogInRequestValidator : AbstractValidator<AccountController.LogInRequest>
     {
-        public AccountLogInDataValidator()
+        public AccountLogInRequestValidator()
         {
             RuleFor(logIn => logIn.Login)
                 .NotNull().WithMessage(errorMessage: "Логин является обязательным к заполнению")

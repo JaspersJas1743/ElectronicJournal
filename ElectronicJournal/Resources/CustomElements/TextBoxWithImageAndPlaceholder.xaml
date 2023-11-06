@@ -6,7 +6,7 @@
              mc:Ignorable="d" Name="ThisElement" d:DesignHeight="40" d:DesignWidth="200">
     <Grid>
         <TextBox  Text="{Binding ElementName=ThisElement,Path=Text,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
-                  VerticalContentAlignment="Center" x:Name="MainTextBox" TextChanged="OnMainTextBoxChanged" 
+                  VerticalContentAlignment="Center" x:Name="MainTextBox" 
                   ContextMenu="{Binding ElementName=ThisElement,Path=ContextMenu}"
                   FontFamily="{Binding ElementName=ThisElement,Path=FontFamily}" 
                   FontWeight="{Binding ElementName=ThisElement,Path=FontWeight}"
@@ -20,7 +20,7 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type TextBox}">
                                     <Border SnapsToDevicePixels="True" CornerRadius="15" BorderThickness="{TemplateBinding BorderThickness}"
-                                            Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"> 
+                                            Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
                                         <Grid x:Name="MainGrid">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="10"/>
@@ -36,11 +36,11 @@
                                                 <RowDefinition Height="0.25*"/>
                                                 <RowDefinition Height="0.25*"/>
                                             </Grid.RowDefinitions>
-                                            
+
                                             <Viewbox Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center">
                                                 <ScrollViewer x:Name="PART_ContentHost" FontSize="{TemplateBinding FontSize}"/>
                                             </Viewbox>
-                                            
+
                                             <Viewbox Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center">
                                                 <TextBlock Background="{Binding ElementName=MainGrid,Path=Background}" Visibility="Collapsed" 
                                                            Name="PlaceholderText" Text="{Binding ElementName=ThisElement,Path=Placeholder}"

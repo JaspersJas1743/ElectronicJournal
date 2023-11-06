@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ElectronicJournal.Utilities
+namespace ElectronicJournal.ViewModels.Tools
 {
     public class TrackedObject : INotifyPropertyChanged
     {
@@ -11,8 +11,7 @@ namespace ElectronicJournal.Utilities
 
         #region Methods
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            => PropertyChanged?.Invoke(sender: this, e: new PropertyChangedEventArgs(propertyName));
+            => PropertyChanged?.Invoke(sender: this, e: new PropertyChangedEventArgs(propertyName: propertyName));
         #endregion Methods
-
     }
 }

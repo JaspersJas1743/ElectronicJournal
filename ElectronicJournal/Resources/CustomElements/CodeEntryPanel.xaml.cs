@@ -10,7 +10,7 @@ namespace ElectronicJournal.Resources.CustomElements
     {
         #region Fields
         private static readonly DependencyProperty EntryCodeProperty = DependencyProperty.Register(
-            name: "EntryCode", propertyType: typeof(String), ownerType: typeof(CodeEntryPanel), new PropertyMetadata()
+            name: nameof(EntryCode), propertyType: typeof(String), ownerType: typeof(CodeEntryPanel), new PropertyMetadata()
         );
 
         public const int MaxCountOfCell = 6;

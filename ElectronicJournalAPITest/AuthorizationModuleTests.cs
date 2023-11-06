@@ -1,6 +1,4 @@
-using ElectronicJournalAPI;
-
-namespace ElectronicJournalAPITest
+namespace ElectronicJournalAPI.Test
 {
     [TestClass]
     public class AuthorizationModuleTests
@@ -24,7 +22,7 @@ namespace ElectronicJournalAPITest
         private async Task TestAction(string login, string password)
         {
             AuthorizationModule api = AuthorizationModule.Create(login: login, password: password);
-            await api.SignInAsync();
+            _ = await api.SignInAsync();
         }
     }
 }

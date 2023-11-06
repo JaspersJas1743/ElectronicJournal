@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ElectronicJournalAPI
@@ -35,29 +36,35 @@ namespace ElectronicJournalAPI
         #endregion Classes
 
         #region Methods
-        public static async Task<RegistrationModule> Create(string registrationCode)
+        public static async Task<RegistrationModule> Create(string registrationCode, CancellationToken cancellationToken = default)
         {
             RegistrationModule rm = new RegistrationModule(registrationCode: registrationCode);
-            await rm.Verify();
+            await rm.Verify(cancellationToken: cancellationToken);
             return rm;
         }
 
-        private async Task Verify()
+        private async Task Verify(CancellationToken cancellationToken = default)
         {
             RegistrationCodeResponse response = await ApiClient.GetAsync<RegistrationCodeResponse>(
-                apiMethod: "Account/VerifyRegistrationCode", argQuery: new Dictionary<string, string> {
+                apiMethod: "Account/VerifyRegistrationCode", 
+                argQuery: new Dictionary<string, string> {
                     { "RegistrationCode", _registrationCode }
-                }
+                },
+                cancellationToken: cancellationToken
             );
 
             if (!response.IsVerified)
                 throw new ArgumentException(message: "Данный регистрационный код не является действительным :(", paramName: nameof(_registrationCode));
         }
 
-        public async Task SignUpAsync(string login, string password)
+        public async Task SignUpAsync(string login, string password, CancellationToken cancellationToken = default)
         {
             SignUpRequest request = new SignUpRequest() { RegistrationCode = _registrationCode, Login = login, Password = password };
-            await ApiClient.PostAsync<SignUpRequest>(apiMethod: "Account/SignUp", arg: request);
+            await ApiClient.PostAsync<SignUpRequest>(
+                apiMethod: "Account/SignUp",
+                arg: request,
+                cancellationToken: cancellationToken
+            );
         }
         #endregion Methods
     }

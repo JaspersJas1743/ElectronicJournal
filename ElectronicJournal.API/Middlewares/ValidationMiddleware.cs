@@ -62,7 +62,9 @@ namespace ElectronicJournal.API.Middlewares
             {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(new { Errors = validationResult.Errors.Select(e => new { e.ErrorMessage, e.PropertyName }) }));
+                await context.Response.WriteAsync(text: JsonConvert.SerializeObject(value: new { 
+                    Errors = validationResult.Errors.Select(selector: e => new { e.ErrorMessage, e.PropertyName }) 
+                }));
                 return;
             }
 
