@@ -1,5 +1,6 @@
 ﻿using ElectronicJournal.Models;
 using FluentValidation;
+using System;
 
 namespace ElectronicJournal.Utilities.Validator
 {
@@ -7,13 +8,19 @@ namespace ElectronicJournal.Utilities.Validator
     {
         public AuthorizationModelValidator()
         {
-            RuleFor(authorizationModel => authorizationModel.Login)
-                .NotNull().WithMessage(errorMessage: "Поле \"Логин\" является обязательным")
-                .MinimumLength(minimumLength: 4).WithMessage("Минимальная длина логина - 4 символа");
+            string msg = "Поле \"Логин\" является обязательным";
+            RuleFor(expression: AM => AM.Login)
+                .NotNull().WithMessage(errorMessage: msg)
+                .NotEmpty().WithMessage(errorMessage: msg)
+                .Must(predicate: l => !String.IsNullOrWhiteSpace(value: l)).WithMessage(errorMessage: msg)
+                .MinimumLength(minimumLength: 4).WithMessage(errorMessage: "Минимальная длина логина - 4 символа");
 
-            RuleFor(authorizationModel => authorizationModel.Password)
-                .NotNull().WithMessage(errorMessage: "Поле \"Пароль\" является обязательным")
-                .MinimumLength(minimumLength: 6).WithMessage("Минимальная длина пароля - 6 символов");
+            msg = "Поле \"Пароль\" является обязательным";
+            RuleFor(expression: AM => AM.Password)
+                .NotNull().WithMessage(errorMessage: msg)
+                .NotEmpty().WithMessage(errorMessage: msg)
+                .Must(predicate: p => !String.IsNullOrWhiteSpace(value: p)).WithMessage(errorMessage: msg)
+                .MinimumLength(minimumLength: 6).WithMessage(errorMessage: "Минимальная длина пароля - 6 символов");
         }
     }
 }

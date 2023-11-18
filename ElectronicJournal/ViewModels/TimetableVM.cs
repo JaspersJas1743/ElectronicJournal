@@ -1,23 +1,23 @@
-﻿using ElectronicJournal.Utilities.Navigation;
-using ElectronicJournal.ViewModels.Tools;
+﻿using ElectronicJournal.ViewModels.Tools;
+using ElectronicJournalAPI.ApiEntities;
 
 namespace ElectronicJournal.ViewModels
 {
     public class TimetableVM : VM
     {
         #region Fields
-        private readonly INavigationProvider _navigationProvider;
+        //private readonly INavigationProvider _navigationProvider;
 
         #endregion Fields
 
         #region Constructor
-        public TimetableVM(INavigationProvider navigationProvider)
+        public TimetableVM()
         {
-            _navigationProvider = navigationProvider;
         }
         #endregion Constructor
 
         #region Properties
+        public User User { get; set; }
         #endregion Properties
     }
 }

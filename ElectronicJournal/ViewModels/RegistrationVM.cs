@@ -1,90 +1,62 @@
-﻿using ElectronicJournal.Resources.CustomElements;
-using ElectronicJournal.Resources.Windows;
-using ElectronicJournal.Utilities.Navigation;
+﻿using ElectronicJournal.Models;
+using ElectronicJournal.Utilities.PubSubEvents;
 using ElectronicJournal.ViewModels.Tools;
-using ElectronicJournalAPI;
+using ElectronicJournalAPI.ApiEntities;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+using Prism.Events;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace ElectronicJournal.ViewModels
 {
     public class RegistrationVM : VM
     {
         #region Fields
-        private readonly INavigationProvider _navigationProvider;
+        private readonly IValidator<RegistrationModel> _validator;
+        private readonly IEventAggregator _eventAggregator;
+
+        private RegistrationModel _model;
 
         private readonly Lazy<Command> _back;
         private readonly Lazy<Command> _registration;
-
-        private string _code;
-        private RegistrationModule _rm;
         #endregion Fields
 
         #region Constructors
-        public RegistrationVM(INavigationProvider navigationProvider)
+        public RegistrationVM(IValidator<RegistrationModel> validator, IEventAggregator eventAggregator)
             : base(defaultButtonContent: "Зарегистрироваться")
         {
-            _navigationProvider = navigationProvider;
+            _validator = validator;
+            _eventAggregator = eventAggregator;
+
+            _model = new RegistrationModel();
+            _model.PropertyChanged += (object sender, PropertyChangedEventArgs e) => OnPropertyChanged(propertyName: e.PropertyName);
+
             _back = Command.CreateLazyCommand(
-                action: _ => _navigationProvider.MoveTo<MainWindowVM, AuthorizationVM>(),
+                action: _ => _eventAggregator.GetEvent<ChangeMainWindowContentEvent>().Publish(payload: new ChangeMainWindowContentEventArgs { NewVM = Program.AppHost.Services.GetService<AuthorizationVM>() }),
                 canExecute: _ => CanMoveToAnotherPage
             );
 
             _registration = Command.CreateLazyCommand(action: async _ =>
             {
-                try
-                {
-                    if (await ExecuteTask(taskForExecute: VerifyRegistrationCodeAsync))
-                    {
-                        _navigationProvider.MoveTo<MainWindowVM, RegistrationOfAuthorizationDataVM>(parameters: new Dictionary<string, object>()
-                        {
-                            ["RegistrationModule"] = _rm
-                        });
-                    }
-                    else
-                        MessageWindow.ShowError(text: "Проверьте правильность кода или обратитесь в Вашу организацию");
-                } catch (Exception ex)
-                {
-                    MessageWindow.ShowError(text: ex.Message);
-                }
+                RegistrationModule rm = await ExecuteTask(taskForExecute: _model.VerifyRegistrationCodeAsync);
+                RegistrationOfAuthorizationDataVM registrationOfAuthorizationDataVM = Program.AppHost.Services.GetService<RegistrationOfAuthorizationDataVM>();
+                registrationOfAuthorizationDataVM.RegistrationModule = rm;
+                _eventAggregator.GetEvent<ChangeMainWindowContentEvent>().Publish(payload: new ChangeMainWindowContentEventArgs { NewVM = registrationOfAuthorizationDataVM });
             },
-            canExecute: _ => Code?.Length == CodeEntryPanel.MaxCountOfCell && CanMoveToAnotherPage);
+            canExecute: _ => _validator.Validate(instance: _model).IsValid && CanMoveToAnotherPage);
         }
         #endregion Constructors
 
         #region Properties
         public Command Registration => _registration.Value;
-
         public Command Back => _back.Value;
 
         public string Code
         {
-            get => _code;
-            set
-            {
-                _code = value;
-                OnPropertyChanged(propertyName: nameof(Code));
-            }
+            get => _model.Code;
+            set => _model.Code = value;
         }
         #endregion Properties
-
-        #region Classes
-        public class RegistrationCodeResponse
-        {
-            public bool IsVerified { get; set; }
-        }
-        #endregion Classes
-
-        #region Methods
-        private async Task<bool> VerifyRegistrationCodeAsync()
-        {
-            try
-            {
-                _rm = await RegistrationModule.Create(registrationCode: Code);
-                return true;
-            } catch { return false; }
-        }
-        #endregion Methods
     }
 }

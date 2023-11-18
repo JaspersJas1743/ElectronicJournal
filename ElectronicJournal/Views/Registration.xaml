@@ -79,15 +79,6 @@
                     <Button 
                         Grid.Column="0" Grid.ColumnSpan="6" Command="{Binding Registration}"
                         Grid.Row="5" Content="{Binding ButtonContent}">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value="0.75"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
                     </Button>
 
                     <Button 

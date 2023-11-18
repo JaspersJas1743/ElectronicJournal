@@ -18,6 +18,10 @@ namespace ElectronicJournal.Resources.CustomElements
         public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
             name: nameof(Placeholder), propertyType: typeof(String), ownerType: typeof(TextBoxWithImageAndPlaceholder)
         );
+
+        public static readonly DependencyProperty MaxLengthProperty = DependencyProperty.Register(
+            name: nameof(MaxLength), propertyType: typeof(Int32), ownerType: typeof(TextBoxWithImageAndPlaceholder)
+        );
         #endregion Fields
 
         #region Constructor
@@ -44,10 +48,14 @@ namespace ElectronicJournal.Resources.CustomElements
             set => SetValue(dp: PlaceholderProperty, value: value);
         }
 
+        public int MaxLength
+        {
+            get => (int)GetValue(dp: MaxLengthProperty);
+            set => SetValue(dp: MaxLengthProperty, value: value);
+        }
+
         public void SetSelectionStart(int selectionStart)
             => MainTextBox.SelectionStart = selectionStart;
-
-        public int MaxLength => MainTextBox.MaxLength;
         #endregion Properties
 
         #region Methods

@@ -7,10 +7,10 @@
     <Grid>
         <TextBox  Text="{Binding ElementName=ThisElement,Path=Text,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                   VerticalContentAlignment="Center" x:Name="MainTextBox" 
+                  MaxLength="{Binding ElementName=ThisElement,Path=MaxLength}"
                   ContextMenu="{Binding ElementName=ThisElement,Path=ContextMenu}"
                   FontFamily="{Binding ElementName=ThisElement,Path=FontFamily}" 
                   FontWeight="{Binding ElementName=ThisElement,Path=FontWeight}"
-                  FontSize="{Binding ElementName=ThisElement,Path=FontSize}"
                   BorderThickness="{Binding ElementName=ThisElement,Path=BorderThickness}"
                   BorderBrush="{Binding ElementName=ThisElement,Path=BorderBrush}">
             <TextBox.Style>
@@ -54,8 +54,6 @@
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="Text" Value="">
                                             <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
-                                        </Trigger>
-                                        <Trigger Property="IsFocused" Value="True">
                                             <Setter TargetName="PlaceholderText" Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>

@@ -22,5 +22,10 @@
         <ResourceDictionary Source="/Resources/Images/Homeworks.xaml"/>
         <ResourceDictionary Source="/Resources/Images/Marks.xaml"/>
         <ResourceDictionary Source="/Resources/Images/Timetable.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Email.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/AddPhoto.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Information.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Mail.xaml"/>
+        <ResourceDictionary Source="/Resources/Images/Plus.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

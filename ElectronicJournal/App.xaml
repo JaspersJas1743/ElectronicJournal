@@ -1,7 +1,9 @@
 ﻿<Application x:Class="ElectronicJournal.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Startup="OnApplicationStartup">
+             Startup="OnApplicationStartup"
+             DispatcherUnhandledException="OnUnhandledException"
+             >
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="{x:Type Image}" x:Key="Information">
+        <Style.Setters>
+            <Setter Property="Source">
+                <Setter.Value>
+                    <DrawingImage>
+                        <DrawingImage.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                                <DrawingGroup.Transform>
+                                    <TranslateTransform X="0.5" Y="0.5" />
+                                </DrawingGroup.Transform>
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="{DynamicResource BorderColor}" Geometry="F0 M512,512z M0,0z M233.5,-0.5C248.167,-0.5 262.833,-0.5 277.5,-0.5 377.766,12.0408 449.266,64.0408 492,155.5 502.296,180.684 508.796,206.684 511.5,233.5 511.5,248.167 511.5,262.833 511.5,277.5 498.959,377.766 446.959,449.266 355.5,492 330.316,502.296 304.316,508.796 277.5,511.5 262.833,511.5 248.167,511.5 233.5,511.5 133.234,498.959 61.734,446.959 19,355.5 8.70393,330.316 2.20393,304.316 -0.5,277.5 -0.5,262.833 -0.5,248.167 -0.5,233.5 12.0408,133.234 64.0408,61.734 155.5,19 180.684,8.70393 206.684,2.20393 233.5,-0.5z M242.5,46.5C330.129,45.5457 395.963,82.5457 440,157.5 472.943,223.662 472.609,289.662 439,355.5 394.662,429.266 329.162,465.433 242.5,464 166.091,456.518 108.924,419.684 71,353.5 38.0573,287.338 38.3907,221.338 72,155.5 110.351,90.5575 167.185,54.2241 242.5,46.5z"/>
+                                </DrawingGroup>
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="{DynamicResource BorderColor}" Geometry="F0 M512,512z M0,0z M251.5,107.5C272.422,107.928 284.422,118.428 287.5,139 284.209,161.485 271.209,171.818 248.5,170 237.667,167.335 230.167,160.835 226,150.5 220.626,127.911 229.126,113.578 251.5,107.5z"/>
+                                </DrawingGroup>
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="{DynamicResource BorderColor}" Geometry="F0 M512,512z M0,0z M249.5,216.5C265.231,214.763 275.065,221.43 279,236.5 279.667,285.167 279.667,333.833 279,382.5 274.763,399.038 264.263,405.538 247.5,402 238.605,398.441 233.439,391.941 232,382.5 231.333,333.833 231.333,285.167 232,236.5 233.803,226.203 239.636,219.537 249.5,216.5z"/>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>

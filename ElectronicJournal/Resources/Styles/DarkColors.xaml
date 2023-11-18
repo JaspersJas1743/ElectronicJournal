@@ -1,10 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="MainElementColor" Color="#222222"/>
-    <SolidColorBrush x:Key="BackgroundColor" Color="Black"/>
-    <SolidColorBrush x:Key="BackgroundOnMouseOver" Color="#222222"/>
-    <SolidColorBrush x:Key="BorderColor" Color="White"/>
-    <SolidColorBrush x:Key="FontColor" Color="White"/>
+    <SolidColorBrush x:Key="BackgroundColor" Color="#000000"/>
+    <SolidColorBrush x:Key="BackgroundOnMouseOver" Color="#333333"/>
+    <SolidColorBrush x:Key="BorderColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="FontColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="SelectedMenuItem" Color="#222222"/>
+    <SolidColorBrush x:Key="ComboBoxOnMouseOver" Color="#333333"/>
     <SolidColorBrush x:Key="GreetingColor" Color="#999999"/>
+    <SolidColorBrush x:Key="SelectedBirthday" Color="#FF0000"/>
+    <SolidColorBrush x:Key="ScrollBar" Color="#000000"/>
+    <SolidColorBrush x:Key="MaleRadio" Color="#80A6FF"/>
+    <SolidColorBrush x:Key="FemaleRadio" Color="#F4C2C2"/>
+    <SolidColorBrush x:Key="TextSelection" Color="#8A8A8A"/>
+    <SolidColorBrush x:Key="MessagesBorder" Color="#333333"/>
+    <SolidColorBrush x:Key="InboundMessagesCardBackground" Color="#303030"/>
+    <SolidColorBrush x:Key="OutboundMessagesCardBackground" Color="#303030"/>
 </ResourceDictionary>

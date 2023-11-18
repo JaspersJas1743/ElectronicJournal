@@ -7,12 +7,61 @@
             <Setter Property="MaxLength" Value="25"/>
             <Setter Property="FontFamily" Value="Raleway"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="SelectionBrush" Value="{DynamicResource TextSelection}" />
+            <Setter Property="CaretBrush" Value="{DynamicResource FontColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                            <Grid>
-                                <ScrollViewer x:Name="PART_ContentHost" Margin="10 0 0 0"/>
+                        <Border SnapsToDevicePixels="True" CornerRadius="15" BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                            <Grid x:Name="MainGrid">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="5"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.25*"/>
+                                    <RowDefinition Height="0.25*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="0.25*"/>
+                                    <RowDefinition Height="0.25*"/>
+                                </Grid.RowDefinitions>
+
+                                <Viewbox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <ScrollViewer x:Name="PART_ContentHost" FontSize="{TemplateBinding FontSize}"/>
+                                </Viewbox>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}" x:Key="DownloadPath">
+        <Style.Setters>
+            <Setter Property="MaxLength" Value="255"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border SnapsToDevicePixels="True" CornerRadius="15" BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                            <Grid x:Name="MainGrid">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="5"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.25*"/>
+                                    <RowDefinition Height="0.25*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="0.25*"/>
+                                    <RowDefinition Height="0.25*"/>
+                                </Grid.RowDefinitions>
+                                <ScrollViewer x:Name="PART_ContentHost" FontSize="{TemplateBinding FontSize}" Grid.Row="2" Grid.Column="1"/>
                             </Grid>
                         </Border>
                     </ControlTemplate>

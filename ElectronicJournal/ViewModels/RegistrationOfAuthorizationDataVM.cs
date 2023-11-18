@@ -1,49 +1,44 @@
 ﻿using ElectronicJournal.Models;
-using ElectronicJournal.Resources.Windows;
-using ElectronicJournal.Utilities.Navigation;
+using ElectronicJournal.Utilities.PubSubEvents;
 using ElectronicJournal.ViewModels.Tools;
-using ElectronicJournalAPI;
+using ElectronicJournalAPI.ApiEntities;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+using Prism.Events;
 using System;
-using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace ElectronicJournal.ViewModels
 {
     public class RegistrationOfAuthorizationDataVM : VM
     {
         #region Fields
-        private readonly INavigationProvider _navigationProvider;
+        private readonly IValidator<RegistrationOfAuthorizationDataModel> _validator;
+        private readonly IEventAggregator _eventAggregator;
+
+        private RegistrationOfAuthorizationDataModel _model;
 
         private readonly Lazy<Command> _registration;
         private readonly Lazy<Command> _back;
-        private readonly IValidator<RegistrationOfAuthorizationDataModel> _registrationOfAuthorizationDataModelValidator;
-
-        private RegistrationOfAuthorizationDataModel _model;
         #endregion Fields
 
         #region Constructors
-        public RegistrationOfAuthorizationDataVM(INavigationProvider navigationProvider, IValidator<RegistrationOfAuthorizationDataModel> validator)
+        public RegistrationOfAuthorizationDataVM(IValidator<RegistrationOfAuthorizationDataModel> validator, IEventAggregator eventAggregator)
             : base(defaultButtonContent: "Зарегистрироваться")
         {
-            _navigationProvider = navigationProvider;
+            _validator = validator;
+
             _model = new RegistrationOfAuthorizationDataModel();
-            _registrationOfAuthorizationDataModelValidator = validator;
+            _model.PropertyChanged += (object sender, PropertyChangedEventArgs e) => OnPropertyChanged(propertyName: e.PropertyName);
 
             _registration = Command.CreateLazyCommand(action: async _ =>
             {
-                try
-                {
-                    await ExecuteTask(taskForExecute: SignUpAsync);
-                    _navigationProvider.MoveTo<MainWindowVM, AuthorizationVM>();
-                }
-                catch (Exception ex)
-                {
-                    MessageWindow.ShowError(text: ex.Message);
-                }
-            }, canExecute: _ => validator.Validate(instance: _model).IsValid && CanMoveToAnotherPage);
+                await ExecuteTask(taskForExecute: () => _model.SignUpAsync(registrationModule: RegistrationModule));
+                _eventAggregator.GetEvent<ChangeMainWindowContentEvent>().Publish(payload: new ChangeMainWindowContentEventArgs { NewVM = Program.AppHost.Services.GetService<AuthorizationVM>() });                
+            }, canExecute: _ => _validator.Validate(instance: _model).IsValid && CanMoveToAnotherPage);
 
             _back = Command.CreateLazyCommand(
-                action: _ => _navigationProvider.MoveTo<MainWindowVM, AuthorizationVM>(),
+                action: _ => _eventAggregator.GetEvent<ChangeMainWindowContentEvent>().Publish(payload: new ChangeMainWindowContentEventArgs { NewVM = Program.AppHost.Services.GetService<AuthorizationVM>() }),
                 canExecute: _ => CanMoveToAnotherPage
             );
         }
@@ -61,43 +56,24 @@ namespace ElectronicJournal.ViewModels
         public string Login
         {
             get => _model.Login;
-            set
-            {
-                _model.Login = value;
-                OnPropertyChanged(propertyName: nameof(Login));
-            }
+            set => _model.Login = value;
         }
 
         public string Password
         {
             get => _model.Password;
-            set
-            {
-                _model.Password = value;
-                OnPropertyChanged(propertyName: nameof(Password));
-            }
+            set => _model.Password = value;
         }
 
         public string PasswordConfirmation
         {
             get => _model.PasswordConfirmation;
-            set
-            {
-                _model.PasswordConfirmation = value;
-                OnPropertyChanged(propertyName: nameof(PasswordConfirmation));
-            }
+            set => _model.PasswordConfirmation = value;
         }
 
         public Command Registration => _registration.Value;
-
         public Command Back => _back.Value;
-
         public RegistrationModule RegistrationModule { get; set; }
         #endregion Properties
-
-        #region Methods
-        private async Task SignUpAsync()
-            => await RegistrationModule.SignUpAsync(login: Login, password: Password);
-        #endregion Methods
     }
 }

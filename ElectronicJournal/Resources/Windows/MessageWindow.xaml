@@ -6,54 +6,62 @@
         mc:Ignorable="d" ResizeMode="NoResize" WindowStyle="None"
         AllowsTransparency="True" Background="{DynamicResource BackgroundColor}"
         SnapsToDevicePixels="True" WindowStartupLocation="CenterOwner"
-        Title="Сообщение" Height="200" Width="350" Style="{DynamicResource BasedWindowStyle}">
+        Title="Сообщение" Height="300" Width="450" Style="{DynamicResource BasedWindow}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3.5*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.125*"/>
+            <RowDefinition Height="0.75*"/>
+            <RowDefinition Height="0.175*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.55*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="0.565*"/>
+            <ColumnDefinition Width="0.075*"/>
         </Grid.ColumnDefinitions>
-        <Image Width="100" Height="100" Name="Img"
-               VerticalAlignment="Center" Grid.RowSpan="2"
-               HorizontalAlignment="Center" Grid.Column="0"/>
 
-        <TextBlock TextWrapping="Wrap" FontSize="16" Name="Text"
-                   Grid.Column="1" Width="180" Margin="0 0 10 0"
+        <Viewbox VerticalAlignment="Center" Grid.RowSpan="3"
+                 HorizontalAlignment="Center" Grid.Column="0">
+            <Image Height="1" Width="1" Name="Img"/>
+        </Viewbox>
+
+        <TextBlock TextWrapping="Wrap" FontSize="20" Name="Text"
+                   Grid.Column="1" Margin="0 0 10 0" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Visible"
                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-        <Button Grid.Row="0" Grid.Column="1" Click="OnExitButtonClick"
-                Width="15" Height="15" VerticalAlignment="Top"
-                HorizontalAlignment="Right" Margin="0 7 7 0"
-                Style="{DynamicResource WindowButton}" Foreground="Red">
-            <Button.Content>
-                <Image Style="{DynamicResource Close}"/>
-            </Button.Content>
-        </Button>
+        <Viewbox Grid.Row="0" Grid.Column="2">
+            <Button Click="OnExitButtonClick" Width="25" Height="25" Margin="5" IsCancel="True"
+                    Style="{DynamicResource WindowButton}" Foreground="Red">
+                <Button.Content>
+                    <Image Style="{DynamicResource Close}"/>
+                </Button.Content>
+            </Button>
+        </Viewbox>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
-                    FlowDirection="RightToLeft" >
-            <Button Content="Отмена" FontSize="20" Margin="5 0 0 0"
-                    Visibility="Collapsed" Name="CancelButton" 
-                    Height="35" Width="60" Click="OnCancelButtonClick" 
-                    Style="{DynamicResource MessageWindowButton}"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                    Orientation="Horizontal" FlowDirection="RightToLeft">
+            <Viewbox>
+                <Button Name="CancelButton" Style="{DynamicResource MessageWindowButton}"
+                        Content="Отмена" Margin="5" Visibility="Collapsed"
+                        Height="25" Width="50" Click="OnCancelButtonClick" />
+            </Viewbox>
 
-            <Button Content="Нет" FontSize="20" Margin="5 0 0 0"
-                    Visibility="Collapsed" Name="NoButton" 
-                    Height="35" Width="60" Click="OnNoButtonClick" 
-                    Style="{DynamicResource MessageWindowButton}"/>
+            <Viewbox>
+                <Button Name="NoButton" Style="{DynamicResource MessageWindowButton}"
+                        Content="Нет" Margin="5" Visibility="Collapsed"
+                        Height="25" Width="50" Click="OnNoButtonClick" />
+            </Viewbox>
 
-            <Button Content="Ок" FontSize="20" Margin="5 0 0 0"
-                    Visibility="Collapsed" Name="OkButton" 
-                    Height="35" Width="60" Click="OnOkButtonClick" 
-                    Style="{DynamicResource MessageWindowButton}"/>
+            <Viewbox>
+                <Button Name="OkButton" Style="{DynamicResource MessageWindowButton}"
+                        Content="Ок" Margin="5" Visibility="Collapsed" IsDefault="True"
+                        Height="25" Width="50" Click="OnOkButtonClick" />
+            </Viewbox>
 
-            <Button Content="Да" FontSize="20" Margin="5 0 0 0"
-                    Visibility="Collapsed" Name="YesButton" 
-                    Height="35" Width="60" Click="OnYesButtonClick"  
-                    Style="{DynamicResource MessageWindowButton}"/>
+            <Viewbox>
+                <Button Content="Да" Margin="5" Visibility="Collapsed" IsDefault="True"
+                        Name="YesButton" Style="{DynamicResource MessageWindowButton}"
+                        Height="25" Width="50" Click="OnYesButtonClick" />
+            </Viewbox>
         </StackPanel>
     </Grid>
 </Window>

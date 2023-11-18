@@ -1,3 +1,5 @@
+using ElectronicJournalAPI.ApiEntities;
+
 namespace ElectronicJournalAPI.Test
 {
     [TestClass]

@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace ElectronicJournalAPI
+namespace ElectronicJournalAPI.ApiEntities
 {
     public class AuthorizationModule
     {

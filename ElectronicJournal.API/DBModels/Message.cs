@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ElectronicJournal.API.DBModels;
+﻿namespace ElectronicJournal.API.DBModels;
 
 public partial class Message
 {
@@ -15,9 +12,11 @@ public partial class Message
 
     public DateTime? ReadDatetime { get; set; }
 
+    public int? Attachment { get; set; }
+
+    public virtual Attachment AttachmentNavigation { get; set; } = null!;
+
     public virtual User? SenderNavigation { get; set; }
 
-    public virtual ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
-
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public virtual ICollection<User> Receivers { get; set; } = new List<User>();
 }

@@ -60,30 +60,21 @@
                         Text="{Binding Login,Mode=TwoWay}">
                     </uc:TextBoxWithImageAndPlaceholder>
 
-                    <uc:PasswordBoxWithPasswordViewer 
+                    <uc:PasswordBoxWithImageAndPasswordViewer
                         Placeholder="Пароль*" Image="{DynamicResource Password}" 
                         x:Name="PassBox" Text="{Binding Password,Mode=TwoWay}"
                         Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
-                    </uc:PasswordBoxWithPasswordViewer>
+                    </uc:PasswordBoxWithImageAndPasswordViewer>
 
-                    <uc:PasswordBoxWithPasswordViewer 
+                    <uc:PasswordBoxWithImageAndPasswordViewer
                         Grid.Column="0" Grid.Row="5" x:Name="ConfirmPassBox" Grid.ColumnSpan="2"
                         Placeholder="Повторите пароль*" Image="{DynamicResource Password}" 
                         Text="{Binding PasswordConfirmation,Mode=TwoWay}">
-                    </uc:PasswordBoxWithPasswordViewer>
+                    </uc:PasswordBoxWithImageAndPasswordViewer>
 
                     <Button 
                         Grid.Row="7" Grid.Column="0" Content="{Binding ButtonContent}" Grid.ColumnSpan="2" 
                         Command="{Binding Registration}">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value="0.75"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
                     </Button>
 
                     <Button 

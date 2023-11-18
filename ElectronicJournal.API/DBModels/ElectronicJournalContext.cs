@@ -79,25 +79,6 @@ public partial class ElectronicJournalContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Path).HasMaxLength(100);
-
-            entity.HasMany(d => d.Messages).WithMany(p => p.Attachments)
-                .UsingEntity<Dictionary<string, object>>(
-                    "AttachmentsMessage",
-                    r => r.HasOne<Message>().WithMany()
-                        .HasForeignKey("MessagesId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Attachmen__Messa__3B95D2F1"),
-                    l => l.HasOne<Attachment>().WithMany()
-                        .HasForeignKey("AttachmentsId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Attachmen__Attac__3AA1AEB8"),
-                    j =>
-                    {
-                        j.HasKey("AttachmentsId", "MessagesId").HasName("PK__Attachme__F9D9A2E2AEED3CC3");
-                        j.ToTable("Attachments_Messages");
-                        j.IndexerProperty<int>("AttachmentsId").HasColumnName("Attachments_ID");
-                        j.IndexerProperty<int>("MessagesId").HasColumnName("Messages_ID");
-                    });
         });
 
         modelBuilder.Entity<CoupleTiming>(entity =>
@@ -254,15 +235,22 @@ public partial class ElectronicJournalContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Messages__3214EC2738827A57");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ID");
             entity.Property(e => e.ReadDatetime).HasColumnType("datetime");
             entity.Property(e => e.SendDatetime).HasColumnType("datetime");
+
+            entity.HasOne(d => d.AttachmentNavigation).WithOne(p => p.Message)
+                .HasForeignKey<Message>(d => d.Attachment)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Messages__Attach__51300E55");
 
             entity.HasOne(d => d.SenderNavigation).WithMany(p => p.Messages)
                 .HasForeignKey(d => d.Sender)
                 .HasConstraintName("FK__Messages__Sender__49E3F248");
 
-            entity.HasMany(d => d.Users).WithMany(p => p.MessagesNavigation)
+            entity.HasMany(d => d.Receivers).WithMany(p => p.MessagesNavigation)
                 .UsingEntity<Dictionary<string, object>>(
                     "MessagesUser",
                     r => r.HasOne<User>().WithMany()
@@ -421,7 +409,7 @@ public partial class ElectronicJournalContext : DbContext
             entity.Property(e => e.Password).HasMaxLength(255);
             entity.Property(e => e.Patronymic).HasMaxLength(50);
             entity.Property(e => e.Phone).HasMaxLength(15);
-            entity.Property(e => e.Photo).HasMaxLength(100);
+            entity.Property(e => e.Photo).HasMaxLength(255);
             entity.Property(e => e.RegistrationCode).HasMaxLength(6);
             entity.Property(e => e.Surname).HasMaxLength(50);
 

@@ -12,5 +12,14 @@
         <ResourceDictionary Source="/Resources/Styles/Label.xaml"/>
         <ResourceDictionary Source="/Resources/Styles/RadioButtonInMenu.xaml"/>
         <ResourceDictionary Source="/Resources/Styles/CheckBoxInMenu.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/GroupBox.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/RadioButton.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/Calendar.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/ComboBox.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/ScrollBar.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/CheckBox.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/MessageTextBox.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/TabControl.xaml"/>
+        <ResourceDictionary Source="/Resources/Styles/ListView.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -1,13 +1,14 @@
 ﻿using ElectronicJournal.ViewModels.Tools;
-using System;
+using ElectronicJournalAPI.ApiEntities;
+using System.Threading.Tasks;
 
 namespace ElectronicJournal.Models
 {
     public class RegistrationOfAuthorizationDataModel : TrackedObject
     {
-        private string _login = String.Empty;
-        private string _password = String.Empty;
-        private string _passwordСonfirmation = String.Empty;
+        private string _login = default;
+        private string _password = default;
+        private string _passwordСonfirmation = default;
 
         public string Login
         {
@@ -27,7 +28,6 @@ namespace ElectronicJournal.Models
                 _password = value;
                 OnPropertyChanged(propertyName: nameof(Password));
             }
-
         }
 
         public string PasswordConfirmation
@@ -38,7 +38,9 @@ namespace ElectronicJournal.Models
                 _passwordСonfirmation = value;
                 OnPropertyChanged(propertyName: nameof(PasswordConfirmation));
             }
-
         }
+
+        public async Task SignUpAsync(RegistrationModule registrationModule)
+            => await registrationModule.SignUpAsync(login: Login, password: Password);
     }
 }

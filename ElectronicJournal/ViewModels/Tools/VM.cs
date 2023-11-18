@@ -1,5 +1,4 @@
-﻿using ElectronicJournal.Utilities;
-using ElectronicJournalAPI;
+﻿using ElectronicJournalAPI;
 using System;
 using System.Threading.Tasks;
 

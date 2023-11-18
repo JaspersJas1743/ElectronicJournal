@@ -7,8 +7,11 @@ namespace ElectronicJournal.API.Validators
     {
         public AccountRegistrationCodeRequestValidator()
         {
-            RuleFor(registrationCode => registrationCode.RegistrationCode)
-                .NotNull().WithMessage(errorMessage: "Регистрационный код является обязательным к заполнению")
+            string msg = "Регистрационный код является обязательным к заполнению";
+            RuleFor(expression: registrationCode => registrationCode.RegistrationCode)
+                .NotNull().WithMessage(errorMessage: msg)
+                .NotEmpty().WithMessage(errorMessage: msg)
+                .Must(predicate: rc => !String.IsNullOrWhiteSpace(value: rc)).WithMessage(errorMessage: msg)
                 .Length(exactLength: 6).WithMessage(errorMessage: "Длина регистрационного кода равна 6");
         }
     }

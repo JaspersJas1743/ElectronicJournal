@@ -7,13 +7,13 @@ namespace ElectronicJournal.Utilities
     public static class Theme
     {
         #region Fields
-        private static readonly IConfigProvider _configurationProvider;
+        private static readonly IConfigProvider _config;
         #endregion Fields
 
         #region Constructors
         static Theme()
         {
-            _configurationProvider = new ConfigurationProvider();
+            _config = new ConfigurationProvider();
         }
         #endregion Constructors
 
@@ -28,8 +28,8 @@ namespace ElectronicJournal.Utilities
         #region Properties
         public static Type CurrentTheme
         {
-            get => Theme.Parse(themeName: _configurationProvider.Get<String>(propertyName: "Theme"));
-            set => _configurationProvider.Set(propertyName: "Theme", value: value.ToString());
+            get => Theme.Parse(themeName: _config.Get<String>(propertyName: nameof(Theme)));
+            set => _config.Set(propertyName: nameof(Theme), value: value.ToString());
         }
         #endregion Properties
 

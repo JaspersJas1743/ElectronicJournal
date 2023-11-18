@@ -1,12 +1,14 @@
 ﻿using ElectronicJournal.ViewModels.Tools;
-using System;
+using ElectronicJournalAPI.ApiEntities;
+using System.Threading.Tasks;
 
 namespace ElectronicJournal.Models
 {
     public class AuthorizationModel : TrackedObject
     {
-        private string _login = String.Empty;
-        private string _password = String.Empty;
+        private string _login = default;
+        private string _password = default;
+        private bool _saveData = default;
 
         public string Login
         {
@@ -26,6 +28,22 @@ namespace ElectronicJournal.Models
                 _password = value;
                 OnPropertyChanged(propertyName: nameof(Password));
             }
+        }
+
+        public bool SaveData
+        {
+            get => _saveData;
+            set
+            {
+                _saveData = value;
+                OnPropertyChanged(propertyName: nameof(SaveData));
+            }
+        }
+
+        public async Task<User> SignInAsync()
+        {
+            AuthorizationModule api = AuthorizationModule.Create(login: Login, password: Password);
+            return await api.SignInAsync();
         }
     }
 }

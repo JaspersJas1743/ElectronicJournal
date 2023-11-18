@@ -4,11 +4,358 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ElectronicJournal.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="1024" d:DesignWidth="1120">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            
-        </Grid.ColumnDefinitions>
-    </Grid>
+             xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:ce="clr-namespace:ElectronicJournal.Resources.CustomElements"
+             mc:Ignorable="d" d:DesignHeight="1024" d:DesignWidth="1120">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="btv"/>
+
+        <DrawingImage x:Key="Default">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V512 H512 V0 H0 Z">
+                    <DrawingGroup Opacity="1" Transform="0.1,0,0,-0.1,0,512">
+                        <GeometryDrawing Brush="{DynamicResource BorderColor}" Geometry="F1 M512,512z M0,0z M2285,5114C1916,5090 1469,5029 1255,4973 959,4896 747,4777 545,4575 299,4329 178,4079 106,3662 -35,2857 -32,2154 116,1395 253,695 688,255 1384,115 1540,84 1807,46 2035,24 2284,-1 2832,-1 3085,23 3488,63 3783,114 3983,180 4487,348 4840,726 4974,1241 5017,1409 5075,1791 5100,2085 5158,2755 5068,3680 4905,4085 4745,4482 4416,4791 4000,4933 3800,5001 3480,5058 3088,5096 2934,5110 2415,5122 2285,5114z M3090,4865C3295,4845 3558,4807 3713,4774 4298,4651 4659,4291 4775,3716 4807,3559 4845,3290 4867,3070 4891,2826 4891,2293 4867,2050 4788,1270 4691,978 4421,709 4368,657 4311,604 4294,592L4263,571 4257,708C4248,927 4207,1098 4120,1275 3908,1705 3445,1979 2826,2041 2674,2056 2301,2048 2166,2026 1605,1936 1196,1673 1000,1275 914,1099 872,928 863,713 860,640 855,580 852,580 849,580 816,606 778,637 623,764 485,968 407,1185 315,1444 230,2096 230,2550 230,2939 298,3538 375,3826 493,4271 787,4582 1225,4725 1412,4787 1831,4851 2225,4880 2400,4892 2898,4884 3090,4865z M2975,1791C3579,1680 3939,1354 4016,849 4038,709 4031,453 4005,434 3996,427 3945,408 3892,391 3534,277 2759,206 2240,239 1811,267 1431,326 1215,398L1105,435 1098,485C1087,574 1090,752 1105,852 1184,1379 1581,1713 2235,1805 2388,1827 2829,1818 2975,1791z" />
+                        <GeometryDrawing Brush="{DynamicResource BorderColor}" Geometry="F1 M512,512z M0,0z M2416,4270C2079,4216 1800,4017 1646,3720 1559,3551 1523,3385 1533,3191 1555,2751 1853,2381 2285,2254 2407,2219 2613,2210 2744,2234 3022,2287 3261,2444 3416,2676 3523,2836 3578,3003 3587,3196 3611,3688 3290,4124 2815,4246 2702,4274 2516,4286 2416,4270z M2765,4025C2984,3966 3187,3796 3284,3590 3342,3466 3355,3404 3355,3240 3354,3102 3353,3090 3321,2997 3237,2754 3045,2563 2802,2483 2721,2457 2704,2455 2555,2455 2402,2455 2391,2457 2308,2486 2058,2575 1885,2750 1798,3002 1768,3090 1766,3103 1765,3240 1765,3404 1777,3466 1836,3590 1945,3821 2171,3994 2422,4040 2495,4053 2693,4044 2765,4025z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </UserControl.Resources>
+    <Behaviors:Interaction.Triggers>
+        <Behaviors:EventTrigger EventName="Loaded">
+            <Behaviors:InvokeCommandAction Command="{Binding Loaded}"/>
+        </Behaviors:EventTrigger>
+    </Behaviors:Interaction.Triggers>
+    <Viewbox>
+        <Grid Width="1120" Height="1024">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.01*" MaxHeight="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.01*" MaxHeight="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.04*" MaxHeight="20"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.3*" />
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.3*" />
+                </Grid.ColumnDefinitions>
+                <GroupBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                          ContentStringFormat="Основная информация">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.05*" MaxHeight="20"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.04*" MaxHeight="15"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.04*" MaxHeight="15"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.04*" MaxHeight="15"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.05*" MaxHeight="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition Width="0.01*"/>
+                            <ColumnDefinition Width="0.4*"/>
+                            <ColumnDefinition Width="0.01*"/>
+                            <ColumnDefinition Width="0.4*"/>
+                            <ColumnDefinition Width="0.01*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Row="2" HorizontalAlignment="Right"
+                                 Grid.Column="0" Grid.ColumnSpan="2">
+                            <TextBlock Text="Фамилия" HorizontalAlignment="Right"/>
+                        </Viewbox>
+                        <TextBox Grid.Column="3" Grid.Row="1" Grid.RowSpan="3"
+                                 BorderThickness="0" Text="{Binding Surname}"
+                                 IsReadOnly="True"/>
+
+                        <Viewbox Grid.Row="6" HorizontalAlignment="Right"
+                                 Grid.Column="1">
+                            <TextBlock Text="Имя" HorizontalAlignment="Right"/>
+                        </Viewbox>
+                        <TextBox Grid.Column="3" Grid.Row="5" Grid.RowSpan="3"
+                                 BorderThickness="0" Text="{Binding Name}"
+                                 IsReadOnly="True"/>
+
+                        <Viewbox Grid.Row="10" HorizontalAlignment="Right"
+                                 Grid.Column="0" Grid.ColumnSpan="2">
+                            <TextBlock Text="Отчество" HorizontalAlignment="Right"/>
+                        </Viewbox>
+                        <TextBox Grid.Column="3" Grid.Row="9" Grid.RowSpan="3"
+                                 BorderThickness="0" Text="{Binding Patronymic}"
+                                 IsReadOnly="True"/>
+
+                        <Viewbox Grid.Row="14" HorizontalAlignment="Right"
+                             Grid.Column="1">
+                            <TextBlock Text="Пол" HorizontalAlignment="Right"/>
+                        </Viewbox>
+
+                        <Border Grid.Column="3" Grid.Row="13" Grid.RowSpan="3" BorderThickness="2"
+                                BorderBrush="{DynamicResource BorderColor}"
+                                CornerRadius="15">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.5*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="0.5*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.075*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.075*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.075*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <RadioButton GroupName="Gender" Content="Женский" 
+                                             BorderBrush="{DynamicResource FemaleRadio}" Grid.Row="1"
+                                             Grid.Column="1" IsChecked="{Binding IsFemale}"
+                                             Focusable="False" IsHitTestVisible="False"/>
+                                <RadioButton GroupName="Gender" Content="Мужской" 
+                                             BorderBrush="{DynamicResource MaleRadio}" Grid.Row="1"
+                                             Grid.Column="3" IsChecked="{Binding IsMale}"
+                                             Focusable="False" IsHitTestVisible="False"/>
+                            </Grid>
+                        </Border>
+
+                        <Viewbox Grid.Column="5" Grid.Row="1" Grid.RowSpan="15">
+                            <Calendar DisplayDate="{Binding Birthday}"
+                                      SelectedDate="{Binding Birthday}" 
+                                      SelectionMode="SingleDate"
+                                      Focusable="False"
+                                      IsHitTestVisible="False"/>
+                        </Viewbox>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Grid.Row="0" Grid.Column="3"
+                          ContentStringFormat="Фото пользователя">
+                    <Border Margin="15" CornerRadius="15">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Photo}"/>
+                        </Border.Background>
+                        <Button Visibility="{Binding IsDefaultPhoto,Converter={StaticResource btv}}"
+                                Command="{Binding UploadPhoto}">
+                            <Button.Content>
+                                <Viewbox>
+                                    <Grid Width="1" Height="1">
+                                        <Image Style="{DynamicResource AddPhoto}"/>
+                                    </Grid>
+                                </Viewbox>
+                            </Button.Content>
+                        </Button>
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsDefaultPhoto}" Value="True">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
+                </GroupBox>
+
+                <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                      ContentStringFormat="Электронная почта">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.2*" MaxHeight="20"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="0.1*" MaxHeight="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="0.1*" MaxHeight="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="0.2*" MaxHeight="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.1*" MaxWidth="20"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.1*" MaxWidth="20"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ce:TextBoxWithImageAndPlaceholder Margin="0 5" Grid.Column="1"
+                                                           BorderThickness="0" Grid.Row="1"
+                                                           Image="{DynamicResource Email}"
+                                                           FontWeight="DemiBold"
+                                                           Placeholder="example@mail.ru"
+                                                           Text="{Binding Email,Mode=TwoWay}"/>
+
+                        <Viewbox Grid.Row="3" Grid.Column="1" Margin="30 0">
+                            <TextBlock Text="Электронная почта подтверждена"
+                                       Foreground="#4FB84D" />
+                        </Viewbox>
+
+                        <Button Content="{Binding ButtonContent}" Grid.Row="5"
+                                Grid.Column="1" Margin="100 10"
+                                Command="{Binding EmailChanging}"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3"
+                          ContentStringFormat="Телефон">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.2*" MaxHeight="20"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="0.1*" MaxHeight="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="0.1*" MaxHeight="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="0.2*" MaxHeight="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.1*" MaxWidth="20"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.1*" MaxWidth="20"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ce:TextBoxWithImageAndPlaceholder Margin="0 5" Grid.Column="1"
+                                                           BorderThickness="0" Grid.Row="1"
+                                                           MaxLength="15"
+                                                           Image="{DynamicResource Phone}"
+                                                           FontWeight="DemiBold"
+                                                           Placeholder="+7(___)___-____"
+                                                           Text="{Binding Phone,Mode=TwoWay}"/>
+
+                        <Viewbox Grid.Row="3" Grid.Column="1" Margin="50 0">
+                            <TextBlock Text="Номер телефона подтвержден"
+                                       Foreground="#4FB84D"/>
+                        </Viewbox>
+
+                        <Button Content="{Binding ButtonContent}" Grid.Row="5"
+                                Grid.Column="1" Margin="100 10"
+                                Command="{Binding PhoneChanging}"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                          ContentStringFormat="Безопасность">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.05*" MaxHeight="20"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.04*" MaxHeight="15"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.04*" MaxHeight="15"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.04*" MaxHeight="15"/>
+                            <RowDefinition Height="0.18*"/>
+                            <RowDefinition Height="0.05*" MaxHeight="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.1*" MaxWidth="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.2*" MaxWidth="20"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Viewbox Grid.Row="2" HorizontalAlignment="Right">
+                            <TextBlock Text="Текущий пароль"/>
+                        </Viewbox>
+                        <ce:PasswordBoxWithPasswordViewer Grid.Row="1" 
+                                                          Text="{Binding CurrentPassword,Mode=TwoWay}"
+                                                          Grid.Column="2"
+                                                          Grid.RowSpan="3"/>
+
+                        <Viewbox Grid.Row="6" HorizontalAlignment="Right">
+                            <TextBlock Text="Новый пароль"/>
+                        </Viewbox>
+                        <ce:PasswordBoxWithPasswordViewer Grid.Row="5"
+                                                          Text="{Binding NewPassword,Mode=TwoWay}"
+                                                          Grid.Column="2"
+                                                          Grid.RowSpan="3"/>
+
+                        <Viewbox Grid.Row="10" HorizontalAlignment="Right">
+                            <TextBlock Text="Подтвердите пароль"/>
+                        </Viewbox>
+                        <ce:PasswordBoxWithPasswordViewer Grid.Row="9"
+                                                          Text="{Binding ConfirmatedPassword,Mode=TwoWay}"
+                                                          Grid.Column="2"
+                                                          Grid.RowSpan="3"/>
+
+                        <Button Grid.Column="2" Grid.Row="13" 
+                                Content="{Binding ButtonContent}"
+                                Command="{Binding PasswordChanging}"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"
+                          ContentStringFormat="Настройки">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.2*" MaxHeight="20"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.1*" MaxHeight="10"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.04*"/>
+                            <RowDefinition Height="0.1*" MaxHeight="10"/>
+                            <RowDefinition Height="0.18*"/>
+                            <RowDefinition Height="0.1*" MaxHeight="10"/>
+                            <RowDefinition Height="0.18*"/>
+                            <RowDefinition Height="0.2*" MaxHeight="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.2*" MaxWidth="20"/>
+                            <ColumnDefinition Width="0.2*"/>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="0.1*" MaxWidth="10"/>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="0.2*"/>
+                            <ColumnDefinition Width="0.2*" MaxWidth="20"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Row="2" Grid.Column="1"
+                                 Grid.ColumnSpan="2" >
+                            <TextBlock Text="Начальная страница"/>
+                        </Viewbox>
+                        <ComboBox Grid.Row="1" Grid.RowSpan="3"
+                                  ItemsSource="{Binding StartedPages}"
+                                  Grid.Column="4" Grid.ColumnSpan="2"
+                                  SelectedItem="{Binding HomePage,Mode=TwoWay}"
+                                  >
+                        </ComboBox>
+
+                        <Viewbox Grid.Row="6" Grid.Column="1"
+                                 Grid.ColumnSpan="2">
+                            <TextBlock Text="Путь для сохранения"/>
+                        </Viewbox>
+                        <TextBox Grid.Column="4" Grid.ColumnSpan="2" IsReadOnly="True"
+                                 Grid.Row="5" Grid.RowSpan="3" BorderThickness="0"
+                                 Text="{Binding FolderForDownloads}"
+                                 Style="{DynamicResource DownloadPath}"/>
+
+                        <Button Grid.Column="2" Grid.ColumnSpan="3"
+                                Command="{Binding BrowseFolder}"
+                                Grid.Row="9" Content="Выбрать папку.."/>
+
+                        <Button Grid.Column="2" Grid.ColumnSpan="3"
+                                Command="{Binding LogOut}"
+                                Grid.Row="11" Content="Выйти из аккаунта"/>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </Grid>
+    </Viewbox>
 </UserControl>

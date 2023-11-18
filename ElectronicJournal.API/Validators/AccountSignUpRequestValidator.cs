@@ -7,17 +7,26 @@ namespace ElectronicJournal.API.Validators
     {
         public AccountSignUpRequestValidator()
         {
+            string msg = "Регистрационный код является обязательным к заполнению";
             RuleFor(expression: signUp => signUp.RegistrationCode)
-                .NotNull().WithMessage(errorMessage: "Регистрационный код не может быть пустым")
+                .NotNull().WithMessage(errorMessage: msg)
+                .NotEmpty().WithMessage(errorMessage: msg)
+                .Must(predicate: rc => !String.IsNullOrWhiteSpace(value: rc)).WithMessage(errorMessage: msg)
                 .Length(exactLength: 6).WithMessage(errorMessage: "Длина регистрационного кода должна быть равна 6");
 
+            msg = "Логин является обязательным к заполнению";
             RuleFor(expression: signUp => signUp.Login)
-                .NotNull().WithMessage(errorMessage: "Логин является обязательным к заполнению")
-                .MinimumLength(minimumLength: 4).WithMessage("Минимальная длина логина - 4 символа");
+               .NotNull().WithMessage(errorMessage: msg)
+               .NotEmpty().WithMessage(errorMessage: msg)
+               .Must(predicate: l => !String.IsNullOrWhiteSpace(value: l)).WithMessage(errorMessage: msg)
+               .MinimumLength(minimumLength: 4).WithMessage(errorMessage: "Минимальная длина логина - 4 символа");
 
+            msg = "Пароль является обязательным к заполнению";
             RuleFor(expression: signUp => signUp.Password)
-                .NotNull().WithMessage(errorMessage: "Пароль является обязательным к заполнению")
-                .MinimumLength(minimumLength: 6).WithMessage("Минимальная длина пароля - 6 символа");
+                .NotNull().WithMessage(errorMessage: msg)
+                .NotEmpty().WithMessage(errorMessage: msg)
+                .Must(predicate: p => !String.IsNullOrWhiteSpace(value: p)).WithMessage(errorMessage: msg)
+                .MinimumLength(minimumLength: 6).WithMessage(errorMessage: "Минимальная длина пароля - 6 символа");
         }
     }
 }

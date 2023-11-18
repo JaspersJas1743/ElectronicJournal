@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="ElectronicJournal.Views.MessageCreation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectronicJournal.Views"
+             xmlns:tools="clr-namespace:ElectronicJournal.Views.Tools"
+             mc:Ignorable="d" d:DesignHeight="1024" d:DesignWidth="1120">
+    <UserControl.Resources>
+        <CompositeCollection x:Key="DefaultItem">
+            <ComboBoxItem Content="Введите не менее 3 символов для поиска..." IsEnabled="False"/>
+        </CompositeCollection>
+
+        <tools:TextLengthToVisibilityConverter x:Key="tltvbc"/>
+    </UserControl.Resources>
+    
+    <Viewbox>
+        <Grid Width="1120" Height="1024">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.025*" MaxHeight="20"/>
+                <RowDefinition Height="0.04*" MaxHeight="30"/>
+                <RowDefinition Height="0.0125*" MaxHeight="10"/>
+                <RowDefinition Height="0.075*" MaxHeight="60"/>
+                <RowDefinition Height="0.025*" MaxHeight="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.025*" MaxHeight="20"/>
+                <RowDefinition Height="0.75*" MaxHeight="80"/>
+                <RowDefinition Height="0.025*" MaxHeight="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.02*" MaxWidth="20"/>
+                <ColumnDefinition Width="0.06*"/>
+                <ColumnDefinition Width="0.02*" MaxWidth="20"/>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="0.02*" MaxWidth="20"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.02*" MaxWidth="20"/>
+            </Grid.ColumnDefinitions>
+
+            <Viewbox Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Left">
+                <TextBlock Text="Выберите получателя: "/>
+            </Viewbox>
+
+            <ComboBox IsTextSearchEnabled="False" DisplayMemberPath="DisplayedName" Grid.Column="1"
+                      StaysOpenOnEdit="True" IsEditable="True" Grid.ColumnSpan="5" Grid.Row="3"
+                      Text="{Binding Filter,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SelectedUser,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding Users,TargetNullValue={StaticResource DefaultItem}}"
+                      >
+            </ComboBox>
+
+            <TextBox TextWrapping="Wrap" BorderBrush="{x:Null}" FontSize="20" Name="tb"
+                     AcceptsReturn="True" Grid.Row="5" Grid.Column="1" Focusable="True" 
+                     Grid.ColumnSpan="5" Text="{Binding Text,Mode=TwoWay}">
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MessageTextBox}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=border,Path=Visibility}" Value="Collapsed">
+                                <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Mode=Self}}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+
+            <Border Background="{DynamicResource MessagesBorder}" BorderThickness="3"
+                    BorderBrush="{DynamicResource BorderColor}" Grid.Column="1"
+                    Grid.Row="5" CornerRadius="10" Grid.ColumnSpan="5" Name="border"
+                    Visibility="{Binding Text,Converter={StaticResource tltvbc}}">
+                <TextBlock Text="Введите текст сообщения..." FontSize="24"/>
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="IBeam"/>
+                            </Trigger>
+                            <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border>
+
+            <Button Grid.Row="7" Grid.Column="1" Command="{Binding AddAttachments}"
+                    Style="{DynamicResource ButtonWithoutPadding}">
+                <Button.Content>
+                    <Image Style="{DynamicResource Plus}"/>
+                </Button.Content>
+            </Button>
+
+            <Border Grid.Row="7" Grid.Column="3" CornerRadius="15"
+                    Background="{DynamicResource MainElementColor}"
+                    ToolTip="{Binding AttachmentsToolTip}">
+                <TextBlock FontSize="20" Text="{Binding DisplayedAttachmentsCount}"/>
+            </Border>
+
+            <Button Grid.Row="7" Grid.Column="5" Command="{Binding SendMessage}">
+                <TextBlock FontSize="20" Text="Отправить"/>
+            </Button>
+        </Grid>
+    </Viewbox>
+</UserControl>

@@ -112,13 +112,6 @@ namespace ElectronicJournal.Resources.Windows
             ShowCancelButton();
         }
 
-        public static MessageWindowResult Show(string text, string windowTitle, MessageWindowImage image, MessageWindowButton buttons)
-        {
-            MessageWindow window = CreateDefaultMessageWindow(text: text, windowTitle: windowTitle, image: image, buttons: buttons);
-            window.ShowDialog();
-            return window.DialogResult;
-        }
-
         private static MessageWindow CreateDefaultMessageWindow(string text, string windowTitle, MessageWindowImage image, MessageWindowButton buttons)
         {
             MessageWindow window = new MessageWindow();
@@ -129,6 +122,13 @@ namespace ElectronicJournal.Resources.Windows
             window.ShowInTaskbar = false;
             window.SetText(text: text);
             return window;
+        }
+
+        public static MessageWindowResult Show(string text, string windowTitle, MessageWindowImage image, MessageWindowButton buttons)
+        {
+            MessageWindow window = CreateDefaultMessageWindow(text: text, windowTitle: windowTitle, image: image, buttons: buttons);
+            window.ShowDialog();
+            return window.DialogResult;
         }
 
         public static MessageWindowResult ShowError(string text)
@@ -143,8 +143,8 @@ namespace ElectronicJournal.Resources.Windows
         public static void ShowMessage(string text)
         {
             MessageWindow window = CreateDefaultMessageWindow(image: MessageWindowImage.Information, windowTitle: "Сообщение", text: text, buttons: MessageWindowButton.None);
-            Grid.SetRowSpan(window.Img, 2);
-            Grid.SetRowSpan(window.Text, 2);
+            Grid.SetRowSpan(element: window.Img, value: 2);
+            Grid.SetRowSpan(element: window.Text, value: 2);
             window.ShowDialog();
         }
 

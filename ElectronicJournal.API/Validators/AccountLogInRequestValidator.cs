@@ -7,13 +7,19 @@ namespace ElectronicJournal.API.Validators
     {
         public AccountLogInRequestValidator()
         {
-            RuleFor(logIn => logIn.Login)
-                .NotNull().WithMessage(errorMessage: "Логин является обязательным к заполнению")
-                .MinimumLength(minimumLength: 4).WithMessage("Минимальная длина логина - 4 символа");
+            string msg = "Логин является обязательным к заполнению";
+            RuleFor(expression: logIn => logIn.Login)
+                .NotNull().WithMessage(errorMessage: msg)
+                .NotEmpty().WithMessage(errorMessage: msg)
+                .Must(predicate: l => !String.IsNullOrWhiteSpace(value: l)).WithMessage(errorMessage: msg)
+                .MinimumLength(minimumLength: 4).WithMessage(errorMessage: "Минимальная длина логина - 4 символа");
 
-            RuleFor(logInData => logInData.Password)
-                .NotNull().WithMessage(errorMessage: "Пароль является обязательным к заполнению")
-                .MinimumLength(minimumLength: 6).WithMessage("Минимальная длина пароля - 6 символов");
+            msg = "Пароль является обязательным к заполнению";
+            RuleFor(expression: logInData => logInData.Password)
+                .NotNull().WithMessage(errorMessage: msg)
+                .NotEmpty().WithMessage(errorMessage: msg)
+                .Must(predicate: p => !String.IsNullOrWhiteSpace(value: p)).WithMessage(errorMessage: msg)
+                .MinimumLength(minimumLength: 6).WithMessage(errorMessage: "Минимальная длина пароля - 6 символов");
         }
     }
 }

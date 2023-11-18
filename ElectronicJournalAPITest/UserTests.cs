@@ -1,4 +1,6 @@
-﻿namespace ElectronicJournalAPI.Test
+﻿using ElectronicJournalAPI.ApiEntities;
+
+namespace ElectronicJournalAPI.Test
 {
     [TestClass]
     public class UserTests

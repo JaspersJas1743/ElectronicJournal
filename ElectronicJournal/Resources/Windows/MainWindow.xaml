@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d" x:Name="ThisWindow" Title="Электронный журнал" 
-        Style="{DynamicResource WindowStyle}" Width="{Binding Width,Mode=TwoWay}" 
+        Style="{DynamicResource MainWindow}" Width="{Binding Width,Mode=TwoWay}" 
         WindowStartupLocation="CenterScreen" Height="{Binding Height,Mode=TwoWay}" 
-        MinHeight="700" MinWidth="1120">
+        MinHeight="700" MinWidth="900" WindowState="{Binding WindowState,Mode=TwoWay}">
     <Behaviors:Interaction.Triggers>
         <Behaviors:EventTrigger EventName="Closing">
             <Behaviors:InvokeCommandAction Command="{Binding Closing}"/>

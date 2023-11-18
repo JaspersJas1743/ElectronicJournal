@@ -9,7 +9,7 @@ public partial class Attachment
 
     public string? Path { get; set; }
 
-    public virtual ICollection<Homework> Homeworks { get; set; } = new List<Homework>();
+    public virtual Message? Message { get; set; }
 
-    public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
+    public virtual ICollection<Homework> Homeworks { get; set; } = new List<Homework>();
 }

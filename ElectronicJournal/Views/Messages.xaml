@@ -3,12 +3,339 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ElectronicJournal.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Viewbox>
-            <TextBlock Text="Messages"/>
-        </Viewbox>  
-    </Grid>
+             xmlns:m="clr-namespace:ElectronicJournal.Models"
+             xmlns:tools="clr-namespace:ElectronicJournal.Views.Tools"
+             xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" d:DesignHeight="1024" d:DesignWidth="1120">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="btv"/>
+        
+        <CompositeCollection x:Key="DefaultItem">
+            <ComboBoxItem Content="Введите не менее 3 символов для поиска..." IsEnabled="False"/>
+        </CompositeCollection>
+
+        <DataTemplate x:Key="MessageIsNotSelected">
+            <Viewbox>
+                <Grid Width="443" Height="90">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="0.05*"/>
+                        <RowDefinition Height="0.3*"/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Row="0" Width="50" Height="35"
+                             VerticalAlignment="Bottom">
+                        <Image Style="{DynamicResource Mail}" Margin="20"/>
+                    </Viewbox>
+                    
+                    <Viewbox Grid.Row="2" VerticalAlignment="Top">
+                        <TextBlock Text="Выберите сообщение для просмотра" FontSize="20"
+                                   Margin="100 0"/>
+                    </Viewbox>
+                </Grid>
+            </Viewbox>
+        </DataTemplate>
+
+        <DataTemplate x:Key="MessageIsSelected" DataType="{x:Type m:UpdMessage}">
+            <Viewbox >
+                <Grid Width="760" Height="760">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.02*"/>
+                        <RowDefinition Height="0.06*"/>
+                        <RowDefinition Height="0.02*"/>
+                        <RowDefinition Height="0.0075*" MaxHeight="10"/>
+                        <RowDefinition Height="0.02*"/>
+                        <RowDefinition Height="0.06*"/>
+                        <RowDefinition Height="0.02*"/>
+                        <RowDefinition Height="0.0075*" MaxHeight="10"/>
+                        <RowDefinition Height="0.02*"/>
+                        <RowDefinition Height="0.06*"/>
+                        <RowDefinition Height="0.02*"/>
+                        <RowDefinition Height="0.0075*" MaxHeight="10"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.075*" MaxWidth="30"/>
+                        <ColumnDefinition Width="0.4*" />
+                        <ColumnDefinition Width="0.2*" />
+                        <ColumnDefinition Width="0.025*" MaxWidth="10"/>
+                        <ColumnDefinition Width="0.9*" />
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.4*" />
+                        <ColumnDefinition Width="0.025*" MaxWidth="10"/>
+                        <ColumnDefinition Width="0.2*" />
+                        <ColumnDefinition Width="0.075*" MaxWidth="30"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Viewbox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
+                             HorizontalAlignment="Right">
+                        <TextBlock Text="Отправитель" FontSize="20" HorizontalAlignment="Right"/>
+                    </Viewbox>
+                    <TextBox Grid.Column="4" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="5"
+                             BorderBrush="{x:Null}" Text="{Binding Message.Sender}" IsReadOnly="True"/>
+
+                    <Viewbox Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2"
+                             HorizontalAlignment="Right">
+                        <TextBlock Text="Получатель" Margin="15 0 0 0" FontSize="20" HorizontalAlignment="Right"/>
+                    </Viewbox>
+                    <TextBox Grid.Column="4" Grid.Row="4" Grid.RowSpan="3" IsReadOnly="True"
+                             BorderBrush="{x:Null}" Grid.ColumnSpan="5" Text="{Binding Message.Receiver}" />
+
+                    <Viewbox Grid.Column="2" Grid.Row="9" HorizontalAlignment="Right">
+                        <TextBlock Text="Дата" FontSize="20" HorizontalAlignment="Right"/>
+                    </Viewbox>
+                    <TextBox Grid.Column="4" Grid.Row="8" Grid.RowSpan="3" IsReadOnly="True"
+                             BorderBrush="{x:Null}" Text="{Binding Message.Date,StringFormat='dd.MM.yyyy, HH:mm'}"/>
+
+                    <Viewbox Grid.Column="6" Grid.Row="9" HorizontalAlignment="Right">
+                        <TextBlock Text="Вложения" FontSize="20" HorizontalAlignment="Right"
+                                   Visibility="{Binding Message.HaveAttachment,Converter={StaticResource btv}}"/>
+                    </Viewbox>
+                    <Viewbox Grid.Column="8" Grid.Row="8" Grid.RowSpan="3">
+                        <Button BorderBrush="{x:Null}" Width="50" Height="50"
+                                Command="{Binding DownloadAttachment}"
+                                Background="{DynamicResource BackgroundColor}"
+                                Visibility="{Binding Message.HaveAttachment,Converter={StaticResource btv}}">
+                            <Button.Content>
+                                <Viewbox Margin="0.2">
+                                    <TextBlock Text=".rar"/>
+                                </Viewbox>
+                            </Button.Content>
+                        </Button>
+                    </Viewbox>
+
+                    <Border Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="8"
+                            CornerRadius="15" Background="{DynamicResource MainElementColor}"
+                            Visibility="Visible">
+                        <Viewbox>
+                            <TextBlock Text="Сообщение не содержит текст" Margin="110 0"/>
+                        </Viewbox>
+                    </Border>
+
+                    <TextBox TextWrapping="Wrap" BorderBrush="{x:Null}" IsReadOnly="True"
+                             AcceptsReturn="True" FontSize="20" Text="{Binding Message.Text}"
+                             Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="8"
+                             Style="{DynamicResource MessageTextBox}"
+                             Visibility="{Binding Message.HaveText,Converter={StaticResource btv}}"/>
+                </Grid>
+            </Viewbox>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type m:UpdMessage}" x:Key="InboundMessage">
+            <Border Background="{DynamicResource InboundMessagesCardBackground}" 
+                    BorderBrush="{DynamicResource BorderColor}" Width="280" Height="80"
+                    CornerRadius="10" HorizontalAlignment="Left" BorderThickness="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.0625*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="0.2625*"/>
+                        <RowDefinition Height="0.0475*"/>
+                        <RowDefinition Height="0.2125*"/>
+                        <RowDefinition Height="0.0625*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.035*"/>
+                        <ColumnDefinition Width="0.46*"/>
+                        <ColumnDefinition Width="0.11*"/>
+                        <ColumnDefinition Width="0.36*"/>
+                        <ColumnDefinition Width="0.035*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="{Binding Message.Sender}" FontWeight="Bold"
+                               Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               TextTrimming="CharacterEllipsis" FontSize="16"/>
+
+                    <TextBlock Text="{Binding Message.Header}" Grid.Row="2" Grid.Column="1"
+                               Grid.ColumnSpan="3" TextTrimming="CharacterEllipsis" 
+                               FontSize="14" HorizontalAlignment="Left"/>
+
+                    <Viewbox  Grid.Row="4" Grid.Column="3">
+                        <TextBlock Text="{Binding Message.Date,StringFormat='dd.MM.yyyy, HH:mm'}"
+                                   FontWeight="Medium"/>
+                    </Viewbox>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type m:UpdMessage}" x:Key="OutboundMessage">
+            <Border Background="{DynamicResource OutboundMessagesCardBackground}"
+                    BorderBrush="{DynamicResource BorderColor}" Width="280"
+                    Height="80" CornerRadius="10" HorizontalAlignment="Left"
+                    BorderThickness="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.0625*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="0.2625*"/>
+                        <RowDefinition Height="0.0475*"/>
+                        <RowDefinition Height="0.2125*"/>
+                        <RowDefinition Height="0.0625*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.035*"/>
+                        <ColumnDefinition Width="0.46*"/>
+                        <ColumnDefinition Width="0.11*"/>
+                        <ColumnDefinition Width="0.36*"/>
+                        <ColumnDefinition Width="0.035*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="{Binding Message.Receiver}" FontWeight="Bold"
+                               Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               TextTrimming="CharacterEllipsis" FontSize="16"/>
+
+                    <TextBlock Text="{Binding Message.Header}" Grid.Row="2" Grid.Column="1"
+                               Grid.ColumnSpan="3" TextTrimming="CharacterEllipsis" 
+                               HorizontalAlignment="Left" FontSize="14"/>
+
+                    <Viewbox Grid.Row="4" Grid.Column="3">
+                        <TextBlock Text="{Binding Message.Date,StringFormat='dd.MM.yyyy, HH:mm'}"
+                                   FontWeight="Medium"/>
+                    </Viewbox>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        
+    </UserControl.Resources>
+    <Viewbox>
+        <Grid Width="1120" Height="1024">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.025*" MaxHeight="20"/>
+                <RowDefinition Height="0.04*" MaxHeight="30"/>
+                <RowDefinition Height="0.0125*" MaxHeight="10"/>
+                <RowDefinition Height="0.075*" MaxHeight="60"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.75*" MaxHeight="80"/>
+                <RowDefinition Height="0.025*" MaxHeight="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.02*" MaxWidth="20"/>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="0.32*"/>
+                <ColumnDefinition Width="0.02*" MaxWidth="20"/>
+            </Grid.ColumnDefinitions>
+
+            <Viewbox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Left">
+                <TextBlock Text="{Binding SelectedTabItem.HeaderStringFormat}"/>
+            </Viewbox>
+
+            <ComboBox IsTextSearchEnabled="False" DisplayMemberPath="DisplayedName" Grid.Column="1"
+                      SelectedItem="{Binding SelectedUser,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding Users,TargetNullValue={StaticResource DefaultItem}}"
+                      StaysOpenOnEdit="True" IsEditable="True" Grid.ColumnSpan="4" Grid.Row="3"
+                      Text="{Binding Filter,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            </ComboBox>
+
+            <TabControl Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Margin="0 20 0 0"
+                        SelectedItem="{Binding SelectedTabItem,Mode=TwoWay}"
+                        Background="{DynamicResource MessagesBorder}">
+                <Behaviors:Interaction.Triggers>
+                    <Behaviors:EventTrigger EventName="Loaded">
+                        <Behaviors:InvokeCommandAction Command="{Binding Loaded}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}"/>
+                    </Behaviors:EventTrigger>
+                </Behaviors:Interaction.Triggers>
+                <TabItem Header="Входящие" Name="Inbound" 
+                         HeaderStringFormat="Введите отправителя: ">
+                    <ListView ItemsSource="{Binding InboundMessages}"
+                              Style="{DynamicResource MessagesListView}"
+                              SelectedItem="{Binding SelectedMessage,Mode=TwoWay}"
+                              ItemTemplate="{StaticResource InboundMessage}">
+                        <Behaviors:Interaction.Behaviors>
+                            <tools:MessagesListViewScrollBehavior/>
+                        </Behaviors:Interaction.Behaviors>
+                    </ListView>
+                </TabItem>
+                <TabItem Header="Исходящие" Name="Outbound"
+                         HeaderStringFormat="Введите получателя: ">
+                    <ListView ItemsSource="{Binding OutboundMessages}" 
+                              Style="{DynamicResource MessagesListView}"
+                              SelectedItem="{Binding SelectedMessage,Mode=TwoWay}"
+                              ItemTemplate="{StaticResource OutboundMessage}">
+                        <Behaviors:Interaction.Behaviors>
+                            <tools:MessagesListViewScrollBehavior/>
+                        </Behaviors:Interaction.Behaviors>
+                    </ListView>
+                </TabItem>
+            </TabControl>
+
+            <Border Background="{DynamicResource MessagesBorder}" BorderThickness="3"
+                    BorderBrush="{DynamicResource BorderColor}" Grid.Column="2"
+                    Grid.Row="4" CornerRadius="10" Margin="20 20 0 0" Grid.ColumnSpan="3">
+                <ContentControl Content="{Binding}" DataContext="{Binding SelectedMessage}">
+                    <ContentControl.ContentTemplateSelector>
+                        <tools:MessageTemplateSelector MessageIsSelected="{StaticResource MessageIsSelected}"
+                                                       MessageIsNotSelected="{StaticResource MessageIsNotSelected}"/>
+                    </ContentControl.ContentTemplateSelector>
+                </ContentControl>
+            </Border>
+
+            <Button Grid.Row="5" Margin="20 10 0 0" Command="{Binding Reply}" Grid.Column="2"
+                    Content="Ответить" Name="reply">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=Outbound,Path=IsSelected}" Value="True">
+                                <Setter Property="IsHitTestVisible" Value="False" />
+                                <Setter Property="Opacity" Value="0"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SelectedMessage}" Value="{x:Null}">
+                                <Setter Property="IsHitTestVisible" Value="False" />
+                                <Setter Property="Opacity" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Grid.Row="5" Margin="20 10 0 0" Content="Переслать" Name="forward"
+                    Command="{Binding Forward}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Setters>
+                            <Setter Property="Grid.Column" Value="3" />
+                        </Style.Setters>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=reply,Path=IsHitTestVisible}" Value="False">
+                                <Setter Property="Grid.Column" Value="2"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SelectedMessage}" Value="{x:Null}">
+                                <Setter Property="IsHitTestVisible" Value="False" />
+                                <Setter Property="Opacity" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Grid.Row="5" Margin="20 10 0 0" Command="{Binding Send}"
+                    Content="Написать сообщение">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Setters>
+                            <Setter Property="Grid.Column" Value="4" />
+                        </Style.Setters>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=reply,Path=IsHitTestVisible}" Value="False">
+                                <Setter Property="Grid.Column" Value="3"/>
+                                <Setter Property="Grid.ColumnSpan" Value="2" />
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=reply,Path=IsHitTestVisible}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=forward,Path=IsHitTestVisible}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Grid.Column" Value="2"/>
+                                    <Setter Property="Grid.ColumnSpan" Value="3" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+    </Viewbox>
 </UserControl>
