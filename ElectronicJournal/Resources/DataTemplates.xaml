@@ -35,4 +35,7 @@
     <DataTemplate DataType="{x:Type vm:MessageCreationVM}">
         <view:MessageCreation/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:HomeworkViewerVM}">
+        <view:HomeworkViewer/>
+    </DataTemplate>
 </ResourceDictionary>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ElectronicJournal.API.DBModels;
+﻿namespace ElectronicJournal.API.DBModels;
 
 public partial class Attachment
 {
@@ -11,5 +8,5 @@ public partial class Attachment
 
     public virtual Message? Message { get; set; }
 
-    public virtual ICollection<Homework> Homeworks { get; set; } = new List<Homework>();
+    public virtual Homework Homework { get; set; }
 }

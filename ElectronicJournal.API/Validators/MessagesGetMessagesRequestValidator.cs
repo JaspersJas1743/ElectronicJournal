@@ -7,9 +7,6 @@ namespace ElectronicJournal.API.Validators
     {
         public MessagesGetMessagesRequestValidator() 
         {
-            RuleFor(expression: GMR => GMR.IsFiltered)
-                .Must(predicate: (GMR, isFiltered) => !isFiltered && GMR.UserId == 0).WithMessage(errorMessage: "Если фильтрация отсутствует, то UserId должен быть 0, и наоборот");
-
             RuleFor(expression: GMR => GMR.UserId)
                 .GreaterThanOrEqualTo(valueToCompare: 0).WithMessage(errorMessage: "Идентификатор должен быть больше 0");
 

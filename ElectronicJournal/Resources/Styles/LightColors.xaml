@@ -16,4 +16,8 @@
     <SolidColorBrush x:Key="MessagesBorder" Color="#C7C7C7"/>
     <SolidColorBrush x:Key="InboundMessagesCardBackground" Color="#E8E8E8"/>
     <SolidColorBrush x:Key="OutboundMessagesCardBackground" Color="#E8E8E8"/>
+    <SolidColorBrush x:Key="HomeworksScrollView" Color="#C7C7C7"/>
+    <SolidColorBrush x:Key="LittleTimeBeforeDelivery" Color="#FF6868"/>
+    <SolidColorBrush x:Key="EnoughTimeBeforeDelivery" Color="#FFF969"/>
+    <SolidColorBrush x:Key="ManyTimeBeforeDelivery" Color="#82FF80"/>
 </ResourceDictionary>

@@ -3,6 +3,7 @@ using ElectronicJournal.Utilities.Messages;
 using ElectronicJournal.Utilities.PubSubEvents;
 using ElectronicJournal.ViewModels.Tools;
 using ElectronicJournalAPI.ApiEntities;
+using ElectronicJournalAPI.Utilities;
 using FluentValidation;
 using Prism.Events;
 using System;
@@ -123,25 +124,8 @@ namespace ElectronicJournal.ViewModels
         private void ChangeDisplayedAttahmentCount()
         {
             string loadedForm = Attachments.Count % 10 == 1 && Attachments.Count != 11 ? "Загружен" : "Загружено";
-            string fileForm = GetFileForm(Attachments.Count);
+            string fileForm = WordFormulator.GetForm(count:Attachments.Count, forms: new string[] { "файлов", "файл", "файла" });
             DisplayedAttachmentsCount = $"{loadedForm} {Attachments.Count} {fileForm}";
-        }
-
-        private string GetFileForm(int count)
-        {
-            if (count % 100 >= 11 && count % 100 <= 19)
-                return "файлов";
-            switch (count % 10)
-            {
-                case 1:
-                    return "файл";
-                case 2:
-                case 3:
-                case 4:
-                    return "файла";
-                default:
-                    return "файлов";
-            }
         }
 
         public string GetToolTip()

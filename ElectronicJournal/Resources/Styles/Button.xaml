@@ -5,13 +5,14 @@
             <Setter Property="Background" Value="{DynamicResource MainElementColor}"/>
             <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColor}"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border x:Name="MainContent" Background="{TemplateBinding Background}" 
                                 CornerRadius="15" SnapsToDevicePixels="True"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="0">
+                                BorderThickness="{TemplateBinding BorderThickness}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0.6*"/>
@@ -44,9 +45,6 @@
     
     <Style TargetType="{x:Type Button}" x:Key="ButtonWithoutPadding">
         <Style.Setters>
-            <Setter Property="Background" Value="{DynamicResource MainElementColor}"/>
-            <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource BackgroundColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -72,10 +70,5 @@
                 </Setter.Value>
             </Setter>
         </Style.Setters>
-        <Style.Triggers>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.75"/>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 </ResourceDictionary>

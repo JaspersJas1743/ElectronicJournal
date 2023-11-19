@@ -1,4 +1,7 @@
-﻿namespace ElectronicJournal.API.DBModels;
+﻿using System;
+using System.Collections.Generic;
+
+namespace ElectronicJournal.API.DBModels;
 
 public partial class Message
 {

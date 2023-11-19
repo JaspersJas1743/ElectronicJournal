@@ -4,11 +4,80 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ElectronicJournal.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Viewbox>
-            <TextBlock Text="Homeworks"/>
-        </Viewbox>
-    </Grid>
+             xmlns:h="clr-namespace:ElectronicJournalAPI.ApiEntities;assembly=ElectronicJournalAPI"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:tools="clr-namespace:ElectronicJournal.Views.Tools"
+             xmlns:Behaviours="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" d:DesignHeight="1024" d:DesignWidth="1120">
+    <Behaviours:Interaction.Triggers>
+        <Behaviours:EventTrigger EventName="Loaded">
+            <Behaviours:InvokeCommandAction Command="{Binding Loaded}"/>
+        </Behaviours:EventTrigger>
+    </Behaviours:Interaction.Triggers>
+    <UserControl.Resources>
+        <tools:DaysRemainingColorConverter x:Key="drcc"/>
+    </UserControl.Resources>
+    <Viewbox>
+        <Grid Width="1120" Height="1024">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.05*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.02*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.02*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.02*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding Header}" Grid.Row="0"
+                       HorizontalAlignment="Left" FontSize="24" Grid.Column="1"
+                       VerticalAlignment="Bottom"/>
+            
+            <ListView Grid.Column="0" Grid.ColumnSpan="3" VerticalContentAlignment="Top"
+                      VerticalAlignment="Top" Grid.Row="1" ItemsSource="{Binding Homeworks}"
+                      SelectedItem="{Binding SelectedHomework,Mode=TwoWay}">
+                <ListView.Style>
+                    <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource HomeworksListView}">
+                        <Style.Resources>
+                            <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource {x:Type ScrollBar}}">
+                                <Setter Property="Background" Value="{DynamicResource HomeworksScrollView}"/>
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </ListView.Style>
+                <Behaviours:Interaction.Triggers>
+                    <Behaviours:EventTrigger EventName="SelectionChanged">
+                        <Behaviours:InvokeCommandAction Command="{Binding MoreInfo}"
+                                                        CommandParameter="{Binding}"/>
+                    </Behaviours:EventTrigger>
+                </Behaviours:Interaction.Triggers>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="{x:Type h:Homework}">
+                        <Border Background="Transparent" BorderBrush="{DynamicResource BorderColor}"
+                                CornerRadius="20" BorderThickness="2.5" Width="530" Height="300">
+                            <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.2*"/>
+                                        <RowDefinition Height="0.8*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Border Grid.Row="0" CornerRadius="17.5 17.5 0 0"
+                                            Background="{Binding CountRemainDays,Converter={StaticResource drcc}}"
+                                            BorderBrush="{DynamicResource BorderColor}"
+                                            BorderThickness="0 0 0 2.5">
+                                        <TextBlock Text="{Binding Deadline}" FontSize="22"
+                                                   Foreground="Black" TextWrapping="Wrap"
+                                                   Margin="10 0"/>
+                                    </Border>
+
+                                    <TextBlock Grid.Row="1" Grid.RowSpan="3" FontSize="18"
+                                               Text="{Binding Lesson}" TextWrapping="Wrap"
+                                               Margin="10 0" HorizontalAlignment="Center"/>
+                                </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Viewbox>
 </UserControl>

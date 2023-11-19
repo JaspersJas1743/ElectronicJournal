@@ -141,7 +141,12 @@ public partial class ElectronicJournalContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Homework__3214EC2761D26139");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Text).HasMaxLength(255);
+            entity.Property(e => e.CompletionDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.AttachmentNavigation).WithOne(p => p.Homework)
+                .HasForeignKey<Homework>(d => d.Attachment)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Homeworks__Attach");
 
             entity.HasOne(d => d.GroupNavigation).WithMany(p => p.Homeworks)
                 .HasForeignKey(d => d.Group)
@@ -150,25 +155,6 @@ public partial class ElectronicJournalContext : DbContext
             entity.HasOne(d => d.LessonNavigation).WithMany(p => p.Homeworks)
                 .HasForeignKey(d => d.Lesson)
                 .HasConstraintName("FK__Homeworks__Lesso__2B947552");
-
-            entity.HasMany(d => d.Attachments).WithMany(p => p.Homeworks)
-                .UsingEntity<Dictionary<string, object>>(
-                    "HomeworksAttachment",
-                    r => r.HasOne<Attachment>().WithMany()
-                        .HasForeignKey("AttachmentsId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Homeworks__Attac__4336F4B9"),
-                    l => l.HasOne<Homework>().WithMany()
-                        .HasForeignKey("HomeworksId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Homeworks__Homew__442B18F2"),
-                    j =>
-                    {
-                        j.HasKey("HomeworksId", "AttachmentsId").HasName("PK__Homework__107051ECCCB9F5A2");
-                        j.ToTable("Homeworks_Attachments");
-                        j.IndexerProperty<int>("HomeworksId").HasColumnName("Homeworks_ID");
-                        j.IndexerProperty<int>("AttachmentsId").HasColumnName("Attachments_ID");
-                    });
         });
 
         modelBuilder.Entity<Lesson>(entity =>

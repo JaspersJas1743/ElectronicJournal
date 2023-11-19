@@ -353,6 +353,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AuthorizationModel.cs" />
+    <Compile Include="Models\HomeworksModel.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\MessageCreationModel.cs" />
@@ -386,7 +387,9 @@
     <Compile Include="Utilities\Messages\MessageProvider.cs" />
     <Compile Include="Utilities\PubSubEvents\ChangeMainWindowContentEvent.cs" />
     <Compile Include="Utilities\PubSubEvents\ChangeMessageToCreationMessageEvent.cs" />
+    <Compile Include="Utilities\PubSubEvents\CloseHomeworkViewerEvent.cs" />
     <Compile Include="Utilities\PubSubEvents\CloseMessageCreationAfterSendingEvent.cs" />
+    <Compile Include="Utilities\PubSubEvents\GoToHomeworkViewerEvent.cs" />
     <Compile Include="Utilities\PubSubEvents\UserUploadPhotoEvent.cs" />
     <Compile Include="Utilities\Validator\MessageCreationModelValidator.cs" />
     <Compile Include="Utilities\Validator\ProfileModelEmailValidator.cs" />
@@ -394,6 +397,7 @@
     <Compile Include="Utilities\Validator\ProfileModelSecurityValidator.cs" />
     <Compile Include="Utilities\Validator\RegistrationModelValidator.cs" />
     <Compile Include="ViewModels\AboutVM.cs" />
+    <Compile Include="ViewModels\HomeworkViewerVM.cs" />
     <Compile Include="ViewModels\MessageCreationVM.cs" />
     <Compile Include="ViewModels\Tools\TrackedObject.cs" />
     <Compile Include="Utilities\Validator\AuthorizationModelValidator.cs" />
@@ -415,6 +419,9 @@
     </Compile>
     <Compile Include="Views\Homeworks.xaml.cs">
       <DependentUpon>Homeworks.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeworkViewer.xaml.cs">
+      <DependentUpon>HomeworkViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Marks.xaml.cs">
       <DependentUpon>Marks.xaml</DependentUpon>
@@ -440,6 +447,7 @@
     <Compile Include="Views\Timetable.xaml.cs">
       <DependentUpon>Timetable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tools\DaysRemainingColorConverter.cs" />
     <Compile Include="Views\Tools\MessagesListViewScrollBehavior.cs" />
     <Compile Include="Views\Tools\MessageTemplateSelector.cs" />
     <Compile Include="Views\Tools\TextLengthToVisibilityConverter.cs" />
@@ -680,6 +688,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Homeworks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeworkViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

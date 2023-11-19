@@ -28,8 +28,8 @@ namespace ElectronicJournal.API.Controllers
         #region Records
         public record MessageReceiversRequest(string Filter);
         public record MessageReceiversResponse(int Id, string DisplayedName);
-        public record Attachment(int Id, string FileName, string Path);
-        public record GetMessagesResponse(string Header, string Sender, int SenderId, string Receiver, DateTime Date, bool HaveText, string Text, bool HaveAttachment, Attachment Attachment);
+        public record MessageAttachment(int Id, string FileName, string Path);
+        public record GetMessagesResponse(string Header, string Sender, int SenderId, string Receiver, DateTime Date, bool HaveText, string Text, bool HaveAttachment, MessageAttachment Attachment);
         public record GetMessagesRequest(bool IsFiltered, int UserId, int Offset, int Count);
         public record SendMessageRequest(int ReceiverId, string Text, int? AttachmentId);
         public record SendMessageResponse(string Message);
@@ -129,11 +129,11 @@ namespace ElectronicJournal.API.Controllers
                     string receiver = GetReceiverString(receivers: m.Receivers);
                     bool haveText = !String.IsNullOrEmpty(m.Text) || !String.IsNullOrWhiteSpace(m.Text);
                     bool haveAttachment = m.AttachmentNavigation != null;
-                    Attachment attachment = null;
+                    MessageAttachment attachment = null;
                     if (haveAttachment)
                     {
                         FileInfo attachmentFile = new FileInfo(m.AttachmentNavigation.Path);
-                        attachment = new Attachment(m.AttachmentNavigation.Id, attachmentFile.Name, m.AttachmentNavigation.Path);
+                        attachment = new MessageAttachment(m.AttachmentNavigation.Id, attachmentFile.Name, m.AttachmentNavigation.Path);
                     }
 
                     string header = haveText ? m.Text : (haveAttachment ? $"[{attachment.FileName}]" : "[Пустое сообщение]");

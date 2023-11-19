@@ -91,9 +91,8 @@
                                    Visibility="{Binding Message.HaveAttachment,Converter={StaticResource btv}}"/>
                     </Viewbox>
                     <Viewbox Grid.Column="8" Grid.Row="8" Grid.RowSpan="3">
-                        <Button BorderBrush="{x:Null}" Width="50" Height="50"
-                                Command="{Binding DownloadAttachment}"
-                                Background="{DynamicResource BackgroundColor}"
+                        <Button BorderBrush="{x:Null}" Command="{Binding DownloadAttachment}"
+                                Width="50" Height="50" Background="{DynamicResource MainElementColor}"
                                 Visibility="{Binding Message.HaveAttachment,Converter={StaticResource btv}}">
                             <Button.Content>
                                 <Viewbox Margin="0.2">
@@ -120,87 +119,10 @@
             </Viewbox>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type m:UpdMessage}" x:Key="InboundMessage">
-            <Border Background="{DynamicResource InboundMessagesCardBackground}" 
-                    BorderBrush="{DynamicResource BorderColor}" Width="280" Height="80"
-                    CornerRadius="10" HorizontalAlignment="Left" BorderThickness="2">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0.0625*"/>
-                        <RowDefinition Height="0.3*"/>
-                        <RowDefinition Height="0.2625*"/>
-                        <RowDefinition Height="0.0475*"/>
-                        <RowDefinition Height="0.2125*"/>
-                        <RowDefinition Height="0.0625*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.035*"/>
-                        <ColumnDefinition Width="0.46*"/>
-                        <ColumnDefinition Width="0.11*"/>
-                        <ColumnDefinition Width="0.36*"/>
-                        <ColumnDefinition Width="0.035*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="{Binding Message.Sender}" FontWeight="Bold"
-                               Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
-                               VerticalAlignment="Center" HorizontalAlignment="Left"
-                               TextTrimming="CharacterEllipsis" FontSize="16"/>
-
-                    <TextBlock Text="{Binding Message.Header}" Grid.Row="2" Grid.Column="1"
-                               Grid.ColumnSpan="3" TextTrimming="CharacterEllipsis" 
-                               FontSize="14" HorizontalAlignment="Left"/>
-
-                    <Viewbox  Grid.Row="4" Grid.Column="3">
-                        <TextBlock Text="{Binding Message.Date,StringFormat='dd.MM.yyyy, HH:mm'}"
-                                   FontWeight="Medium"/>
-                    </Viewbox>
-                </Grid>
-            </Border>
-        </DataTemplate>
-        
-        <DataTemplate DataType="{x:Type m:UpdMessage}" x:Key="OutboundMessage">
-            <Border Background="{DynamicResource OutboundMessagesCardBackground}"
-                    BorderBrush="{DynamicResource BorderColor}" Width="280"
-                    Height="80" CornerRadius="10" HorizontalAlignment="Left"
-                    BorderThickness="2">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0.0625*"/>
-                        <RowDefinition Height="0.3*"/>
-                        <RowDefinition Height="0.2625*"/>
-                        <RowDefinition Height="0.0475*"/>
-                        <RowDefinition Height="0.2125*"/>
-                        <RowDefinition Height="0.0625*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.035*"/>
-                        <ColumnDefinition Width="0.46*"/>
-                        <ColumnDefinition Width="0.11*"/>
-                        <ColumnDefinition Width="0.36*"/>
-                        <ColumnDefinition Width="0.035*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="{Binding Message.Receiver}" FontWeight="Bold"
-                               Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
-                               VerticalAlignment="Center" HorizontalAlignment="Left"
-                               TextTrimming="CharacterEllipsis" FontSize="16"/>
-
-                    <TextBlock Text="{Binding Message.Header}" Grid.Row="2" Grid.Column="1"
-                               Grid.ColumnSpan="3" TextTrimming="CharacterEllipsis" 
-                               HorizontalAlignment="Left" FontSize="14"/>
-
-                    <Viewbox Grid.Row="4" Grid.Column="3">
-                        <TextBlock Text="{Binding Message.Date,StringFormat='dd.MM.yyyy, HH:mm'}"
-                                   FontWeight="Medium"/>
-                    </Viewbox>
-                </Grid>
-            </Border>
-        </DataTemplate>
-        
     </UserControl.Resources>
     <Viewbox>
         <Grid Width="1120" Height="1024">
-            <Grid.RowDefinitions>
+            <Grid.RowDefinitions> 
                 <RowDefinition Height="0.025*" MaxHeight="20"/>
                 <RowDefinition Height="0.04*" MaxHeight="30"/>
                 <RowDefinition Height="0.0125*" MaxHeight="10"/>
@@ -240,9 +162,8 @@
                 <TabItem Header="Входящие" Name="Inbound" 
                          HeaderStringFormat="Введите отправителя: ">
                     <ListView ItemsSource="{Binding InboundMessages}"
-                              Style="{DynamicResource MessagesListView}"
-                              SelectedItem="{Binding SelectedMessage,Mode=TwoWay}"
-                              ItemTemplate="{StaticResource InboundMessage}">
+                              Style="{DynamicResource InbountMessagesListView}"
+                              SelectedItem="{Binding SelectedMessage,Mode=TwoWay}">
                         <Behaviors:Interaction.Behaviors>
                             <tools:MessagesListViewScrollBehavior/>
                         </Behaviors:Interaction.Behaviors>
@@ -251,9 +172,8 @@
                 <TabItem Header="Исходящие" Name="Outbound"
                          HeaderStringFormat="Введите получателя: ">
                     <ListView ItemsSource="{Binding OutboundMessages}" 
-                              Style="{DynamicResource MessagesListView}"
-                              SelectedItem="{Binding SelectedMessage,Mode=TwoWay}"
-                              ItemTemplate="{StaticResource OutboundMessage}">
+                              Style="{DynamicResource OutbountMessagesListView}"
+                              SelectedItem="{Binding SelectedMessage,Mode=TwoWay}">
                         <Behaviors:Interaction.Behaviors>
                             <tools:MessagesListViewScrollBehavior/>
                         </Behaviors:Interaction.Behaviors>

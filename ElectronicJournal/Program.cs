@@ -39,6 +39,7 @@ namespace ElectronicJournal
                     services.AddTransient<TimetableVM>();
                     services.AddTransient<AboutVM>();
                     services.AddTransient<MessageCreationVM>();
+                    services.AddTransient<HomeworkViewerVM>();
 
                     services.AddScoped<IConfigProvider, ConfigurationProvider>();
                     services.AddScoped<IMessageProvider, MessageProvider>();

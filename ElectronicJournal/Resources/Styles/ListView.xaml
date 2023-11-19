@@ -1,20 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style TargetType="{x:Type ListView}" x:Key="MessagesListView">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:m="clr-namespace:ElectronicJournal.Models">
+
+    <Style TargetType="{x:Type ListView}">
         <Style.Setters>
-            <Setter Property="ItemContainerStyle">
-                <Setter.Value>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                    <ContentPresenter x:Name="PART_ContentHost"/>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Setter.Value>
-            </Setter>
             <Setter Property="ItemsPanel">
                 <Setter.Value>
                     <ItemsPanelTemplate>
@@ -28,6 +17,124 @@
             <Setter Property="BorderBrush" Value="{x:Null}" />
             <Setter Property="Focusable" Value="False" />
             <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
+        </Style.Setters>
+    </Style>
+
+    <DataTemplate DataType="{x:Type m:UpdMessage}" x:Key="InboundMessage">
+        <Border Background="{DynamicResource InboundMessagesCardBackground}" BorderBrush="{DynamicResource BorderColor}"
+                Width="280" Height="80" CornerRadius="10" HorizontalAlignment="Left" BorderThickness="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.0625*"/>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.2625*"/>
+                    <RowDefinition Height="0.0475*"/>
+                    <RowDefinition Height="0.2125*"/>
+                    <RowDefinition Height="0.0625*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.035*"/>
+                    <ColumnDefinition Width="0.46*"/>
+                    <ColumnDefinition Width="0.11*"/>
+                    <ColumnDefinition Width="0.36*"/>
+                    <ColumnDefinition Width="0.035*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding Message.Sender}" FontWeight="Bold" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                           VerticalAlignment="Center" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis" FontSize="16"/>
+
+                <TextBlock Text="{Binding Message.Header}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"
+                           TextTrimming="CharacterEllipsis"  FontSize="14" HorizontalAlignment="Left"/>
+
+                <Viewbox  Grid.Row="4" Grid.Column="3">
+                    <TextBlock Text="{Binding Message.Date,StringFormat='dd.MM.yyyy, HH:mm'}" FontWeight="Medium"/>
+                </Viewbox>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type m:UpdMessage}" x:Key="OutboundMessage">
+        <Border Background="{DynamicResource OutboundMessagesCardBackground}" BorderBrush="{DynamicResource BorderColor}"
+                Width="280" Height="80" CornerRadius="10" HorizontalAlignment="Left" BorderThickness="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.0625*"/>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.2625*"/>
+                    <RowDefinition Height="0.0475*"/>
+                    <RowDefinition Height="0.2125*"/>
+                    <RowDefinition Height="0.0625*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.035*"/>
+                    <ColumnDefinition Width="0.46*"/>
+                    <ColumnDefinition Width="0.11*"/>
+                    <ColumnDefinition Width="0.36*"/>
+                    <ColumnDefinition Width="0.035*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding Message.Receiver}" FontWeight="Bold" Grid.Row="1" Grid.Column="1"
+                           Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Left"
+                           TextTrimming="CharacterEllipsis" FontSize="16"/>
+
+                <TextBlock Text="{Binding Message.Header}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"
+                           TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" FontSize="14"/>
+
+                <Viewbox Grid.Row="4" Grid.Column="3">
+                    <TextBlock Text="{Binding Message.Date,StringFormat='dd.MM.yyyy, HH:mm'}" FontWeight="Medium"/>
+                </Viewbox>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <Style TargetType="{x:Type ListView}" x:Key="MessagesListView" BasedOn="{StaticResource {x:Type ListView}}">
+        <Style.Setters>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter x:Name="PART_ContentHost" Margin="0 0 0 5"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="{x:Type ListView}" x:Key="OutbountMessagesListView" BasedOn="{StaticResource MessagesListView}">
+        <Setter Property="ItemTemplate" Value="{StaticResource OutboundMessage}"/>
+    </Style>
+
+    <Style TargetType="{x:Type ListView}" x:Key="InbountMessagesListView" BasedOn="{StaticResource MessagesListView}">
+        <Setter Property="ItemTemplate" Value="{StaticResource InboundMessage}"/>
+    </Style>
+
+    <Style TargetType="{x:Type ListView}" x:Key="HomeworksListView" BasedOn="{StaticResource {x:Type ListView}}">
+        <Style.Setters>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter x:Name="PART_ContentHost" Margin="0 10"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
         </Style.Setters>
     </Style>
 </ResourceDictionary>

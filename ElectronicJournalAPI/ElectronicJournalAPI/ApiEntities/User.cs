@@ -143,21 +143,18 @@ namespace ElectronicJournalAPI.ApiEntities
             return response;
         }
 
-        public async Task<List<MessageReceiversResponse>> GetReceivers(string filter, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<MessageReceiversResponse>> GetReceivers(string filter, CancellationToken cancellationToken = default)
         {
-            return await ApiClient.GetAsync<List<MessageReceiversResponse>>(
+            return await ApiClient.GetAsync<IEnumerable<MessageReceiversResponse>>(
                 apiMethod: "Messages/GetMessageReceivers",
                 argQuery: new Dictionary<string, string> { [nameof(MessageReceiversRequest.Filter)] = filter },
                 cancellationToken: cancellationToken
             );
         }
 
-        public async Task<List<Message>> GetOutboundMessages()
-            => await GetMessages(dest: "Outbound", 0, 20, 0);
-
-        public async Task<List<Message>> GetMessages(string dest, int offset, int count, int userId = 0, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Message>> GetMessages(string dest, int offset, int count, int userId = 0, CancellationToken cancellationToken = default)
         {
-            return await ApiClient.GetAsync<List<Message>>(
+            return await ApiClient.GetAsync<IEnumerable<Message>>(
                 apiMethod: $"Messages/Get{dest}Messages",
                 argQuery: new Dictionary<string, string>
                 {
@@ -166,6 +163,14 @@ namespace ElectronicJournalAPI.ApiEntities
                     ["Offset"] = offset.ToString(),
                     ["Count"] = count.ToString()
                 },
+                cancellationToken: cancellationToken
+            );
+        }
+
+        public async Task<IEnumerable<Homework>> GetHomeworks(CancellationToken cancellationToken = default)
+        {
+            return await ApiClient.GetAsync<IEnumerable<Homework>>(
+                apiMethod: "Homework/GetHomeworks",
                 cancellationToken: cancellationToken
             );
         }

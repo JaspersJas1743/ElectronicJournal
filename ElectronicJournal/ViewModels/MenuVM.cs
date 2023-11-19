@@ -41,7 +41,9 @@ namespace ElectronicJournal.ViewModels
 
             _eventAggregator.GetEvent<UserUploadPhotoEvent>().Subscribe(action: UploadPhoto);
             _eventAggregator.GetEvent<ChangeMessageToCreationMessageEvent>().Subscribe(action: ChangeMessageToCreationMessage);
+            _eventAggregator.GetEvent<GoToHomeworkViewerEvent>().Subscribe(action: GoToHomeworkViewer);
             _eventAggregator.GetEvent<CloseMessageCreationAfterSendingEvent>().Subscribe(action: CloseMessageCreationAfterSending);
+            _eventAggregator.GetEvent<CloseHomeworkViewerEvent>().Subscribe(action: CloseHomeworkViewer);
 
             _profile = Command.CreateLazyCommand(action: _ => MoveTo<ProfileVM>());
             _messages = Command.CreateLazyCommand(action: _ => MoveTo<MessagesVM>());
@@ -65,6 +67,10 @@ namespace ElectronicJournal.ViewModels
         ~MenuVM()
         {
             _eventAggregator.GetEvent<UserUploadPhotoEvent>().Unsubscribe(subscriber: UploadPhoto);
+            _eventAggregator.GetEvent<ChangeMessageToCreationMessageEvent>().Unsubscribe(subscriber: ChangeMessageToCreationMessage);
+            _eventAggregator.GetEvent<GoToHomeworkViewerEvent>().Unsubscribe(subscriber: GoToHomeworkViewer);
+            _eventAggregator.GetEvent<CloseMessageCreationAfterSendingEvent>().Unsubscribe(subscriber: CloseMessageCreationAfterSending);
+            _eventAggregator.GetEvent<CloseHomeworkViewerEvent>().Unsubscribe(subscriber: CloseHomeworkViewer);
         }
 
         #region Properties
@@ -122,14 +128,6 @@ namespace ElectronicJournal.ViewModels
         private void UploadPhoto(UserUploadPhotoEventArgs e)
             => Photo = e.NewPhoto;
 
-        private async void ChangeMessageToCreationMessage(ChangeMessageToCreationMessageEventArgs e)
-        {
-            MessageCreationVM vm = Program.AppHost.Services.GetRequiredService<MessageCreationVM>();
-            vm.User = e.User;
-            await SetMessageInformation(e, vm);
-            Content = vm;
-        }
-
         private async Task SetMessageInformation(ChangeMessageToCreationMessageEventArgs e, MessageCreationVM vm)
         {
             if (e.Message == null)
@@ -147,11 +145,34 @@ namespace ElectronicJournal.ViewModels
             vm.AddAttachment(Path.Combine(path1: tempFolder, path2: e.Message.Attachment.FileName));
         }
 
+        private async void ChangeMessageToCreationMessage(ChangeMessageToCreationMessageEventArgs e)
+        {
+            MessageCreationVM vm = Program.AppHost.Services.GetRequiredService<MessageCreationVM>();
+            vm.User = e.User;
+            await SetMessageInformation(e, vm);
+            Content = vm;
+        }
+
+        private void GoToHomeworkViewer(GoToHomeworkViewerEventArgs e)
+        {
+            HomeworkViewerVM vm = Program.AppHost.Services.GetRequiredService<HomeworkViewerVM>();
+            vm.User = e.User;
+            vm.Homework = e.Homework;
+            Content = vm;
+        }
+
         private void CloseMessageCreationAfterSending(CloseMessageCreationAfterSendingEventArgs e)
         {
             MessagesVM vm = Program.AppHost.Services.GetRequiredService<MessagesVM>();
             vm.User = e.User;
             vm.SelectedIndex = 1;
+            Content = vm;
+        }
+
+        private void CloseHomeworkViewer(CloseHomeworkViewerEventArgs e)
+        {
+            HomeworksVM vm = Program.AppHost.Services.GetRequiredService<HomeworksVM>();
+            vm.User = e.User;
             Content = vm;
         }
         #endregion Methods

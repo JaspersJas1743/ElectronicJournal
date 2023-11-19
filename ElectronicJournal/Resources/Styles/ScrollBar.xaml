@@ -9,7 +9,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">
-                        <Border CornerRadius="5" Opacity="0.6" Background="{DynamicResource ScrollBar}"/>
+                        <Border CornerRadius="5" Opacity="0.6" Background="{TemplateBinding Background}"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -20,7 +20,8 @@
         <Grid>
             <Track Name="PART_Track" IsDirectionReversed="True">
                 <Track.Thumb>
-                    <Thumb Style="{DynamicResource ScrollBarThumb}"/>
+                    <Thumb Style="{DynamicResource ScrollBarThumb}"
+                           Background="{TemplateBinding Background}"/>
                 </Track.Thumb>
             </Track>
         </Grid>
@@ -28,6 +29,7 @@
 
     <Style TargetType="{x:Type ScrollBar}">
         <Style.Setters>
+            <Setter Property="Background" Value="{DynamicResource ScrollBar}"/>
             <Setter Property="Template" Value="{DynamicResource VerticalScrollBar}"/>
             <Setter Property="MaxWidth" Value="7"/>
         </Style.Setters>

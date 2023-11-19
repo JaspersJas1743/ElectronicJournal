@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="ElectronicJournal.Views.HomeworkViewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectronicJournal.Views"
+             xmlns:tools="clr-namespace:ElectronicJournal.Views.Tools"
+             mc:Ignorable="d" d:DesignHeight="1024" d:DesignWidth="1120">
+    <UserControl.Resources>
+        <tools:DaysRemainingColorConverter x:Key="drcc"/>
+        <BooleanToVisibilityConverter x:Key="btv"/>
+    </UserControl.Resources>
+    <Viewbox>
+        <Grid Margin="20" Width="1120" Height="1024">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.875*"/>
+                <RowDefinition Height="0.025*"/>
+                <RowDefinition Height="0.1*"/>
+            </Grid.RowDefinitions>
+            <Border Background="{DynamicResource MessagesBorder}" CornerRadius="15" Grid.Row="0"
+                    BorderThickness="2" BorderBrush="{DynamicResource BorderColor}"
+                    Padding="20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.02*"/>
+                        <RowDefinition Height="0.05*"/>
+                        <RowDefinition Height="0.0375*"/>
+                        <RowDefinition Height="0.02*"/>
+                        <RowDefinition Height="0.05*"/>
+                        <RowDefinition Height="0.0375*"/>
+                        <RowDefinition Height="0.02*"/>
+                        <RowDefinition Height="0.05*"/>
+                        <RowDefinition Height="0.0375*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.2*"/>
+                        <ColumnDefinition Width="0.22 *"/>
+                        <ColumnDefinition Width="0.15*"/>
+                        <ColumnDefinition Width="0.075*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="0.125*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Viewbox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">
+                        <TextBlock Text="Дисциплина" HorizontalAlignment="Right"/>
+                    </Viewbox>
+                    <TextBox Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="5" BorderThickness="0"
+                             IsReadOnly="True" Text="{Binding Homework.Lesson}" Margin="10 0 0 10"/>
+
+                    <Viewbox Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right">
+                        <TextBlock Text="Преподаватель" HorizontalAlignment="Right"/>
+                    </Viewbox>
+                    <TextBox Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="5" BorderThickness="0"
+                             IsReadOnly="True" Text="{Binding Homework.Teacher}" Margin="10 0 0 10"/>
+
+                    <Viewbox Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right">
+                        <TextBlock Text="Время сдачи" HorizontalAlignment="Right"/>
+                    </Viewbox>
+                    <TextBox Grid.Row="6" Grid.RowSpan="3" Grid.Column="1" BorderThickness="0"
+                             IsReadOnly="True" Text="{Binding Homework.CompletionDate,StringFormat='dd.MM.yyyy, HH:mm'}" Margin="10 0 0 10"/>
+
+                    <Viewbox Grid.Row="7" Grid.Column="2" HorizontalAlignment="Right"
+                             Visibility="{Binding Homework.HaveAttachment,Converter={StaticResource btv}}">
+                        <TextBlock Text="Вложения" HorizontalAlignment="Right"/>
+                    </Viewbox>
+                    <Viewbox Grid.Row="6" Grid.RowSpan="3" Grid.Column="3">
+                        <Button Margin="10 0 0 10" Height="50" Width="50" BorderBrush="{x:Null}"
+                                Visibility="{Binding Homework.HaveAttachment,Converter={StaticResource btv}}"
+                                Background="{DynamicResource MainElementColor}"
+                                Command="{Binding DownloadAttachment}">
+                            <Button.Content>
+                                <Viewbox Margin="0.2 0 0.2 0.2">
+                                    <Label Content=".rar"/>
+                                </Viewbox>
+                            </Button.Content>
+                        </Button>
+                    </Viewbox>
+
+                    <Viewbox Grid.Row="7" Grid.Column="4" HorizontalAlignment="Right">
+                        <TextBlock Text="Осталось времени " HorizontalAlignment="Right"/>
+                    </Viewbox>
+                    <TextBox Grid.Row="6" Grid.RowSpan="3" Grid.Column="5" BorderThickness="0" Margin="10 0 0 10"
+                             IsReadOnly="True" Text="{Binding Homework.CountRemainDaysString,Mode=OneWay}"
+                             Style="{DynamicResource DefaultTB}" Foreground="Black" 
+                             Background="{Binding Homework.CountRemainDays,Converter={StaticResource drcc}}"/>
+
+                    <TextBox Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="6" BorderThickness="0" Style="{DynamicResource MessageTextBox}" 
+                             Text="{Binding Homework.Text}" IsReadOnly="True" TextWrapping="Wrap"/>
+                </Grid>
+            </Border>
+            <Button Content="Назад" Grid.Row="2" Command="{Binding GoBack}"/>
+        </Grid>
+    </Viewbox>
+</UserControl>

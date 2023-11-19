@@ -179,7 +179,7 @@ namespace ElectronicJournal.ViewModels
                 OutboundMessages = new List<UpdMessage>();
             }
 
-            _offsetLoadedMessages += count;
+            _offsetLoadedMessages += messages.Count();
 
             if (nameof(InboundMessages).Contains(dest))
                 InboundMessages.AddRange(collection: messages);

@@ -51,7 +51,7 @@ namespace ElectronicJournal.API
                 {
                     Title = "Electronic Journal \"MyJournal\" API",
                     Version = "v1",
-                    Description = "API для моей информационной системы электронного журнала \"MyJournal\""
+                    Description = "API для информационной системы электронного журнала \"MyJournal\""
                 });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
