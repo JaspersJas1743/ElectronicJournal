@@ -1,5 +1,6 @@
 ﻿using ElectronicJournalAPI.Utilities;
 using System;
+using System.Drawing;
 
 namespace ElectronicJournalAPI.ApiEntities
 {
@@ -16,25 +17,35 @@ namespace ElectronicJournalAPI.ApiEntities
             get
             {
                 TimeSpan difference = CompletionDate.Subtract(value: DateTime.Now);
+                if (difference.TotalHours < 1)
+                    return GetMinutesString(minutes: difference.Minutes);
+
                 if (difference.TotalDays < 1)
                     return GetHoursString(hours: difference.Hours);
 
                 return GetDaysString(days: difference.Days);
             }
         }
+
         public int CountRemainDays => CompletionDate.Subtract(value: DateTime.Now).Days;
         public string CountRemainDaysString
         {
             get
             {
                 TimeSpan difference = CompletionDate.Subtract(value: DateTime.Now);
+                if (difference.TotalHours < 1)
+                    return GetTimeForm(count: difference.Minutes, func: GetMinutesForm);
+
                 if (difference.TotalDays < 1)
                     return GetTimeForm(count: difference.Hours, func: GetHourForm);
 
                 return GetTimeForm(count: difference.Days, func: GetDayForm);
             }
         }
-                
+
+        private string GetMinutesString(int minutes)
+            => GetTimes(count: minutes, func: GetMinutesForm);
+
         private string GetHoursString(int hours)
             => GetTimes(count: hours, func: GetHourForm);
 
@@ -46,6 +57,9 @@ namespace ElectronicJournalAPI.ApiEntities
 
         private string GetTimeForm(int count, Func<int, string> func)
             => $"{count} {func(count)}";
+
+        private string GetMinutesForm(int count)
+            => WordFormulator.GetForm(count: count, forms: new[] { "минут", "минута", "минуты" });
 
         private string GetDayForm(int count)
             => WordFormulator.GetForm(count: count, forms: new[] { "дней", "день", "дня" });

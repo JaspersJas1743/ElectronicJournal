@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
 
 namespace ElectronicJournal.ViewModels
 {
@@ -40,8 +39,11 @@ namespace ElectronicJournal.ViewModels
 
             _loaded = Command.CreateLazyCommand(action: async _ =>
             {
-                Homeworks = await User.GetHomeworks();
-                Header = $"Необходимо выполнить {Homeworks.Count()} {WordFormulator.GetForm(count: Homeworks.Count(), forms: new string[] { "заданий", "задание", "задания" })}: ";
+                await ExecuteTask(taskForExecute: async () =>
+                {
+                    Homeworks = await User.GetHomeworks();
+                    Header = $"Необходимо выполнить {Homeworks.Count()} {WordFormulator.GetForm(count: Homeworks.Count(), forms: new string[] { "заданий", "задание", "задания" })}: ";
+                });
             });
         }
 

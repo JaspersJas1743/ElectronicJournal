@@ -186,14 +186,14 @@ public partial class ElectronicJournalContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasMaxLength(50);
-            entity.Property(e => e.Mark1).HasColumnName("Mark");
+            entity.Property(e => e.Value).HasColumnName("Mark");
 
             entity.HasOne(d => d.LessonNavigation).WithMany(p => p.Marks)
                 .HasForeignKey(d => d.Lesson)
                 .HasConstraintName("FK__Marks__Lesson__29AC2CE0");
 
             entity.HasOne(d => d.Mark1Navigation).WithMany(p => p.Marks)
-                .HasForeignKey(d => d.Mark1)
+                .HasForeignKey(d => d.Value)
                 .HasConstraintName("FK__Marks__Mark__4707859D");
 
             entity.HasOne(d => d.StudentNavigation).WithMany(p => p.Marks)

@@ -7,9 +7,11 @@ using ElectronicJournal.ViewModels.Tools;
 using ElectronicJournalAPI.ApiEntities;
 using Prism.Events;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -104,6 +106,7 @@ namespace ElectronicJournal.ViewModels
             {
                 _model.SelectedUser = value;
                 UpdateMessages(offset: 0, count: 20);
+                InboundMessages = OutboundMessages = Enumerable.Empty<UpdMessage>();
             }
         }
 
@@ -123,13 +126,13 @@ namespace ElectronicJournal.ViewModels
             set => _model.SelectedMessage = value;
         }
 
-        public List<UpdMessage> InboundMessages
+        public IEnumerable<UpdMessage> InboundMessages
         {
             get => _model.InboundMessages;
             set => _model.InboundMessages = value;
         }
 
-        public List<UpdMessage> OutboundMessages
+        public IEnumerable<UpdMessage> OutboundMessages
         {
             get => _model.OutboundMessages;
             set => _model.OutboundMessages = value;
@@ -159,7 +162,9 @@ namespace ElectronicJournal.ViewModels
             if (SelectedUser?.DisplayedName == Filter)
                 return;
 
-            SelectedUser = null;
+            if (SelectedUser != null)
+                SelectedUser = null;
+            
             Users = Filter.Length < 3 ? null : await User.GetReceivers(filter: Filter);
         }
 
@@ -169,22 +174,29 @@ namespace ElectronicJournal.ViewModels
             if (string.IsNullOrEmpty(dest))
                 return;
 
-            IEnumerable<UpdMessage> messages = (await User.GetMessages(dest: dest, offset: offset, count: count, userId: SelectedUser?.Id ?? 0))
-                .Select(m => new UpdMessage(message: m));
+            IEnumerable<UpdMessage> messages = await (offset == 0 
+                ? ExecuteTask(taskForExecute: async () => await GetNewMessages(dest: dest, offset: offset, count: count))
+                : GetNewMessages(dest: dest, offset: offset, count: count));
 
             if (offset == 0)
             {
                 _offsetLoadedMessages = offset;
-                InboundMessages = new List<UpdMessage>();
-                OutboundMessages = new List<UpdMessage>();
+                InboundMessages = Enumerable.Empty<UpdMessage>();
+                OutboundMessages = Enumerable.Empty<UpdMessage>();
             }
 
             _offsetLoadedMessages += messages.Count();
 
             if (nameof(InboundMessages).Contains(dest))
-                InboundMessages.AddRange(collection: messages);
+                InboundMessages = InboundMessages.Concat(second: messages);
             else
-                OutboundMessages.AddRange(collection: messages);
+                OutboundMessages = OutboundMessages.Concat(second: messages);
+        }
+
+        private async Task<IEnumerable<UpdMessage>> GetNewMessages(string dest, int offset, int count)
+        {
+            IEnumerable<Message> newMessages = await User.GetMessages(dest: dest, offset: offset, count: count, userId: SelectedUser?.Id ?? 0);
+            return newMessages.Select(m => new UpdMessage(message: m, messageProvider: _message));
         }
     }
 }

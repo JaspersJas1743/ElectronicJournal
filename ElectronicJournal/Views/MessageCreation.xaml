@@ -91,7 +91,7 @@
             </Border>
 
             <Button Grid.Row="7" Grid.Column="1" Command="{Binding AddAttachments}"
-                    Style="{DynamicResource ButtonWithoutPadding}">
+                    BorderBrush="{x:Null}" Style="{DynamicResource ButtonWithoutPadding}">
                 <Button.Content>
                     <Image Style="{DynamicResource Plus}"/>
                 </Button.Content>
@@ -104,7 +104,7 @@
             </Border>
 
             <Button Grid.Row="7" Grid.Column="5" Command="{Binding SendMessage}">
-                <TextBlock FontSize="20" Text="Отправить"/>
+                <TextBlock FontSize="20" Text="{Binding ButtonContent}"/>
             </Button>
         </Grid>
     </Viewbox>

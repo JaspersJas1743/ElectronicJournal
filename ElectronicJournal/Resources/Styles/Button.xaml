@@ -43,7 +43,7 @@
         </Style.Triggers>
     </Style>
     
-    <Style TargetType="{x:Type Button}" x:Key="ButtonWithoutPadding">
+    <Style TargetType="{x:Type Button}" x:Key="ButtonWithoutPadding" BasedOn="{StaticResource {x:Type Button}}">
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>

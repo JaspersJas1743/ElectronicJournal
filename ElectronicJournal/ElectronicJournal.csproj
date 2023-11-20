@@ -355,6 +355,7 @@
     <Compile Include="Models\AuthorizationModel.cs" />
     <Compile Include="Models\HomeworksModel.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
+    <Compile Include="Models\MarksModel.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\MessageCreationModel.cs" />
     <Compile Include="Models\MessagesModel.cs" />
@@ -448,8 +449,10 @@
       <DependentUpon>Timetable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tools\DaysRemainingColorConverter.cs" />
+    <Compile Include="Views\Tools\MarkColorConverter.cs" />
     <Compile Include="Views\Tools\MessagesListViewScrollBehavior.cs" />
     <Compile Include="Views\Tools\MessageTemplateSelector.cs" />
+    <Compile Include="Views\Tools\NullToVisibilityConverter.cs" />
     <Compile Include="Views\Tools\TextLengthToVisibilityConverter.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -811,17 +814,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="NETWORKLIST">
-      <Guid>{DCB00D01-570F-4A9B-8D69-199FDBA5723B}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ElectronicJournalAPI\ElectronicJournalAPI\ElectronicJournalAPI.csproj">

@@ -21,7 +21,7 @@
     </Style>
 
     <DataTemplate DataType="{x:Type m:UpdMessage}" x:Key="InboundMessage">
-        <Border Background="{DynamicResource InboundMessagesCardBackground}" BorderBrush="{DynamicResource BorderColor}"
+        <Border Background="{DynamicResource InboundMessagesCardBackground}" BorderBrush="{DynamicResource InboundMessagesCardBorder}"
                 Width="280" Height="80" CornerRadius="10" HorizontalAlignment="Left" BorderThickness="2">
             <Grid>
                 <Grid.RowDefinitions>
@@ -54,7 +54,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type m:UpdMessage}" x:Key="OutboundMessage">
-        <Border Background="{DynamicResource OutboundMessagesCardBackground}" BorderBrush="{DynamicResource BorderColor}"
+        <Border Background="{DynamicResource OutboundMessagesCardBackground}" BorderBrush="{DynamicResource OutboundMessagesCardBorder}"
                 Width="280" Height="80" CornerRadius="10" HorizontalAlignment="Left" BorderThickness="2">
             <Grid>
                 <Grid.RowDefinitions>
@@ -89,6 +89,7 @@
 
     <Style TargetType="{x:Type ListView}" x:Key="MessagesListView" BasedOn="{StaticResource {x:Type ListView}}">
         <Style.Setters>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
             <Setter Property="ItemContainerStyle">
                 <Setter.Value>
                     <Style TargetType="{x:Type ListViewItem}">
@@ -133,6 +134,57 @@
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="2"/>
                     </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="{x:Type ListView}" x:Key="MarksListView" BasedOn="{StaticResource {x:Type ListView}}">
+        <Style.Setters>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter x:Name="PART_ContentHost" Margin="0 10"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="7"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="{x:Type ListView}" x:Key="LessonsListView" BasedOn="{StaticResource {x:Type ListView}}">
+        <Style.Setters>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <Border Width="350" Height="40" Background="{TemplateBinding Background}"
+                                            CornerRadius="15" Margin="-5 0 0 0">
+                                        <ContentPresenter x:Name="PART_ContentHost" Margin="0 2.5"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource SelectedLesson}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
                 </Setter.Value>
             </Setter>
         </Style.Setters>

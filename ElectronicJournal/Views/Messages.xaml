@@ -9,9 +9,14 @@
              mc:Ignorable="d" d:DesignHeight="1024" d:DesignWidth="1120">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="btv"/>
-        
+        <tools:NullToVisibilityConverter x:Key="ntv"/>
+
         <CompositeCollection x:Key="DefaultItem">
             <ComboBoxItem Content="Введите не менее 3 символов для поиска..." IsEnabled="False"/>
+        </CompositeCollection>
+
+        <CompositeCollection x:Key="EmptyCollectionItem">
+            <ComboBoxItem Content="Ничего не найдено" IsEnabled="False"/>
         </CompositeCollection>
 
         <DataTemplate x:Key="MessageIsNotSelected">
@@ -58,7 +63,7 @@
                         <ColumnDefinition Width="0.4*" />
                         <ColumnDefinition Width="0.2*" />
                         <ColumnDefinition Width="0.025*" MaxWidth="10"/>
-                        <ColumnDefinition Width="0.9*" />
+                        <ColumnDefinition Width="0.85*" />
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="0.4*" />
                         <ColumnDefinition Width="0.025*" MaxWidth="10"/>
@@ -161,23 +166,34 @@
                 </Behaviors:Interaction.Triggers>
                 <TabItem Header="Входящие" Name="Inbound" 
                          HeaderStringFormat="Введите отправителя: ">
-                    <ListView ItemsSource="{Binding InboundMessages}"
-                              Style="{DynamicResource InbountMessagesListView}"
-                              SelectedItem="{Binding SelectedMessage,Mode=TwoWay}">
-                        <Behaviors:Interaction.Behaviors>
-                            <tools:MessagesListViewScrollBehavior/>
-                        </Behaviors:Interaction.Behaviors>
-                    </ListView>
+                    <Grid>
+                        <ListView ItemsSource="{Binding InboundMessages}"
+                                  Style="{DynamicResource InbountMessagesListView}"
+                                  SelectedItem="{Binding SelectedMessage,Mode=TwoWay}">
+                            <Behaviors:Interaction.Behaviors>
+                                <tools:MessagesListViewScrollBehavior/>
+                            </Behaviors:Interaction.Behaviors>
+                        </ListView>
+
+                        <TextBlock Text="{Binding ButtonContent}" VerticalAlignment="Top" Margin="0 100"
+                                   Visibility="{Binding InbountMessages,Converter={StaticResource ntv}}"/>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="Исходящие" Name="Outbound"
                          HeaderStringFormat="Введите получателя: ">
-                    <ListView ItemsSource="{Binding OutboundMessages}" 
-                              Style="{DynamicResource OutbountMessagesListView}"
-                              SelectedItem="{Binding SelectedMessage,Mode=TwoWay}">
-                        <Behaviors:Interaction.Behaviors>
-                            <tools:MessagesListViewScrollBehavior/>
-                        </Behaviors:Interaction.Behaviors>
-                    </ListView>
+                    <Grid>
+                        <ListView ItemsSource="{Binding OutboundMessages}" 
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                  Style="{DynamicResource OutbountMessagesListView}"
+                                  SelectedItem="{Binding SelectedMessage,Mode=TwoWay}">
+                            <Behaviors:Interaction.Behaviors>
+                                <tools:MessagesListViewScrollBehavior/>
+                            </Behaviors:Interaction.Behaviors>
+                        </ListView>
+
+                        <TextBlock Text="{Binding ButtonContent}" VerticalAlignment="Top" Margin="0 100"
+                                   Visibility="{Binding OutbountMessages,Converter={StaticResource ntv}}"/>
+                    </Grid>
                 </TabItem>
             </TabControl>
 

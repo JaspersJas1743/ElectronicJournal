@@ -1,21 +1,34 @@
-﻿using ElectronicJournal.ViewModels.Tools;
+﻿using ElectronicJournal.Resources.Windows;
+using ElectronicJournal.Utilities.Messages;
+using ElectronicJournal.ViewModels.Tools;
 using ElectronicJournalAPI.ApiEntities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Controls;
 
 namespace ElectronicJournal.Models
 {
     public class UpdMessage
     {
+        private IMessageProvider _message;
+
         private readonly Lazy<Command> _downloadAttachment;
 
-        public UpdMessage(Message message)
+        public UpdMessage(Message message, IMessageProvider messageProvider)
         {
             Message = message;
+            _message = messageProvider;
             _downloadAttachment = Command.CreateLazyCommand(action: async _ =>
             {
                 await Message.Attachment.Download(folder: Properties.Settings.Default.FolderForDownloads);
+                MessageWindow.MessageWindowResult result = _message.Show(
+                    text: "Файл сохранён! Открыть?",
+                    windowTitle: String.Empty,
+                    image: MessageWindow.MessageWindowImage.Information,
+                    buttons: MessageWindow.MessageWindowButton.YesNo);
+                if (result.Equals(MessageWindow.MessageWindowResult.Yes))
+                    Process.Start(fileName: Message.Attachment.Path);
             }, canExecute: _ => Message.Attachment != null);
         }
 
@@ -29,8 +42,8 @@ namespace ElectronicJournal.Models
         private User.MessageReceiversResponse _selectedUser;
         private UpdMessage _selectedMessage;
         private string _filter;
-        private List<UpdMessage> _inboundMessages = new List<UpdMessage>();
-        private List<UpdMessage> _outboundMessages = new List<UpdMessage>();
+        private IEnumerable<UpdMessage> _inboundMessages;
+        private IEnumerable<UpdMessage> _outboundMessages;
         private TabItem _selectedTabItem;
 
         public IEnumerable<User.MessageReceiversResponse> Users
@@ -73,7 +86,7 @@ namespace ElectronicJournal.Models
             }
         }
 
-        public List<UpdMessage> InboundMessages
+        public IEnumerable<UpdMessage> InboundMessages
         {
             get => _inboundMessages;
             set
@@ -83,7 +96,7 @@ namespace ElectronicJournal.Models
             }
         }
 
-        public List<UpdMessage> OutboundMessages
+        public IEnumerable<UpdMessage> OutboundMessages
         {
             get => _outboundMessages;
             set

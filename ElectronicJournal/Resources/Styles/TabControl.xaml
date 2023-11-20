@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style TargetType="{x:Type TabControl}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -17,7 +18,7 @@
                         </Viewbox>
                         <Border x:Name="Border" Grid.Row="1" BorderThickness="3 0 3 3" CornerRadius="0 0 15 15" KeyboardNavigation.TabNavigation="Local"
                                 KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2"
-                                Background="{DynamicResource MessagesBorder}" BorderBrush="{DynamicResource BorderColor}">
+                                Background="{DynamicResource MessagesBorder}" BorderBrush="{TemplateBinding BorderBrush}">
                             <ContentPresenter x:Name="PART_SelectedContentHost" Margin="4" ContentSource="SelectedContent" />
                         </Border>
                     </Grid>
@@ -28,7 +29,8 @@
 
     <Style TargetType="{x:Type TabItem}">
         <Setter Property="BorderThickness" Value="3" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}" />
+        <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Setter Property="Background" Value="{DynamicResource MessagesBorder}"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="Padding" Value="16 4"/>
@@ -37,7 +39,7 @@
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid x:Name="Root">
                         <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15 15 0 0"
-                                BorderBrush="{TemplateBinding BorderBrush}" Background="{DynamicResource MessagesBorder}">
+                                BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
                             <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" 
                                                 ContentSource="Header" RecognizesAccessKey="True" TextElement.FontSize="{TemplateBinding FontSize}"/>
                         </Border>

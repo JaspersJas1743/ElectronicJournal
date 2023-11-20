@@ -27,6 +27,8 @@ namespace ElectronicJournalAPI.Utilities
         #region Properties
         public bool Exists => File.Exists(path: _file.FullName);
 
+        public long Length => _file.Length;
+        public string Name => _file.Name;
         public string FullName => _file.FullName;
         #endregion Properties
 

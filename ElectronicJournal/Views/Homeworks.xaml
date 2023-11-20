@@ -15,7 +15,8 @@
         </Behaviours:EventTrigger>
     </Behaviours:Interaction.Triggers>
     <UserControl.Resources>
-        <tools:DaysRemainingColorConverter x:Key="drcc"/>
+        <tools:DaysRemainingColorConverter x:Key="drc"/>
+        <tools:NullToVisibilityConverter x:Key="ntv"/>
     </UserControl.Resources>
     <Viewbox>
         <Grid Width="1120" Height="1024">
@@ -32,10 +33,10 @@
             <TextBlock Text="{Binding Header}" Grid.Row="0"
                        HorizontalAlignment="Left" FontSize="24" Grid.Column="1"
                        VerticalAlignment="Bottom"/>
-            
-            <ListView Grid.Column="0" Grid.ColumnSpan="3" VerticalContentAlignment="Top"
-                      VerticalAlignment="Top" Grid.Row="1" ItemsSource="{Binding Homeworks}"
-                      SelectedItem="{Binding SelectedHomework,Mode=TwoWay}">
+
+            <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalContentAlignment="Top" VerticalAlignment="Top"
+                      SelectedItem="{Binding SelectedHomework,Mode=TwoWay}"
+                      ItemsSource="{Binding Homeworks}">
                 <ListView.Style>
                     <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource HomeworksListView}">
                         <Style.Resources>
@@ -53,7 +54,7 @@
                 </Behaviours:Interaction.Triggers>
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="{x:Type h:Homework}">
-                        <Border Background="Transparent" BorderBrush="{DynamicResource BorderColor}"
+                        <Border Background="Transparent" BorderBrush="{Binding CountRemainDays,Converter={StaticResource drc}}"
                                 CornerRadius="20" BorderThickness="2.5" Width="530" Height="300">
                             <Grid>
                                     <Grid.RowDefinitions>
@@ -62,9 +63,7 @@
                                     </Grid.RowDefinitions>
 
                                     <Border Grid.Row="0" CornerRadius="17.5 17.5 0 0"
-                                            Background="{Binding CountRemainDays,Converter={StaticResource drcc}}"
-                                            BorderBrush="{DynamicResource BorderColor}"
-                                            BorderThickness="0 0 0 2.5">
+                                            Background="{Binding CountRemainDays,Converter={StaticResource drc}}">
                                         <TextBlock Text="{Binding Deadline}" FontSize="22"
                                                    Foreground="Black" TextWrapping="Wrap"
                                                    Margin="10 0"/>
@@ -78,6 +77,10 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"
+                       Visibility="{Binding Homeworks,Converter={StaticResource ntv}}" 
+                       Text="{Binding ButtonContent}" FontSize="64"/>
         </Grid>
     </Viewbox>
 </UserControl>

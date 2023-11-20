@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ElectronicJournal.API.DBModels;
+﻿namespace ElectronicJournal.API.DBModels;
 
 public partial class Mark
 {
@@ -13,7 +10,7 @@ public partial class Mark
 
     public int? Lesson { get; set; }
 
-    public int? Mark1 { get; set; }
+    public int? Value { get; set; }
 
     public string? Description { get; set; }
 

@@ -53,7 +53,7 @@ namespace ElectronicJournal.API.Controllers
         public async Task<ActionResult<UploadAttachmentResponse>> UploadAttachment(IFormFile file)
         {
             if (file is null || file.Length == 0)
-                return BadRequest(error: new Error { Message = "Файл поврежден или пуст" });
+                return BadRequest(error: new Error { Message = "Допустимый размер загружаемого файла - 30Мбайт" });
 
             Attachment attachment = new Attachment { Path = await FileUploader.Upload(file: file) };
             _context.Attachments.Add(entity: attachment);

@@ -30,7 +30,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Viewbox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                    <ScrollViewer x:Name="PART_ContentHost" FontSize="{TemplateBinding FontSize}"/>
+                                    <ScrollViewer x:Name="PART_ContentHost" FontSize="{TemplateBinding FontSize}" VerticalScrollBarVisibility="Disabled"/>
                                 </Viewbox>
                             </Grid>
                         </Border>

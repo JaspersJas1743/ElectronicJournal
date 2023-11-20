@@ -175,6 +175,14 @@ namespace ElectronicJournalAPI.ApiEntities
             );
         }
 
+        public async Task<IEnumerable<Lesson>> GetLessons(CancellationToken cancellationToken = default)
+        {
+            return await ApiClient.GetAsync<IEnumerable<Lesson>>(
+                apiMethod: "Lessons/GetLessons",
+                cancellationToken: cancellationToken
+            );
+        }
+
         public void LogOut()
             => ApiClient.Token = null;
         #endregion Methods

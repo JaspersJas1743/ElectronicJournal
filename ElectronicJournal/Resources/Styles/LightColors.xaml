@@ -15,9 +15,17 @@
     <SolidColorBrush x:Key="TextSelection" Color="#595959"/>
     <SolidColorBrush x:Key="MessagesBorder" Color="#C7C7C7"/>
     <SolidColorBrush x:Key="InboundMessagesCardBackground" Color="#E8E8E8"/>
+    <SolidColorBrush x:Key="InboundMessagesCardBorder" Color="#000000"/>
     <SolidColorBrush x:Key="OutboundMessagesCardBackground" Color="#E8E8E8"/>
+    <SolidColorBrush x:Key="OutboundMessagesCardBorder" Color="#000000"/>
     <SolidColorBrush x:Key="HomeworksScrollView" Color="#C7C7C7"/>
-    <SolidColorBrush x:Key="LittleTimeBeforeDelivery" Color="#FF6868"/>
-    <SolidColorBrush x:Key="EnoughTimeBeforeDelivery" Color="#FFF969"/>
-    <SolidColorBrush x:Key="ManyTimeBeforeDelivery" Color="#82FF80"/>
+    <SolidColorBrush x:Key="LittleTimeBeforeDelivery" Color="#FF886D"/>
+    <SolidColorBrush x:Key="EnoughTimeBeforeDelivery" Color="#E9E366"/>
+    <SolidColorBrush x:Key="ManyTimeBeforeDelivery" Color="#6AB269"/>
+    <SolidColorBrush x:Key="Five" Color="#6AB269"/>
+    <SolidColorBrush x:Key="Four" Color="#93E26D"/>
+    <SolidColorBrush x:Key="Three" Color="#E9E366"/>
+    <SolidColorBrush x:Key="Two" Color="#FFC56D"/>
+    <SolidColorBrush x:Key="Skip" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SelectedLesson" Color="#BABABA"/>
 </ResourceDictionary>

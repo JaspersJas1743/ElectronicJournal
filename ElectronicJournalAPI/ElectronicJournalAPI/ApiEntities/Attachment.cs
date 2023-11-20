@@ -20,14 +20,13 @@ namespace ElectronicJournalAPI.ApiEntities
 
         public Attachment(IEnumerable<string> files)
         {
-            Path = new TempFile(file: $"message_attachments_{DateTime.Now.ToString("ddMMyyyy_HHmmss")}.zip").FullName;
-            FileName = System.IO.Path.GetFileName(path: Path);
+            TempFile f = new TempFile(file: $"message_attachments_{DateTime.Now.ToString("ddMMyyyy_HHmmss")}.zip");
+            Path = f.FullName;
+            FileName = f.Name;
             using (ZipArchive archive = ZipFile.Open(archiveFileName: Path, mode: ZipArchiveMode.Create))
             {
                 foreach (string file in files)
-                {
                     archive.CreateEntryFromFile(sourceFileName: file, entryName: System.IO.Path.GetFileName(file));
-                }
             }
         }
 
@@ -49,8 +48,10 @@ namespace ElectronicJournalAPI.ApiEntities
                     ["Id"] = Id.ToString()
                 });
 
-            using (FileStream stream = new FileStream(path: System.IO.Path.Combine(path1: folder, path2: FileName), mode: FileMode.Create, access: FileAccess.Write))
+            string newPath = System.IO.Path.Combine(path1: folder, path2: FileName);
+            using (FileStream stream = new FileStream(path: newPath, mode: FileMode.Create, access: FileAccess.Write))
                 await stream.WriteAsync(buffer: response, offset: 0, count: response.Length, cancellationToken: cancellationToken);
+            Path = newPath;
         }
 
         public async Task<UploadAttachmentResponse> Upload(CancellationToken cancellationToken = default)

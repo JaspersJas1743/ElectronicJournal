@@ -38,8 +38,8 @@
                         <ColumnDefinition Width="0.22 *"/>
                         <ColumnDefinition Width="0.15*"/>
                         <ColumnDefinition Width="0.075*"/>
-                        <ColumnDefinition Width="0.3*"/>
-                        <ColumnDefinition Width="0.125*"/>
+                        <ColumnDefinition Width="0.275*"/>
+                        <ColumnDefinition Width="0.15*"/>
                     </Grid.ColumnDefinitions>
 
                     <Viewbox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">

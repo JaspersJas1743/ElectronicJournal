@@ -60,7 +60,7 @@ namespace ElectronicJournalAPI
         {
             HttpResponseMessage response = await _client.GetAsync(requestUri: uri, cancellationToken: cancellationToken);
             await ApiException.ThrowIfBadResponseAsync(response: response, jsonSerializerOptions: _options);
-            ContentType = response.Content.Headers.ContentType.MediaType;
+            ContentType = response.Content.Headers.ContentType?.MediaType;
             return response;
         }
 

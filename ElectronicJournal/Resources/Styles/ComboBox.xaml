@@ -51,10 +51,10 @@
                             <ContentPresenter Content="{TemplateBinding SelectionBoxItem}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="6" 
                                               x:Name="ContentSite" IsHitTestVisible="False" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" />
                         </Viewbox>
-                        <TextBlock x:Name="PlaceholderText" HorizontalAlignment="Left" VerticalAlignment="Center" Focusable="True"
+                        <TextBlock x:Name="PlaceholderText" HorizontalAlignment="Left" VerticalAlignment="Center" Focusable="True" IsHitTestVisible="False"
                                    Background="Transparent" Text="Поиск..." Opacity="0.5" Margin="15 0" FontSize="24" Visibility="Collapsed"/>
                         <TextBox x:Name="PART_EditableTextBox" BorderBrush="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                 Focusable="True" Background="Transparent" IsReadOnly="{TemplateBinding IsReadOnly}" MaxLength="0"
+                                 Focusable="True" Background="Transparent" IsReadOnly="{TemplateBinding IsReadOnly}" MaxLength="50"
                                  Visibility="{TemplateBinding IsEditable,Converter={StaticResource btv}}" />
                         <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
                             <Grid x:Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">

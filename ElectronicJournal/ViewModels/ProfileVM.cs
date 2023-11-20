@@ -132,13 +132,9 @@ namespace ElectronicJournal.ViewModels
         private async Task<bool> Change(Func<Task<User.ChangeResponse>> func)
         {
             User.ChangeResponse result = await func();
-            if (!result.IsSuccess)
-            {
-                _message.ShowError(text: result.Message);
-                return result.IsSuccess;
-            }
-
-            _message.ShowInformation(text: result.Message);
+            if (result.IsSuccess)
+                _message.ShowInformation(text: result.Message);
+            else _message.ShowError(text: result.Message);
             return result.IsSuccess;
         }
         #endregion Constructor

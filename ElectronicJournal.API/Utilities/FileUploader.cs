@@ -4,6 +4,9 @@
     {
         public static async Task<string> Upload(IFormFile file)
         {
+            if (file == null)
+                throw new ArgumentNullException(nameof(file));
+
             string folder = Path.Combine(path1: "Resources", path2: "Attachments");
             DirectoryInfo directory = new DirectoryInfo(path: folder);
             if (!directory.Exists)
