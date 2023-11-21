@@ -29,7 +29,6 @@ namespace ElectronicJournal.ViewModels
 
         #region Constructor
         public AuthorizationVM(IValidator<AuthorizationModel> validator, IConfigProvider config, IEventAggregator eventAggregator)
-            : base(defaultButtonContent: "Войти")
         {
             _validator = validator;
             _config = config;

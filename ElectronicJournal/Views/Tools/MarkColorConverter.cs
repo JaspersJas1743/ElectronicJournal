@@ -28,7 +28,7 @@ namespace ElectronicJournal.Views.Tools
         private static string NewMethod(double note)
         {
             string result;
-            if (note >= 4.5 && note < 5)
+            if (note >= 4.5 && note <= 5)
                 result = "Five";
             else if (note >= 3.5)
                 result = "Four";

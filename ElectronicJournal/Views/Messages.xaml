@@ -9,7 +9,7 @@
              mc:Ignorable="d" d:DesignHeight="1024" d:DesignWidth="1120">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="btv"/>
-        <tools:NullToVisibilityConverter x:Key="ntv"/>
+        <tools:LoaderVisibilityConverter x:Key="lv"/>
 
         <CompositeCollection x:Key="DefaultItem">
             <ComboBoxItem Content="Введите не менее 3 символов для поиска..." IsEnabled="False"/>
@@ -176,7 +176,7 @@
                         </ListView>
 
                         <TextBlock Text="{Binding ButtonContent}" VerticalAlignment="Top" Margin="0 100"
-                                   Visibility="{Binding InbountMessages,Converter={StaticResource ntv}}"/>
+                                   Visibility="{Binding InbountMessages,Converter={StaticResource lv}}"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Исходящие" Name="Outbound"
@@ -192,7 +192,7 @@
                         </ListView>
 
                         <TextBlock Text="{Binding ButtonContent}" VerticalAlignment="Top" Margin="0 100"
-                                   Visibility="{Binding OutbountMessages,Converter={StaticResource ntv}}"/>
+                                   Visibility="{Binding OutbountMessages,Converter={StaticResource lv}}"/>
                     </Grid>
                 </TabItem>
             </TabControl>

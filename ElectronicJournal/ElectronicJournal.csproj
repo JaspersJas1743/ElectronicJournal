@@ -362,6 +362,7 @@
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Models\RegistrationOfAuthorizationDataModel.cs" />
+    <Compile Include="Models\TimetableModel.cs" />
     <Compile Include="Resources\CustomElements\CodeEntryPanel.xaml.cs">
       <DependentUpon>CodeEntryPanel.xaml</DependentUpon>
     </Compile>
@@ -449,9 +450,11 @@
       <DependentUpon>Timetable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tools\DaysRemainingColorConverter.cs" />
+    <Compile Include="Views\Tools\DayToStringConverter.cs" />
     <Compile Include="Views\Tools\MarkColorConverter.cs" />
     <Compile Include="Views\Tools\MessagesListViewScrollBehavior.cs" />
     <Compile Include="Views\Tools\MessageTemplateSelector.cs" />
+    <Compile Include="Views\Tools\LoaderVisibilityConverter.cs" />
     <Compile Include="Views\Tools\NullToVisibilityConverter.cs" />
     <Compile Include="Views\Tools\TextLengthToVisibilityConverter.cs" />
     <Page Include="App.xaml">

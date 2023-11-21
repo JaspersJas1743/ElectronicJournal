@@ -10,6 +10,8 @@
              mc:Ignorable="d" d:DesignHeight="1024" d:DesignWidth="1120">
     <UserControl.Resources>
         <tools:MarkColorConverter x:Key="mc"/>
+        <tools:NullToVisibilityConverter x:Key="ntv"/>
+        <tools:LoaderVisibilityConverter x:Key="lv"/>
     </UserControl.Resources>
 
     <Behaviours:Interaction.Triggers>
@@ -35,17 +37,17 @@
                 <ColumnDefinition Width="0.35*"/>
             </Grid.ColumnDefinitions>
 
-            <Viewbox Grid.Row="1" Grid.Column="0" Margin="0 0 10 0"
-                     HorizontalAlignment="Right">
+            <Viewbox Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Right"
+                     Visibility="{Binding Marks,Converter={StaticResource ntv}}">
                 <TextBlock Text="Средний балл: " FontSize="20"
                            HorizontalAlignment="Right"/>
             </Viewbox>
 
-            <TextBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="3"
-                     Margin="10 0 0 0" Foreground="Black"
+            <TextBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" BorderBrush="{x:Null}"
+                     Margin="10 0 0 0" Foreground="Black" IsReadOnly="True"
                      Text="{Binding Average,Mode=OneWay,StringFormat='0.##'}" Style="{DynamicResource DefaultTB}"
                      FontSize="32" Background="{Binding Average,Converter={StaticResource mc}}" 
-                     BorderBrush="{x:Null}"/>
+                     Visibility="{Binding Marks,Converter={StaticResource ntv}}"/>
 
             <Viewbox Grid.Row="1" Grid.Column="2" Visibility="Collapsed">
                 <TextBlock Text="Ваше место в группе: 1 из 23" FontSize="20"/>
@@ -79,8 +81,12 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <TextBlock Text="{Binding Description,Mode=OneWay}" Grid.Row="1" 
-                                TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="24"/>
+
+                    <TextBlock Text="{Binding ButtonContent,TargetNullValue='Нет оценок'}" FontSize="32" VerticalAlignment="Center" 
+                               Visibility="{Binding Marks,Converter={StaticResource lv}}" Grid.RowSpan="2"/>
+
+                    <TextBlock Text="{Binding Description,Mode=OneWay}" Grid.Row="1"
+                               TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="24"/>
                 </Grid>
             </Border>
 
@@ -103,7 +109,7 @@
                     <ListView Grid.Row="4" Style="{DynamicResource LessonsListView}"
                               ItemsSource="{Binding Lessons}" SelectedItem="{Binding SelectedLesson,Mode=TwoWay}">
                         <ListView.ItemTemplate>
-                            <DataTemplate DataType="{x:Type m:Lesson}">
+                            <DataTemplate DataType="{x:Type m:Subject}">
                                 <TextBlock TextTrimming="CharacterEllipsis"
                                             FontSize="20" Margin="10 0" Text="{Binding Name}"
                                             HorizontalAlignment="Left"/>
@@ -113,8 +119,15 @@
                             <Behaviours:EventTrigger EventName="SelectionChanged">
                                 <Behaviours:InvokeCommandAction Command="{Binding LessonsSelectionChanged}"/>
                             </Behaviours:EventTrigger>
+                            <Behaviours:EventTrigger EventName="Loaded">
+                                <Behaviours:InvokeCommandAction Command="{Binding LessonsLoaded}"
+                                                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
+                            </Behaviours:EventTrigger>
                         </Behaviours:Interaction.Triggers>
                     </ListView>
+
+                    <TextBlock Text="{Binding ButtonContent,TargetNullValue='Не удалось загрузить.. :('}" Grid.Row="4" FontSize="24" VerticalAlignment="Top" 
+                               Visibility="{Binding Lessons,Converter={StaticResource lv}}"/>
                 </Grid>
             </Border>
 

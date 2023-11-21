@@ -30,7 +30,6 @@ namespace ElectronicJournal.ViewModels
         private readonly Lazy<Command> _sendMessage;
 
         public MessageCreationVM(IMessageProvider message, IEventAggregator eventAggregator, IValidator<MessageCreationModel> validator)
-            : base(defaultButtonContent: "Отправить")
         {
             _message = message;
             _eventAggregator = eventAggregator;

@@ -47,7 +47,7 @@ namespace ElectronicJournal.API.Controllers
             var homeworks = user?.Student?.GroupNavigation?.Homeworks
                 .Where(predicate: h => h.CompletionDate > DateTime.Now)
                 .OrderBy(keySelector: h => h.CompletionDate);
-            return Ok(value: homeworks.Select(h =>
+            return Ok(value: homeworks?.Select(h =>
             {
                 HomeworkAttachment? attachment = null;
                 if (h.AttachmentNavigation != null)
@@ -63,7 +63,7 @@ namespace ElectronicJournal.API.Controllers
                     Teacher: teachersString,
                     Attachment: attachment
                 );
-            }));
+            }) ?? Enumerable.Empty<GetHomeworkResponse>());
         }
         #endregion GET
         #endregion Methods

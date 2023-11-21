@@ -78,7 +78,7 @@
 
                     <Button 
                         Grid.Column="0" Grid.ColumnSpan="6" Command="{Binding Registration}"
-                        Grid.Row="5" Content="{Binding ButtonContent}">
+                        Grid.Row="5" Content="{Binding ButtonContent,TargetNullValue='Зарегистрироваться'}">
                     </Button>
 
                     <Button 

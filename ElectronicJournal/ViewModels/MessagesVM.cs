@@ -56,7 +56,7 @@ namespace ElectronicJournal.ViewModels
             _reply = Command.CreateLazyCommand(action: _ =>
             {
                 Message replyMessage = SelectedMessage.Message;
-                replyMessage.Text = String.Empty;
+                replyMessage.Text = null;
                 replyMessage.Attachment = null;
                 ChangeMessageToCreationMessageEventArgs e = new ChangeMessageToCreationMessageEventArgs
                 {

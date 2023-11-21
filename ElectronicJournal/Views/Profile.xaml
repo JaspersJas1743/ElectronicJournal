@@ -199,7 +199,7 @@
                                        Foreground="#4FB84D" />
                         </Viewbox>
 
-                        <Button Content="{Binding ButtonContent}" Grid.Row="5"
+                        <Button Content="{Binding ButtonContent,TargetNullValue='Сохранить изменения'}" Grid.Row="5"
                                 Grid.Column="1" Margin="100 10"
                                 Command="{Binding EmailChanging}"/>
                     </Grid>
@@ -236,7 +236,7 @@
                                        Foreground="#4FB84D"/>
                         </Viewbox>
 
-                        <Button Content="{Binding ButtonContent}" Grid.Row="5"
+                        <Button Content="{Binding ButtonContent,TargetNullValue='Сохранить изменения'}" Grid.Row="5"
                                 Grid.Column="1" Margin="100 10"
                                 Command="{Binding PhoneChanging}"/>
                     </Grid>
@@ -294,7 +294,7 @@
                                                           Grid.RowSpan="3"/>
 
                         <Button Grid.Column="2" Grid.Row="13" 
-                                Content="{Binding ButtonContent}"
+                                Content="{Binding ButtonContent,TargetNullValue='Сохранить изменения'}"
                                 Command="{Binding PasswordChanging}"/>
                     </Grid>
                 </GroupBox>

@@ -7,18 +7,8 @@ namespace ElectronicJournal.ViewModels.Tools
     public class VM : TrackedObject
     {
         #region Fields
-        private string _defaultButtonContent;
-
         private string _buttonContent;
         #endregion Fields
-
-        #region Constructors
-        protected VM(string defaultButtonContent = default)
-        {
-            _defaultButtonContent = defaultButtonContent;
-            _buttonContent = _defaultButtonContent;
-        }
-        #endregion Constructors
 
         #region Properties
         public string ButtonContent
@@ -31,7 +21,7 @@ namespace ElectronicJournal.ViewModels.Tools
             }
         }
 
-        public bool CanMoveToAnotherPage => ButtonContent.Equals(_defaultButtonContent);
+        public bool CanMoveToAnotherPage => ButtonContent == null;
         #endregion Properties
 
         #region Methods
@@ -76,7 +66,7 @@ namespace ElectronicJournal.ViewModels.Tools
 
                 await Task.Delay(millisecondsDelay: 250);
             }
-            ButtonContent = _defaultButtonContent;
+            ButtonContent = null;
         }
         #endregion Methods
     }

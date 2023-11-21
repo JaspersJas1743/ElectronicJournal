@@ -1,4 +1,5 @@
 ﻿using ElectronicJournal.Models;
+using ElectronicJournal.Utilities.Messages;
 using ElectronicJournal.Utilities.PubSubEvents;
 using ElectronicJournal.ViewModels.Tools;
 using ElectronicJournalAPI.ApiEntities;
@@ -14,6 +15,7 @@ namespace ElectronicJournal.ViewModels
     {
         #region Fields
         private readonly IValidator<RegistrationOfAuthorizationDataModel> _validator;
+        private readonly IMessageProvider _message;
         private readonly IEventAggregator _eventAggregator;
 
         private RegistrationOfAuthorizationDataModel _model;
@@ -23,10 +25,14 @@ namespace ElectronicJournal.ViewModels
         #endregion Fields
 
         #region Constructors
-        public RegistrationOfAuthorizationDataVM(IValidator<RegistrationOfAuthorizationDataModel> validator, IEventAggregator eventAggregator)
-            : base(defaultButtonContent: "Зарегистрироваться")
+        public RegistrationOfAuthorizationDataVM(
+            IValidator<RegistrationOfAuthorizationDataModel> validator,
+            IMessageProvider message,
+            IEventAggregator eventAggregator)
         {
             _validator = validator;
+            _message = message;
+            _eventAggregator = eventAggregator;
 
             _model = new RegistrationOfAuthorizationDataModel();
             _model.PropertyChanged += (object sender, PropertyChangedEventArgs e) => OnPropertyChanged(propertyName: e.PropertyName);
@@ -34,7 +40,12 @@ namespace ElectronicJournal.ViewModels
             _registration = Command.CreateLazyCommand(action: async _ =>
             {
                 await ExecuteTask(taskForExecute: () => _model.SignUpAsync(registrationModule: RegistrationModule));
-                _eventAggregator.GetEvent<ChangeMainWindowContentEvent>().Publish(payload: new ChangeMainWindowContentEventArgs { NewVM = Program.AppHost.Services.GetService<AuthorizationVM>() });                
+                _message.ShowInformation(text: "Регистрация прошла успешно!");
+                ChangeMainWindowContentEventArgs e = new ChangeMainWindowContentEventArgs
+                {
+                    NewVM = Program.AppHost.Services.GetService<AuthorizationVM>()
+                };
+                _eventAggregator.GetEvent<ChangeMainWindowContentEvent>().Publish(payload: e);                
             }, canExecute: _ => _validator.Validate(instance: _model).IsValid && CanMoveToAnotherPage);
 
             _back = Command.CreateLazyCommand(

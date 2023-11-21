@@ -16,7 +16,8 @@
     </Behaviours:Interaction.Triggers>
     <UserControl.Resources>
         <tools:DaysRemainingColorConverter x:Key="drc"/>
-        <tools:NullToVisibilityConverter x:Key="ntv"/>
+        <tools:LoaderVisibilityConverter x:Key="lv"/>
+        <tools:NullToVisibilityConverter x:Key="nv"/>
     </UserControl.Resources>
     <Viewbox>
         <Grid Width="1120" Height="1024">
@@ -30,13 +31,12 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="0.02*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="{Binding Header}" Grid.Row="0"
-                       HorizontalAlignment="Left" FontSize="24" Grid.Column="1"
-                       VerticalAlignment="Bottom"/>
+            <TextBlock Text="{Binding Header}" Grid.Row="0" FontSize="24" Grid.Column="1"
+                       HorizontalAlignment="Left"  VerticalAlignment="Bottom" />
 
-            <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalContentAlignment="Top" VerticalAlignment="Top"
-                      SelectedItem="{Binding SelectedHomework,Mode=TwoWay}"
-                      ItemsSource="{Binding Homeworks}">
+            <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalContentAlignment="Top"
+                      VerticalAlignment="Top" SelectedItem="{Binding SelectedHomework,Mode=TwoWay}"
+                      ItemsSource="{Binding Homeworks}" Grid.RowSpan="2">
                 <ListView.Style>
                     <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource HomeworksListView}">
                         <Style.Resources>
@@ -79,8 +79,12 @@
             </ListView>
 
             <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"
-                       Visibility="{Binding Homeworks,Converter={StaticResource ntv}}" 
-                       Text="{Binding ButtonContent}" FontSize="64"/>
+                       Visibility="{Binding Homeworks,Converter={StaticResource lv}}" 
+                       Text="{Binding ButtonContent,TargetNullValue='Нет заданий'}" FontSize="64"/>
+
+            <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"
+                       Visibility="{Binding Homeworks,Converter={StaticResource lv}}" 
+                       Text="{Binding ButtonContent,TargetNullValue='Нет заданий'}" FontSize="64"/>
         </Grid>
     </Viewbox>
 </UserControl>

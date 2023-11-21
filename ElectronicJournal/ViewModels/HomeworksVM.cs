@@ -43,6 +43,11 @@ namespace ElectronicJournal.ViewModels
                 {
                     Homeworks = await User.GetHomeworks();
                     Header = $"Необходимо выполнить {Homeworks.Count()} {WordFormulator.GetForm(count: Homeworks.Count(), forms: new string[] { "заданий", "задание", "задания" })}: ";
+                    if (Homeworks.Count() == 0)
+                    {
+                        Header = String.Empty;
+                        Homeworks = null;
+                    } 
                 });
             });
         }

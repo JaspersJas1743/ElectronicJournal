@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -196,6 +197,7 @@ namespace ElectronicJournalAPI
                     uri.Append(value: $"{pair.Key}={pair.Value}&");
                 uri.Remove(startIndex: uri.Length - 1, length: 1);
             }
+            Debug.WriteLine(uri.ToString());
             return new Uri(uriString: uri.ToString());
         }
         #endregion Methods

@@ -52,7 +52,6 @@ namespace ElectronicJournal.ViewModels
                          IValidator<ProfileModel.EmailBlock> emailValidator,
                          IValidator<ProfileModel.PhoneBlock> phoneValidator,
                          IEventAggregator eventAggregator)
-            : base(defaultButtonContent: "Сохранить изменения")
         {
             _message = message;
             _config = config; _securityValidator = securityValidator;

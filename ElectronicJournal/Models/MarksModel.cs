@@ -6,14 +6,14 @@ namespace ElectronicJournal.Models
 {
     public class MarksModel : VM
     {
-        private IEnumerable<Lesson> _lessons;
+        private IEnumerable<Subject> _lessons;
         private IEnumerable<Mark> _marks;
-        private Lesson _selectedLesson;
+        private Subject _selectedLesson;
         private Mark _selectedMark;
         private double _average;
         private string _description;
 
-        public IEnumerable<Lesson> Lessons
+        public IEnumerable<Subject> Lessons
         {
             get => _lessons;
             set
@@ -33,7 +33,7 @@ namespace ElectronicJournal.Models
             }
         }
 
-        public Lesson SelectedLesson
+        public Subject SelectedLesson
         {
             get => _selectedLesson;
             set

@@ -2,12 +2,105 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:m="clr-namespace:ElectronicJournalAPI.ApiEntities;assembly=ElectronicJournalAPI"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:tools="clr-namespace:ElectronicJournal.Views.Tools"
+             xmlns:Behaviours="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" MaxWidth="1920" MaxHeight="1440"
-             d:DesignHeight="1440" d:DesignWidth="1920">
-    <Grid>
-        <Viewbox>
-            <TextBlock Text="Timetable"/>
-        </Viewbox>
-    </Grid>
+             d:DesignHeight="1024" d:DesignWidth="1120">
+    <UserControl.Resources>
+        <tools:LoaderVisibilityConverter x:Key="lv"/>
+        <tools:DayToStringConverter x:Key="dts"/>
+        <tools:NullToVisibilityConverter x:Key="ntv"/>
+        <BooleanToVisibilityConverter x:Key="btv"/>
+    </UserControl.Resources>
+    <Behaviours:Interaction.Triggers>
+        <Behaviours:EventTrigger EventName="Loaded">
+            <Behaviours:InvokeCommandAction Command="{Binding Loaded}"/>
+        </Behaviours:EventTrigger>
+    </Behaviours:Interaction.Triggers>
+    <Viewbox>
+        <Grid Width="1120" Height="1024" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.25*"/>
+                <RowDefinition Height="0.025*"/>
+                <RowDefinition Height="0.725*"/>
+            </Grid.RowDefinitions>
+            <ListView Grid.Row="0" Style="{DynamicResource StudyDaysListView}" ItemsSource="{Binding Days}"
+                      SelectedItem="{Binding SelectedDay,Mode=TwoWay}" Name="Days">
+                <Behaviours:Interaction.Triggers>
+                    <Behaviours:EventTrigger EventName="Loaded">
+                        <Behaviours:InvokeCommandAction Command="{Binding DaysLoaded}"
+                                                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
+                    </Behaviours:EventTrigger>
+                    <Behaviours:EventTrigger EventName="SelectionChanged">
+                        <Behaviours:InvokeCommandAction Command="{Binding DaySelectionChanged}"
+                                                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
+                    </Behaviours:EventTrigger>
+                </Behaviours:Interaction.Triggers>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="{x:Type m:StudyDay}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.7*"/>
+                                <RowDefinition Height="0.05*"/>
+                                <RowDefinition Height="0.1*"/>
+                                <RowDefinition Height="0.1*"/>
+                                <RowDefinition Height="0.05*"/>
+                            </Grid.RowDefinitions>
+                            <Border BorderThickness="0 0 0 2" BorderBrush="Black" Grid.Row="0" Margin="20 20 20 0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.2*"/>
+                                        <RowDefinition Height="0.8*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Margin="0 5 0 0" Text="{Binding Date,Converter={StaticResource dts}}" FontSize="20"/>
+                                    <TextBlock Grid.Row="1" Text="{Binding Date,StringFormat='dd'}" FontSize="84"/>
+                                </Grid>
+                            </Border>
+
+                            <TextBlock Text="{Binding StudyTime}" Grid.Row="2" FontSize="16"/>
+                            <TextBlock Text="{Binding CountLessonString}" Grid.Row="3" FontSize="16"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Border Grid.Row="2" BorderThickness="2" BorderBrush="{DynamicResource BorderColor}" Padding="20 20 20 0"
+                    CornerRadius="25" Background="#C7C7C7" Visibility="{Binding Lessons,Converter={StaticResource ntv}}">
+                <Grid>
+                    <ListView Style="{DynamicResource TimetableListView}" ItemsSource="{Binding Lessons}" Margin="0 7.5 0 0"
+                              VerticalAlignment="Top">
+                        <ListView.ItemTemplate>
+                            <DataTemplate DataType="{x:Type m:Lesson}">
+                                <Border Width="335" Height="330" BorderThickness="2" BorderBrush="Black"
+                                        CornerRadius="20" Background="{DynamicResource MainElementColor}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="0.55*"/>
+                                            <RowDefinition Height="0.3*"/>
+                                            <RowDefinition Height="0.15*"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 0 0 2">
+                                            <Grid>
+                                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="20" Margin="10 0 10 20"/>
+                                                <TextBlock Text="{Binding Duration}" FontSize="20" VerticalAlignment="Bottom" Margin="10 0 10 10"/>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Grid.Row="1" Text="{Binding Teacher}" Margin="10 0" FontSize="20" TextWrapping="Wrap"/>
+                                        <TextBlock Grid.Row="2" Text="{Binding Auditorium}" Margin="10 0" FontSize="20"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <TextBlock Text="Нет занятий" FontSize="64" Visibility="{Binding DontHaveLessons,Converter={StaticResource btv}}"/>
+                </Grid>
+            </Border>
+            <TextBlock Text="{Binding ButtonContent}" Grid.RowSpan="3"
+                       FontSize="32" Visibility="{Binding Lessons,Converter={StaticResource lv}}"/>
+        </Grid>
+    </Viewbox>
 </UserControl>

@@ -4,7 +4,10 @@ using ElectronicJournalAPI.ApiEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Text.Json;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ElectronicJournal.ViewModels
 {
@@ -13,6 +16,7 @@ namespace ElectronicJournal.ViewModels
         private MarksModel _model;
 
         private Lazy<Command> _loaded;
+        private Lazy<Command> _lessonsLoaded;
         private Lazy<Command> _lessonsSelectionChanged;
         private Lazy<Command> _marksSelectionChanged;
 
@@ -23,14 +27,30 @@ namespace ElectronicJournal.ViewModels
 
             _loaded = Command.CreateLazyCommand(action: async _ =>
             {
-                Lessons = await User.GetLessons();
+                try
+                {
+                    Lessons = await ExecuteTask(taskForExecute: async () => await User.GetLessons());
+                }
+                catch (Exception)
+                {
+                }
+            });
+
+            _lessonsLoaded = Command.CreateLazyCommand(action: async arg =>
+            {
+                (arg as ListView).SelectedIndex = 0;
             });
 
             _lessonsSelectionChanged = Command.CreateLazyCommand(action: async _ =>
             {
-                await SelectedLesson.GetMarks();
-                Marks = SelectedLesson.Marks;
-                Average = SelectedLesson.Average;
+                try
+                {
+                    await ExecuteTask(async () => await SelectedLesson.GetMarks());
+                    Marks = SelectedLesson.Marks.Count() == 0 ? null : SelectedLesson.Marks;
+                    Average = SelectedLesson.Average;
+                } catch(Exception)
+                {
+                }
             });
 
             _marksSelectionChanged = Command.CreateLazyCommand(action: _ =>
@@ -39,7 +59,7 @@ namespace ElectronicJournal.ViewModels
             });
         }
 
-        public IEnumerable<Lesson> Lessons 
+        public IEnumerable<Subject> Lessons 
         {
             get => _model.Lessons;
             set => _model.Lessons = value;
@@ -51,7 +71,7 @@ namespace ElectronicJournal.ViewModels
             set => _model.Marks = value;
         }
 
-        public Lesson SelectedLesson
+        public Subject SelectedLesson
         {
             get => _model.SelectedLesson;
             set => _model.SelectedLesson = value;
@@ -78,6 +98,7 @@ namespace ElectronicJournal.ViewModels
         public User User { get; set; }
 
         public Command Loaded => _loaded.Value;
+        public Command LessonsLoaded => _lessonsLoaded.Value;
         public Command LessonsSelectionChanged => _lessonsSelectionChanged .Value;
         public Command MarksSelectionChanged => _marksSelectionChanged.Value;
     }

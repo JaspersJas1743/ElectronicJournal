@@ -24,7 +24,6 @@ namespace ElectronicJournal.ViewModels
 
         #region Constructors
         public RegistrationVM(IValidator<RegistrationModel> validator, IEventAggregator eventAggregator)
-            : base(defaultButtonContent: "Зарегистрироваться")
         {
             _validator = validator;
             _eventAggregator = eventAggregator;

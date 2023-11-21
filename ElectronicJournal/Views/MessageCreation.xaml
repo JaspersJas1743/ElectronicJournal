@@ -104,7 +104,7 @@
             </Border>
 
             <Button Grid.Row="7" Grid.Column="5" Command="{Binding SendMessage}">
-                <TextBlock FontSize="20" Text="{Binding ButtonContent}"/>
+                <TextBlock FontSize="20" Text="{Binding ButtonContent,TargetNullValue='Отправить'}"/>
             </Button>
         </Grid>
     </Viewbox>
